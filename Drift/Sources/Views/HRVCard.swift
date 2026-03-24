@@ -3,19 +3,34 @@ import Charts
 
 struct HRVCard: View {
     let record: SleepRecord
+    @EnvironmentObject var healthKitService: HealthKitService
     @State private var isExpanded = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            HStack {
-                Text("Heart Rate Variability")
-                    .font(.system(size: 12, weight: .semibold))
-                    .foregroundColor(Theme.textSecondary)
-                    .textCase(.uppercase)
-                    .tracking(1)
+            headerRow
 
-                Spacer()
+            if record.hrvAvg != nil {
+                dataView
+            } else {
+                noDataErrorView
+            }
+        }
+        .padding()
+        .glassCard()
+    }
 
+    private var headerRow: some View {
+        HStack {
+            Text("Heart Rate Variability")
+                .font(.system(size: 12, weight: .semibold))
+                .foregroundColor(Theme.textSecondary)
+                .textCase(.uppercase)
+                .tracking(1)
+
+            Spacer()
+
+            if record.hrvAvg != nil {
                 Button {
                     withAnimation(.spring(duration: 0.3)) {
                         isExpanded.toggle()
@@ -26,78 +41,118 @@ struct HRVCard: View {
                         .foregroundColor(Theme.textSecondary)
                 }
             }
+        }
+    }
 
-            if let hrvAvg = record.hrvAvg {
-                HStack(spacing: 16) {
+    @ViewBuilder
+    private var dataView: some View {
+        VStack(spacing: 12) {
+            HStack(spacing: 16) {
+                HRVStatItem(
+                    value: String(format: "%.0f", record.hrvAvg ?? 0),
+                    unit: "ms",
+                    label: "Avg HRV",
+                    color: Theme.insightAccent
+                )
+
+                if let hrvAvg = record.hrvAvg {
                     HRVStatItem(
-                        value: String(format: "%.0f", hrvAvg),
-                        unit: "ms",
-                        label: "Avg HRV",
-                        color: Theme.insightAccent
+                        value: hrvRecoveryLabel(hrvAvg),
+                        unit: "",
+                        label: "Recovery",
+                        color: hrvRecoveryColor(hrvAvg)
                     )
-
-                    if hrvAvg >= 50 {
-                        HRVStatItem(
-                            value: "Good",
-                            unit: "",
-                            label: "Recovery",
-                            color: Theme.insightAccent
-                        )
-                    } else if hrvAvg >= 30 {
-                        HRVStatItem(
-                            value: "Fair",
-                            unit: "",
-                            label: "Recovery",
-                            color: Theme.warningAccent
-                        )
-                    } else {
-                        HRVStatItem(
-                            value: "Low",
-                            unit: "",
-                            label: "Recovery",
-                            color: Theme.heartRate
-                        )
-                    }
-
-                    Spacer()
-
-                    Image(systemName: "heart.text.square.fill")
-                        .font(.title2)
-                        .foregroundColor(Theme.insightAccent.opacity(0.7))
                 }
 
-                if isExpanded {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Divider()
-                            .background(Theme.surface)
+                Spacer()
 
-                        Text("What is HRV?")
-                            .font(.system(size: 11, weight: .semibold))
-                            .foregroundColor(Theme.textSecondary)
+                Image(systemName: "heart.text.square.fill")
+                    .font(.title2)
+                    .foregroundColor(Theme.insightAccent.opacity(0.7))
+            }
 
-                        Text("Heart Rate Variability measures the variation in time between heartbeats. Higher HRV generally indicates better cardiovascular fitness and recovery. It fluctuates with stress, sleep quality, and exercise.")
-                            .font(.system(size: 11))
-                            .foregroundColor(Theme.textSecondary.opacity(0.8))
-                            .lineSpacing(2)
-
-                        hrvContextView
-                    }
+            if isExpanded {
+                expandedContent
                     .transition(.opacity.combined(with: .move(edge: .top)))
-                }
-            } else {
-                HStack {
-                    Image(systemName: "exclamationmark.triangle.fill")
-                        .foregroundColor(Theme.warningAccent)
-                        .font(.caption)
-
-                    Text("No HRV data available from your watch")
-                        .font(.system(size: 12))
-                        .foregroundColor(Theme.textSecondary)
-                }
             }
         }
-        .padding()
-        .glassCard()
+    }
+
+    private var noDataErrorView: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(spacing: 8) {
+                Image(systemName: "applewatch.slash.fill")
+                    .foregroundColor(Theme.warningAccent)
+                    .font(.caption)
+
+                Text("No HRV data from your watch")
+                    .font(.system(size: 12, weight: .medium))
+                    .foregroundColor(Theme.textSecondary)
+            }
+
+            Text("HRV requires Apple Watch to measure heartbeat intervals overnight. Make sure your watch is charged and Sleep Tracking is enabled in the Health app.")
+                .font(.system(size: 11))
+                .foregroundColor(Theme.textSecondary.opacity(0.7))
+                .lineSpacing(2)
+
+            HStack(spacing: 12) {
+                Button {
+                    Task {
+                        await healthKitService.fetchTodaySleep()
+                    }
+                } label: {
+                    HStack(spacing: 4) {
+                        Image(systemName: "arrow.clockwise")
+                        Text("Refresh")
+                    }
+                    .font(.system(size: 11, weight: .semibold))
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 5)
+                    .background(Theme.deepSleep)
+                    .clipShape(RoundedRectangle(cornerRadius: 6))
+                }
+
+                if healthKitService.hrvDataUnavailable {
+                    Text("Watch may not support HRV tracking")
+                        .font(.system(size: 10))
+                        .foregroundColor(Theme.textSecondary.opacity(0.6))
+                }
+            }
+
+            // Tip box
+            HStack(alignment: .top, spacing: 8) {
+                Image(systemName: "lightbulb.fill")
+                    .font(.system(size: 10))
+                    .foregroundColor(Theme.warningAccent)
+
+                Text("Tip: HRV is typically available on Apple Watch Series 3 or later. Make sure watchOS is up to date.")
+                    .font(.system(size: 10))
+                    .foregroundColor(Theme.textSecondary.opacity(0.7))
+                    .lineSpacing(1)
+            }
+            .padding(8)
+            .background(Theme.warningAccent.opacity(0.08))
+            .clipShape(RoundedRectangle(cornerRadius: 8))
+        }
+    }
+
+    private var expandedContent: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Divider()
+                .background(Theme.surface)
+
+            Text("What is HRV?")
+                .font(.system(size: 11, weight: .semibold))
+                .foregroundColor(Theme.textSecondary)
+
+            Text("Heart Rate Variability measures the variation in time between heartbeats. Higher HRV generally indicates better cardiovascular fitness and recovery. It fluctuates with stress, sleep quality, and exercise.")
+                .font(.system(size: 11))
+                .foregroundColor(Theme.textSecondary.opacity(0.8))
+                .lineSpacing(2)
+
+            hrvContextView
+        }
     }
 
     private var hrvContextView: some View {
@@ -135,6 +190,18 @@ struct HRVCard: View {
                 }
             }
         }
+    }
+
+    private func hrvRecoveryLabel(_ value: Double) -> String {
+        if value >= 50 { return "Good" }
+        if value >= 30 { return "Fair" }
+        return "Low"
+    }
+
+    private func hrvRecoveryColor(_ value: Double) -> Color {
+        if value >= 50 { return Theme.insightAccent }
+        if value >= 30 { return Theme.warningAccent }
+        return Theme.heartRate
     }
 }
 

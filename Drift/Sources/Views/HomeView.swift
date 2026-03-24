@@ -4,6 +4,7 @@ struct HomeView: View {
     @EnvironmentObject var healthKitService: HealthKitService
     @Binding var showPricing: Bool
     @State private var currentInsight: SleepInsight?
+    @State private var showHRVDetail = false
     private let insightService = AIInsightService()
 
     var body: some View {
@@ -48,6 +49,9 @@ struct HomeView: View {
                         }
                     }
                 }
+            }
+            .sheet(isPresented: $showHRVDetail) {
+                HRVTrendChartView(records: healthKitService.weeklySleep)
             }
         }
     }
@@ -198,8 +202,23 @@ struct HomeView: View {
                         .padding(.horizontal)
                 }
 
-                HRVCard(record: record)
-                    .padding(.horizontal)
+                Button {
+                    showHRVDetail = true
+                } label: {
+                    HRVCard(record: record)
+                }
+                .buttonStyle(.plain)
+                .padding(.horizontal)
+
+                if record.hasRespiratoryData {
+                    RespiratoryCard(record: record)
+                        .padding(.horizontal)
+                }
+
+                if record.hasRespiratoryData {
+                    RespiratoryCard(record: record)
+                        .padding(.horizontal)
+                }
 
                 Spacer(minLength: 40)
             }

@@ -15,6 +15,7 @@ struct WeeklyReport: Identifiable, Codable {
     let insights: [String]
     let trend: TrendDirection
     let hrvAverage: Double?
+    let correlations: [CorrelationInsight]
 
     enum TrendDirection: String, Codable {
         case up = "up"
@@ -42,6 +43,28 @@ struct WeeklyReport: Identifiable, Codable {
         let date: Date
         let score: Int
         let hours: String
+    }
+
+    struct CorrelationInsight: Codable, Identifiable {
+        let id: UUID
+        let factor: String
+        let description: String
+        let strength: CorrelationStrength
+        let emoji: String
+
+        enum CorrelationStrength: String, Codable {
+            case strong = "strong"
+            case moderate = "moderate"
+            case weak = "weak"
+
+            var label: String {
+                switch self {
+                case .strong: return "Strong"
+                case .moderate: return "Moderate"
+                case .weak: return "Weak"
+                }
+            }
+        }
     }
 
     var formattedDateRange: String {

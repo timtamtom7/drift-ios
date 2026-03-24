@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var healthKitService: HealthKitService
+    @StateObject private var smartWakeService = SmartWakeService()
     @State private var selectedTab = 0
     @State private var hasRequestedAuth = false
     @State private var showOnboarding = !UserDefaults.standard.bool(forKey: "onboardingCompleted")
@@ -13,6 +14,7 @@ struct ContentView: View {
                 OnboardingView(isCompleted: $showOnboarding)
             } else {
                 mainTabView
+                    .environmentObject(smartWakeService)
             }
         }
     }
@@ -51,11 +53,17 @@ struct ContentView: View {
                     }
                     .tag(3)
 
+                SmartWakeView()
+                    .tabItem {
+                        Label("Wake", systemImage: "alarm.watch")
+                    }
+                    .tag(4)
+
                 SettingsView(showPricing: $showPricing)
                     .tabItem {
                         Label("Settings", systemImage: "gearshape.fill")
                     }
-                    .tag(4)
+                    .tag(5)
             }
             .tint(Theme.lightSleep)
         }

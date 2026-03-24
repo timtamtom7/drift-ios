@@ -16,6 +16,7 @@
 		36714185CFCF9F604896E7F0 /* HealthKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EEEDECF6C65F72755D5D45 /* HealthKitService.swift */; };
 		39E2330E307F64B5A45D6716 /* WeeklyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3320D6B5A66F6084B9199F89 /* WeeklyView.swift */; };
 		41A4672C1A2DFFFA40CE8FD6 /* SleepRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDDBE6D05FC5B13AB73016D /* SleepRecord.swift */; };
+		52AA6A4F4B2B303B94AB52AB /* RespiratoryCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1DF8511F21C91BA96282B6 /* RespiratoryCard.swift */; };
 		5E4336F9026D44561F18683A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F182F680CF572F90E2AF48 /* HomeView.swift */; };
 		6116D6BAF59B763C3D3FF220 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8212DA6DDF662D7B428B97 /* Theme.swift */; };
 		66E61D7F32DF8CDDF95B0158 /* HRVCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407D264C57BAA614D28EA4DF /* HRVCard.swift */; };
@@ -50,6 +51,7 @@
 		3655206C81AF14ABB877112D /* DriftApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriftApp.swift; sourceTree = "<group>"; };
 		407D264C57BAA614D28EA4DF /* HRVCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HRVCard.swift; sourceTree = "<group>"; };
 		4A2F953D4C4EA97BD2872A32 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		4F1DF8511F21C91BA96282B6 /* RespiratoryCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RespiratoryCard.swift; sourceTree = "<group>"; };
 		51F1AAF3C973934C2582327A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		552F5AE6789DA294DDB91E8B /* Drift.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Drift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		71F182F680CF572F90E2AF48 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 				DD39A3C118D723BDD144CFEB /* InsightCard.swift */,
 				1CC5606E120922F6A17CB523 /* OnboardingView.swift */,
 				1B7C0567F2A6F6ED90797EC8 /* PricingView.swift */,
+				4F1DF8511F21C91BA96282B6 /* RespiratoryCard.swift */,
 				01A95998EE00CB87DD07C2BC /* SettingsView.swift */,
 				EC9602DCF97DB848E55CB99E /* SleepScoreRing.swift */,
 				064DDBEFCB49FF611C91EA16 /* SleepStagesBar.swift */,
@@ -274,6 +277,7 @@
 				9970C4196A31D63E36F14C01 /* InsightCard.swift in Sources */,
 				7D853763C3083AF1641F0287 /* OnboardingView.swift in Sources */,
 				238FB48AF96C022423A9FEDD /* PricingView.swift in Sources */,
+				52AA6A4F4B2B303B94AB52AB /* RespiratoryCard.swift in Sources */,
 				36291A92C95865835A45F985 /* SettingsView.swift in Sources */,
 				1E31543793320085328EF5EF /* SleepInsight.swift in Sources */,
 				41A4672C1A2DFFFA40CE8FD6 /* SleepRecord.swift in Sources */,

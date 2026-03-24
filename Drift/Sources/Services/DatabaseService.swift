@@ -17,6 +17,13 @@ class DatabaseService: ObservableObject {
     private let colHeartRateMax = SQLite.Expression<Int?>("heart_rate_max")
     private let colHeartRateAvg = SQLite.Expression<Int?>("heart_rate_avg")
     private let colHrvAvg = SQLite.Expression<Double?>("hrv_avg")
+    private let colRespiratoryRateAvg = SQLite.Expression<Double?>("respiratory_rate_avg")
+    private let colSpo2Avg = SQLite.Expression<Double?>("spo2_avg")
+    private let colSpo2DropsBelow90 = SQLite.Expression<Int?>("spo2_drops_below_90")
+    private let colWristTempAvg = SQLite.Expression<Double?>("wrist_temp_avg")
+    private let colCaffeineMg = SQLite.Expression<Double?>("caffeine_mg")
+    private let colExerciseMinutes = SQLite.Expression<Double?>("exercise_minutes")
+    private let colMindfulMinutes = SQLite.Expression<Double?>("mindful_minutes")
     private let colInsight = SQLite.Expression<String?>("insight")
 
     // Weekly Reports table
@@ -35,6 +42,7 @@ class DatabaseService: ObservableObject {
     private let colInsightsJSON = SQLite.Expression<String>("insights_json")
     private let colTrend = SQLite.Expression<String>("trend")
     private let colHrvAverage = SQLite.Expression<Double?>("hrv_average")
+    private let colCorrelationsJSON = SQLite.Expression<String>("correlations_json")
 
     init() {
         setupDatabase()
@@ -64,6 +72,13 @@ class DatabaseService: ObservableObject {
             t.column(colHeartRateMax)
             t.column(colHeartRateAvg)
             t.column(colHrvAvg)
+            t.column(colRespiratoryRateAvg)
+            t.column(colSpo2Avg)
+            t.column(colSpo2DropsBelow90)
+            t.column(colWristTempAvg)
+            t.column(colCaffeineMg)
+            t.column(colExerciseMinutes)
+            t.column(colMindfulMinutes)
             t.column(colInsight)
         })
 
@@ -82,7 +97,54 @@ class DatabaseService: ObservableObject {
             t.column(colInsightsJSON)
             t.column(colTrend)
             t.column(colHrvAverage)
+            t.column(colCorrelationsJSON)
         })
+
+        // Migrate existing tables if needed
+        try migrateTables()
+    }
+
+    private func migrateTables() throws {
+        guard let db = db else { return }
+
+        // Helper to check if a column exists in a table using raw SQL
+        func columnExists(tableName: String, columnName: String) throws -> Bool {
+            let stmt = try db.prepare("PRAGMA table_info(\(tableName))")
+            for row in stmt {
+                if let colName = row[1] as? String, colName == columnName {
+                    return true
+                }
+            }
+            return false
+        }
+
+        // Migrate sleep_records table
+        if !(try columnExists(tableName: "sleep_records", columnName: "caffeine_mg")) {
+            try db.execute("ALTER TABLE sleep_records ADD COLUMN caffeine_mg REAL")
+        }
+        if !(try columnExists(tableName: "sleep_records", columnName: "exercise_minutes")) {
+            try db.execute("ALTER TABLE sleep_records ADD COLUMN exercise_minutes REAL")
+        }
+        if !(try columnExists(tableName: "sleep_records", columnName: "mindful_minutes")) {
+            try db.execute("ALTER TABLE sleep_records ADD COLUMN mindful_minutes REAL")
+        }
+        if !(try columnExists(tableName: "sleep_records", columnName: "respiratory_rate_avg")) {
+            try db.execute("ALTER TABLE sleep_records ADD COLUMN respiratory_rate_avg REAL")
+        }
+        if !(try columnExists(tableName: "sleep_records", columnName: "spo2_avg")) {
+            try db.execute("ALTER TABLE sleep_records ADD COLUMN spo2_avg REAL")
+        }
+        if !(try columnExists(tableName: "sleep_records", columnName: "spo2_drops_below_90")) {
+            try db.execute("ALTER TABLE sleep_records ADD COLUMN spo2_drops_below_90 INTEGER")
+        }
+        if !(try columnExists(tableName: "sleep_records", columnName: "wrist_temp_avg")) {
+            try db.execute("ALTER TABLE sleep_records ADD COLUMN wrist_temp_avg REAL")
+        }
+
+        // Migrate weekly_reports table
+        if !(try columnExists(tableName: "weekly_reports", columnName: "correlations_json")) {
+            try db.execute("ALTER TABLE weekly_reports ADD COLUMN correlations_json TEXT NOT NULL DEFAULT '[]'")
+        }
     }
 
     func saveSleepRecord(_ record: SleepRecord) throws {
@@ -104,6 +166,13 @@ class DatabaseService: ObservableObject {
             colHeartRateMax <- record.heartRateMax,
             colHeartRateAvg <- record.heartRateAvg,
             colHrvAvg <- record.hrvAvg,
+            colRespiratoryRateAvg <- record.respiratoryRateAvg,
+            colSpo2Avg <- record.spo2Avg,
+            colSpo2DropsBelow90 <- record.spo2DropsBelow90,
+            colWristTempAvg <- record.wristTempAvg,
+            colCaffeineMg <- record.caffeineMg,
+            colExerciseMinutes <- record.exerciseMinutes,
+            colMindfulMinutes <- record.mindfulMinutes,
             colInsight <- record.insight
         )
 
@@ -134,6 +203,13 @@ class DatabaseService: ObservableObject {
                 heartRateMax: row[colHeartRateMax],
                 heartRateAvg: row[colHeartRateAvg],
                 hrvAvg: row[colHrvAvg],
+                respiratoryRateAvg: row[colRespiratoryRateAvg],
+                spo2Avg: row[colSpo2Avg],
+                spo2DropsBelow90: row[colSpo2DropsBelow90],
+                wristTempAvg: row[colWristTempAvg],
+                caffeineMg: row[colCaffeineMg],
+                exerciseMinutes: row[colExerciseMinutes],
+                mindfulMinutes: row[colMindfulMinutes],
                 insight: row[colInsight]
             )
             records.append(record)
@@ -185,6 +261,9 @@ class DatabaseService: ObservableObject {
         let insightsData = try encoder.encode(report.insights)
         let insightsString = String(data: insightsData, encoding: .utf8) ?? "[]"
 
+        let correlationsData = try encoder.encode(report.correlations)
+        let correlationsString = String(data: correlationsData, encoding: .utf8) ?? "[]"
+
         let insert = weeklyReports.insert(or: .replace,
             colReportId <- report.id.uuidString,
             colWeekStartDate <- report.weekStartDate,
@@ -199,7 +278,8 @@ class DatabaseService: ObservableObject {
             colWorstNightJSON <- worstNightString,
             colInsightsJSON <- insightsString,
             colTrend <- report.trend.rawValue,
-            colHrvAverage <- report.hrvAverage
+            colHrvAverage <- report.hrvAverage,
+            colCorrelationsJSON <- correlationsString
         )
 
         try db.run(insert)
@@ -231,6 +311,11 @@ class DatabaseService: ObservableObject {
                 insights = (try? decoder.decode([String].self, from: insightsData)) ?? []
             }
 
+            var correlations: [WeeklyReport.CorrelationInsight] = []
+            if let corrData = row[colCorrelationsJSON].data(using: .utf8) {
+                correlations = (try? decoder.decode([WeeklyReport.CorrelationInsight].self, from: corrData)) ?? []
+            }
+
             let trend = WeeklyReport.TrendDirection(rawValue: row[colTrend]) ?? .stable
 
             let report = WeeklyReport(
@@ -247,7 +332,8 @@ class DatabaseService: ObservableObject {
                 worstNight: worstNight,
                 insights: insights,
                 trend: trend,
-                hrvAverage: row[colHrvAverage]
+                hrvAverage: row[colHrvAverage],
+                correlations: correlations
             )
             reports.append(report)
         }

@@ -79,6 +79,9 @@ class WeeklyReportService: ObservableObject {
             avgRem: avgRem
         )
 
+        // Generate correlations
+        let correlations = generateCorrelations(from: weekRecords)
+
         // Determine trend
         let trend = determineTrend(records: records, currentWeekRecords: weekRecords)
 
@@ -96,7 +99,8 @@ class WeeklyReportService: ObservableObject {
             worstNight: worstNight,
             insights: insights,
             trend: trend,
-            hrvAverage: hrvAverage
+            hrvAverage: hrvAverage,
+            correlations: correlations
         )
 
         // Save to database
@@ -166,6 +170,161 @@ class WeeklyReportService: ObservableObject {
         }
 
         return insights
+    }
+
+    private func generateCorrelations(from records: [SleepRecord]) -> [WeeklyReport.CorrelationInsight] {
+        var correlations: [WeeklyReport.CorrelationInsight] = []
+
+        // Only generate correlations if we have enough data
+        let recordsWithCaffeine = records.filter { $0.caffeineMg != nil }
+        let recordsWithExercise = records.filter { $0.exerciseMinutes != nil }
+        let recordsWithMindful = records.filter { $0.mindfulMinutes != nil }
+
+        // Caffeine correlation
+        if recordsWithCaffeine.count >= 3 {
+            let caffeineCorrelation = analyzeCaffeineCorrelation(records: recordsWithCaffeine)
+            if let corr = caffeineCorrelation {
+                correlations.append(corr)
+            }
+        }
+
+        // Exercise correlation
+        if recordsWithExercise.count >= 3 {
+            let exerciseCorrelation = analyzeExerciseCorrelation(records: recordsWithExercise)
+            if let corr = exerciseCorrelation {
+                correlations.append(corr)
+            }
+        }
+
+        // Mindful correlation
+        if recordsWithMindful.count >= 3 {
+            let mindfulCorrelation = analyzeMindfulCorrelation(records: recordsWithMindful)
+            if let corr = mindfulCorrelation {
+                correlations.append(corr)
+            }
+        }
+
+        return correlations
+    }
+
+    private func analyzeCaffeineCorrelation(records: [SleepRecord]) -> WeeklyReport.CorrelationInsight? {
+        // Group by high caffeine (>200mg) vs low caffeine (<=200mg)
+        let highCaffeine = records.filter { ($0.caffeineMg ?? 0) > 200 }
+        let lowCaffeine = records.filter { ($0.caffeineMg ?? 0) <= 200 }
+
+        guard !highCaffeine.isEmpty && !lowCaffeine.isEmpty else { return nil }
+
+        let avgScoreHigh = highCaffeine.map { $0.score }.reduce(0, +) / highCaffeine.count
+        let avgScoreLow = lowCaffeine.map { $0.score }.reduce(0, +) / lowCaffeine.count
+
+        let diff = avgScoreLow - avgScoreHigh
+
+        if abs(diff) < 5 { return nil } // Not meaningful
+
+        let isPositive = diff > 0
+        let strength: WeeklyReport.CorrelationInsight.CorrelationStrength
+        if abs(diff) > 10 {
+            strength = .strong
+        } else if abs(diff) > 5 {
+            strength = .moderate
+        } else {
+            strength = .weak
+        }
+
+        let description: String
+        if isPositive {
+            let avgCaffeineHigh = highCaffeine.map { $0.caffeineMg ?? 0.0 }.reduce(0.0, +) / Double(highCaffeine.count)
+            description = "Your sleep scores are \(abs(diff)) points lower on days with >\(Int(avgCaffeineHigh))mg caffeine. Try limiting caffeine after 2pm."
+        } else {
+            description = "Interestingly, your sleep was slightly better on higher caffeine days. This might be because good sleep makes you more energetic the next day."
+        }
+
+        return WeeklyReport.CorrelationInsight(
+            id: UUID(),
+            factor: "Caffeine",
+            description: description,
+            strength: strength,
+            emoji: "☕"
+        )
+    }
+
+    private func analyzeExerciseCorrelation(records: [SleepRecord]) -> WeeklyReport.CorrelationInsight? {
+        // Group by exercised (>30 min) vs not exercised
+        let exercised = records.filter { ($0.exerciseMinutes ?? 0) > 30 }
+        let rested = records.filter { ($0.exerciseMinutes ?? 0) <= 30 }
+
+        guard !exercised.isEmpty && !rested.isEmpty else { return nil }
+
+        let avgScoreExercised = exercised.map { $0.score }.reduce(0, +) / exercised.count
+        let avgScoreRested = rested.map { $0.score }.reduce(0, +) / rested.count
+
+        let diff = avgScoreExercised - avgScoreRested
+
+        if abs(diff) < 5 { return nil }
+
+        let isPositive = diff > 0
+        let strength: WeeklyReport.CorrelationInsight.CorrelationStrength
+        if abs(diff) > 12 {
+            strength = .strong
+        } else if abs(diff) > 7 {
+            strength = .moderate
+        } else {
+            strength = .weak
+        }
+
+        let description: String
+        if isPositive {
+            description = "Days when you exercised for 30+ minutes led to \(abs(diff))-point higher sleep scores. Keep moving — it pays off at night."
+        } else {
+            description = "Your sleep scores were slightly lower after exercise days. Make sure you're giving yourself time to wind down after workouts."
+        }
+
+        return WeeklyReport.CorrelationInsight(
+            id: UUID(),
+            factor: "Exercise",
+            description: description,
+            strength: strength,
+            emoji: "🏃"
+        )
+    }
+
+    private func analyzeMindfulCorrelation(records: [SleepRecord]) -> WeeklyReport.CorrelationInsight? {
+        let mindful = records.filter { ($0.mindfulMinutes ?? 0) > 0 }
+        let notMindful = records.filter { ($0.mindfulMinutes ?? 0) == 0 }
+
+        guard !mindful.isEmpty && !notMindful.isEmpty else { return nil }
+
+        let avgScoreMindful = mindful.map { $0.score }.reduce(0, +) / mindful.count
+        let avgScoreNotMindful = notMindful.map { $0.score }.reduce(0, +) / notMindful.count
+
+        let diff = avgScoreMindful - avgScoreNotMindful
+
+        if abs(diff) < 5 { return nil }
+
+        let isPositive = diff > 0
+        let strength: WeeklyReport.CorrelationInsight.CorrelationStrength
+        if abs(diff) > 10 {
+            strength = .strong
+        } else if abs(diff) > 5 {
+            strength = .moderate
+        } else {
+            strength = .weak
+        }
+
+        let description: String
+        if isPositive {
+            description = "Days with mindfulness sessions led to \(abs(diff))-point higher sleep scores. Even 5 minutes of meditation helps."
+        } else {
+            description = "Mindfulness didn't show a clear benefit this week. The relationship between mindfulness and sleep often takes longer to emerge."
+        }
+
+        return WeeklyReport.CorrelationInsight(
+            id: UUID(),
+            factor: "Mindfulness",
+            description: description,
+            strength: strength,
+            emoji: "🧘"
+        )
     }
 
     private func determineTrend(records: [SleepRecord], currentWeekRecords: [SleepRecord]) -> WeeklyReport.TrendDirection {

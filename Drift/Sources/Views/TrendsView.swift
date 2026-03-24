@@ -64,6 +64,12 @@ struct TrendsView: View {
                 monthComparisonCard
                 bestWorstCard
                 trendStatsRow
+                if !correlationInsights.isEmpty {
+                    correlationSection
+                }
+                if hasRespiratoryData {
+                    respiratoryTrendCard
+                }
             }
             .padding()
         }
@@ -326,6 +332,117 @@ struct TrendsView: View {
         return trendRecords.map { $0.deepSleepMinutes }.reduce(0, +) / trendRecords.count
     }
 
+    private var hasRespiratoryData: Bool {
+        trendRecords.contains { $0.hasRespiratoryData }
+    }
+
+    private var correlationInsights: [(factor: String, emoji: String, avgScoreWith: Int, avgScoreWithout: Int, countWith: Int)] {
+        // Caffeine correlation
+        var insights: [(factor: String, emoji: String, avgScoreWith: Int, avgScoreWithout: Int, countWith: Int)] = []
+
+        let withCaffeine = trendRecords.filter { ($0.caffeineMg ?? 0) > 200 }
+        let withoutCaffeine = trendRecords.filter { ($0.caffeineMg ?? 0) <= 200 }
+
+        if withCaffeine.count >= 2 && withoutCaffeine.count >= 2 {
+            let avgWith = withCaffeine.map { $0.score }.reduce(0, +) / withCaffeine.count
+            let avgWithout = withoutCaffeine.map { $0.score }.reduce(0, +) / withoutCaffeine.count
+            insights.append((factor: "Caffeine >200mg", emoji: "☕", avgScoreWith: avgWith, avgScoreWithout: avgWithout, countWith: withCaffeine.count))
+        }
+
+        let withExercise = trendRecords.filter { ($0.exerciseMinutes ?? 0) > 30 }
+        let withoutExercise = trendRecords.filter { ($0.exerciseMinutes ?? 0) <= 30 }
+
+        if withExercise.count >= 2 && withoutExercise.count >= 2 {
+            let avgWith = withExercise.map { $0.score }.reduce(0, +) / withExercise.count
+            let avgWithout = withoutExercise.map { $0.score }.reduce(0, +) / withoutExercise.count
+            insights.append((factor: "Exercise >30min", emoji: "🏃", avgScoreWith: avgWith, avgScoreWithout: avgWithout, countWith: withExercise.count))
+        }
+
+        return insights
+    }
+
+    private var correlationSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Sleep Correlations")
+                .font(.system(size: 12, weight: .semibold))
+                .foregroundColor(Theme.textSecondary)
+                .textCase(.uppercase)
+                .tracking(1)
+
+            ForEach(correlationInsights, id: \.factor) { insight in
+                CorrelationTrendRow(
+                    factor: insight.factor,
+                    emoji: insight.emoji,
+                    avgScoreWith: insight.avgScoreWith,
+                    avgScoreWithout: insight.avgScoreWithout,
+                    countWith: insight.countWith
+                )
+            }
+        }
+        .padding()
+        .glassCard()
+    }
+
+    private var respiratoryTrendCard: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Text("Breathing Trends")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundColor(Theme.textSecondary)
+                    .textCase(.uppercase)
+                    .tracking(1)
+
+                Spacer()
+
+                Image(systemName: "lungs.fill")
+                    .foregroundColor(Theme.lightSleep)
+                    .font(.caption)
+            }
+
+            let respRecords = trendRecords.filter { $0.respiratoryRateAvg != nil }
+            let spo2Records = trendRecords.filter { $0.spo2Avg != nil }
+
+            HStack(spacing: 20) {
+                if !respRecords.isEmpty {
+                    VStack(alignment: .leading, spacing: 4) {
+                        let avgResp = respRecords.compactMap { $0.respiratoryRateAvg }.reduce(0, +) / Double(respRecords.count)
+                        Text(String(format: "%.0f", avgResp))
+                            .font(.system(size: 28, weight: .bold, design: .rounded))
+                            .foregroundColor(Theme.lightSleep)
+                        Text("avg breaths/min")
+                            .font(.system(size: 11))
+                            .foregroundColor(Theme.textSecondary)
+                        Text("\(respRecords.count) nights tracked")
+                            .font(.system(size: 10))
+                            .foregroundColor(Theme.textSecondary.opacity(0.6))
+                    }
+                }
+
+                if !spo2Records.isEmpty {
+                    VStack(alignment: .leading, spacing: 4) {
+                        let avgSpO2 = spo2Records.compactMap { $0.spo2Avg }.reduce(0, +) / Double(spo2Records.count)
+                        Text(String(format: "%.0f%%", avgSpO2))
+                            .font(.system(size: 28, weight: .bold, design: .rounded))
+                            .foregroundColor(avgSpO2 >= 95 ? Theme.insightAccent : Theme.warningAccent)
+                        Text("avg SpO₂")
+                            .font(.system(size: 11))
+                            .foregroundColor(Theme.textSecondary)
+                        let drops = spo2Records.flatMap { [$0.spo2DropsBelow90 ?? 0] }.reduce(0, +)
+                        if drops > 0 {
+                            Text("\(drops) drops <90%")
+                                .font(.system(size: 10))
+                                .foregroundColor(Theme.heartRate)
+                        }
+                    }
+                }
+
+                Spacer()
+            }
+        }
+        .padding()
+        .glassCard()
+    }
+
     private func loadTrends() async {
         isLoading = true
         defer { isLoading = false }
@@ -493,5 +610,81 @@ struct TrendStatBox: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding()
         .glassCard()
+    }
+}
+
+struct CorrelationTrendRow: View {
+    let factor: String
+    let emoji: String
+    let avgScoreWith: Int
+    let avgScoreWithout: Int
+    let countWith: Int
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 12) {
+            Text(emoji)
+                .font(.system(size: 18))
+                .frame(width: 28)
+
+            VStack(alignment: .leading, spacing: 4) {
+                Text(factor)
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundColor(Theme.textPrimary)
+
+                HStack(spacing: 12) {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("With")
+                            .font(.system(size: 10))
+                            .foregroundColor(Theme.textSecondary)
+                        HStack(spacing: 2) {
+                            Text("\(avgScoreWith)")
+                                .font(.system(size: 14, weight: .bold, design: .rounded))
+                                .foregroundColor(Theme.scoreColor(for: avgScoreWith))
+                            Text("avg")
+                                .font(.system(size: 10))
+                                .foregroundColor(Theme.textSecondary)
+                        }
+                    }
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Without")
+                            .font(.system(size: 10))
+                            .foregroundColor(Theme.textSecondary)
+                        HStack(spacing: 2) {
+                            Text("\(avgScoreWithout)")
+                                .font(.system(size: 14, weight: .bold, design: .rounded))
+                                .foregroundColor(Theme.scoreColor(for: avgScoreWithout))
+                            Text("avg")
+                                .font(.system(size: 10))
+                                .foregroundColor(Theme.textSecondary)
+                        }
+                    }
+
+                    Spacer()
+
+                    diffBadge
+                }
+            }
+        }
+        .padding(12)
+        .background(Theme.surface.opacity(0.5))
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+    }
+
+    private var diffBadge: some View {
+        let diff = avgScoreWith - avgScoreWithout
+        let isPositive = diff > 0
+
+        return HStack(spacing: 2) {
+            Image(systemName: isPositive ? "arrow.up" : "arrow.down")
+                .font(.system(size: 9, weight: .bold))
+            Text("\(abs(diff))")
+                .font(.system(size: 11, weight: .bold))
+        }
+        .foregroundColor(isPositive ? Theme.insightAccent : Theme.heartRate)
+        .padding(.horizontal, 8)
+        .padding(.vertical, 4)
+        .background((isPositive ? Theme.insightAccent : Theme.heartRate).opacity(0.15))
+        .clipShape(RoundedRectangle(cornerRadius: 6))
     }
 }

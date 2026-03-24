@@ -6,6 +6,8 @@ struct WeeklyReportView: View {
     @State private var reports: [WeeklyReport] = []
     @State private var selectedReport: WeeklyReport?
     @State private var isLoading = false
+    @State private var showShareSheet = false
+    @State private var reportToShare: WeeklyReport?
 
     var body: some View {
         NavigationStack {
@@ -37,6 +39,11 @@ struct WeeklyReportView: View {
                             .foregroundColor(Theme.deepSleep)
                     }
                     .disabled(reportService.isGenerating)
+                }
+            }
+            .sheet(isPresented: $showShareSheet) {
+                if let report = reportToShare {
+                    WeeklyReportShareView(report: report)
                 }
             }
         }
@@ -127,6 +134,18 @@ struct WeeklyReportView: View {
                 Spacer()
 
                 trendBadge(report.trend)
+
+                Button {
+                    reportToShare = report
+                    showShareSheet = true
+                } label: {
+                    Image(systemName: "square.and.arrow.up")
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundColor(Theme.deepSleep)
+                        .padding(8)
+                        .background(Theme.deepSleep.opacity(0.15))
+                        .clipShape(Circle())
+                }
             }
 
             // Main score
@@ -209,6 +228,24 @@ struct WeeklyReportView: View {
                 }
             }
 
+            // Correlations
+            if !report.correlations.isEmpty {
+                Divider()
+                    .background(Theme.surface)
+
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("What Affects Your Sleep")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundColor(Theme.textSecondary)
+                        .textCase(.uppercase)
+                        .tracking(1)
+
+                    ForEach(report.correlations) { correlation in
+                        CorrelationRow(correlation: correlation)
+                    }
+                }
+            }
+
             // Insights
             if !report.insights.isEmpty {
                 Divider()
@@ -288,6 +325,299 @@ struct WeeklyReportView: View {
             (trend == .up ? Theme.insightAccent : (trend == .down ? Theme.heartRate : Theme.warningAccent)).opacity(0.15)
         )
         .clipShape(RoundedRectangle(cornerRadius: 8))
+    }
+}
+
+// MARK: - Correlation Row
+
+struct CorrelationRow: View {
+    let correlation: WeeklyReport.CorrelationInsight
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 10) {
+            Text(correlation.emoji)
+                .font(.system(size: 16))
+                .frame(width: 24)
+
+            VStack(alignment: .leading, spacing: 2) {
+                HStack(spacing: 6) {
+                    Text(correlation.factor)
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundColor(Theme.textPrimary)
+
+                    strengthBadge
+                }
+
+                Text(correlation.description)
+                    .font(.system(size: 12))
+                    .foregroundColor(Theme.textSecondary)
+                    .lineSpacing(2)
+            }
+
+            Spacer()
+        }
+        .padding(10)
+        .background(strengthColor.opacity(0.08))
+        .clipShape(RoundedRectangle(cornerRadius: 10))
+    }
+
+    private var strengthBadge: some View {
+        Text(correlation.strength.label)
+            .font(.system(size: 9, weight: .bold))
+            .foregroundColor(.white)
+            .padding(.horizontal, 6)
+            .padding(.vertical, 2)
+            .background(strengthColor)
+            .clipShape(Capsule())
+    }
+
+    private var strengthColor: Color {
+        switch correlation.strength {
+        case .strong: return Theme.heartRate
+        case .moderate: return Theme.warningAccent
+        case .weak: return Theme.insightAccent
+        }
+    }
+}
+
+// MARK: - Weekly Report Share Card
+
+struct WeeklyReportShareView: View {
+    let report: WeeklyReport
+    @Environment(\.dismiss) private var dismiss
+    @State private var renderedImage: UIImage?
+
+    var body: some View {
+        NavigationStack {
+            ZStack {
+                LinearGradient(
+                    colors: [Theme.background, Theme.backgroundGradient],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                .ignoresSafeArea()
+
+                VStack(spacing: 20) {
+                    WeeklyReportShareCard(report: report)
+                        .padding(.horizontal)
+
+                    if let image = renderedImage {
+                        ShareLink(
+                            item: Image(uiImage: image),
+                            preview: SharePreview("Weekly Sleep Report", image: Image(uiImage: image))
+                        ) {
+                            HStack(spacing: 8) {
+                                Image(systemName: "square.and.arrow.up")
+                                Text("Share Report")
+                            }
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 16)
+                            .background(
+                                LinearGradient(
+                                    colors: [Theme.deepSleep, Theme.remSleep],
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                )
+                            )
+                            .clipShape(RoundedRectangle(cornerRadius: 16))
+                        }
+                        .padding(.horizontal)
+                    }
+
+                    Text("Tap the share button above to save or send your weekly sleep report")
+                        .font(.system(size: 11))
+                        .foregroundColor(Theme.textSecondary.opacity(0.6))
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal)
+                }
+                .padding(.vertical)
+            }
+            .navigationTitle("Share Report")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundColor(Theme.textSecondary)
+                    }
+                }
+            }
+        }
+    }
+}
+
+struct WeeklyReportShareCard: View {
+    let report: WeeklyReport
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            // Header
+            HStack {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Drift")
+                        .font(.system(size: 11, weight: .semibold))
+                        .foregroundColor(Theme.textSecondary)
+                    Text("Weekly Sleep Report")
+                        .font(.system(size: 18, weight: .bold))
+                        .foregroundColor(.white)
+                    Text(report.formattedDateRange)
+                        .font(.system(size: 12))
+                        .foregroundColor(Theme.textSecondary)
+                }
+
+                Spacer()
+
+                trendBadgeView
+            }
+
+            Divider()
+                .background(Color.white.opacity(0.1))
+
+            // Score
+            HStack(spacing: 20) {
+                VStack(spacing: 4) {
+                    Text("\(report.averageScore)")
+                        .font(.system(size: 52, weight: .bold, design: .rounded))
+                        .foregroundColor(Theme.scoreColor(for: report.averageScore))
+
+                    Text("Sleep Score")
+                        .font(.system(size: 12))
+                        .foregroundColor(Theme.textSecondary)
+                }
+
+                Spacer()
+
+                VStack(alignment: .trailing, spacing: 8) {
+                    HStack(spacing: 4) {
+                        Image(systemName: "clock.fill")
+                            .font(.system(size: 11))
+                            .foregroundColor(Theme.lightSleep)
+                        Text(String(format: "%.1fh avg", report.averageHours))
+                            .font(.system(size: 13, weight: .medium))
+                            .foregroundColor(.white)
+                    }
+
+                    HStack(spacing: 4) {
+                        Image(systemName: "moon.fill")
+                            .font(.system(size: 11))
+                            .foregroundColor(Theme.deepSleep)
+                        Text("\(report.totalNights) nights tracked")
+                            .font(.system(size: 13, weight: .medium))
+                            .foregroundColor(.white)
+                    }
+
+                    if let hrv = report.hrvAverage {
+                        HStack(spacing: 4) {
+                            Image(systemName: "waveform.path.ecg")
+                                .font(.system(size: 11))
+                                .foregroundColor(Theme.insightAccent)
+                            Text(String(format: "%.0f ms HRV", hrv))
+                                .font(.system(size: 13, weight: .medium))
+                                .foregroundColor(.white)
+                        }
+                    }
+                }
+            }
+
+            // Stages
+            HStack(spacing: 8) {
+                StageBadge(label: "Deep", value: "\(report.averageDeepMinutes)m", color: Theme.deepSleep)
+                StageBadge(label: "REM", value: "\(report.averageRemMinutes)m", color: Theme.remSleep)
+                Spacer()
+            }
+
+            // Insights preview
+            if !report.insights.isEmpty {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("💡 \(report.insights.first ?? "")")
+                        .font(.system(size: 11))
+                        .foregroundColor(Theme.textSecondary.opacity(0.8))
+                        .lineLimit(2)
+
+                    if report.insights.count > 1 {
+                        Text("+\(report.insights.count - 1) more insights in the app")
+                            .font(.system(size: 10))
+                            .foregroundColor(Theme.textSecondary.opacity(0.5))
+                    }
+                }
+            }
+        }
+        .padding(20)
+        .background(
+            LinearGradient(
+                colors: [Color(hex: "0d1020"), Color(hex: "141628")],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        )
+        .clipShape(RoundedRectangle(cornerRadius: 20))
+        .overlay(
+            RoundedRectangle(cornerRadius: 20)
+                .stroke(Color.white.opacity(0.08), lineWidth: 1)
+        )
+        .background(
+            GeometryReader { geo in
+                Color.clear.preference(
+                    key: ShareCardSizePreferenceKey.self,
+                    value: geo.size
+                )
+            }
+        )
+        .onPreferenceChange(ShareCardSizePreferenceKey.self) { size in
+            // Card rendered
+        }
+    }
+
+    private var trendBadgeView: some View {
+        VStack(spacing: 2) {
+            Text(report.trend.emoji)
+                .font(.system(size: 16, weight: .bold))
+            Text(report.trend.description)
+                .font(.system(size: 9, weight: .medium))
+                .foregroundColor(Theme.textSecondary)
+        }
+        .foregroundColor(report.trend == .up ? Theme.insightAccent : (report.trend == .down ? Theme.heartRate : Theme.warningAccent))
+        .padding(.horizontal, 8)
+        .padding(.vertical, 6)
+        .background(
+            (report.trend == .up ? Theme.insightAccent : (report.trend == .down ? Theme.heartRate : Theme.warningAccent)).opacity(0.15)
+        )
+        .clipShape(RoundedRectangle(cornerRadius: 10))
+    }
+}
+
+struct StageBadge: View {
+    let label: String
+    let value: String
+    let color: Color
+
+    var body: some View {
+        HStack(spacing: 4) {
+            Circle()
+                .fill(color)
+                .frame(width: 6, height: 6)
+            Text(label)
+                .font(.system(size: 10))
+                .foregroundColor(Theme.textSecondary)
+            Text(value)
+                .font(.system(size: 10, weight: .semibold))
+                .foregroundColor(.white)
+        }
+        .padding(.horizontal, 8)
+        .padding(.vertical, 4)
+        .background(color.opacity(0.15))
+        .clipShape(Capsule())
+    }
+}
+
+struct ShareCardSizePreferenceKey: PreferenceKey {
+    static let defaultValue: CGSize = .zero
+    static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
+        value = nextValue()
     }
 }
 
