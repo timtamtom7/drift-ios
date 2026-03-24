@@ -53,17 +53,23 @@ struct ContentView: View {
                     }
                     .tag(3)
 
+                FamilyView()
+                    .tabItem {
+                        Label("Family", systemImage: "person.3.fill")
+                    }
+                    .tag(4)
+
                 SmartWakeView()
                     .tabItem {
                         Label("Wake", systemImage: "alarm.watch")
                     }
-                    .tag(4)
+                    .tag(5)
 
                 SettingsView(showPricing: $showPricing)
                     .tabItem {
                         Label("Settings", systemImage: "gearshape.fill")
                     }
-                    .tag(5)
+                    .tag(6)
             }
             .tint(Theme.lightSleep)
         }
