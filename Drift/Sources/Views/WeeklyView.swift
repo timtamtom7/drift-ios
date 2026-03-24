@@ -21,6 +21,7 @@ struct WeeklyView: View {
                             emptyView
                         } else {
                             weekOverview
+                            HRVTrendCard(records: healthKitService.weeklySleep)
                             weeklyCards
                         }
                     }

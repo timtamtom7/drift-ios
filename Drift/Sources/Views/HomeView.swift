@@ -198,6 +198,9 @@ struct HomeView: View {
                         .padding(.horizontal)
                 }
 
+                HRVCard(record: record)
+                    .padding(.horizontal)
+
                 Spacer(minLength: 40)
             }
             .padding(.top)

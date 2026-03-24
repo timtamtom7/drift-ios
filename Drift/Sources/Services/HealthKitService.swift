@@ -22,7 +22,8 @@ class HealthKitService: ObservableObject {
 
         let typesToRead: Set<HKSampleType> = [
             HKObjectType.categoryType(forIdentifier: .sleepAnalysis)!,
-            HKObjectType.quantityType(forIdentifier: .heartRate)!
+            HKObjectType.quantityType(forIdentifier: .heartRate)!,
+            HKObjectType.quantityType(forIdentifier: .heartRateVariabilitySDNN)!
         ]
 
         do {
@@ -80,10 +81,57 @@ class HealthKitService: ObservableObject {
         weeklySleep = records.sorted { $0.date < $1.date }
     }
 
+    func fetchSleepForDate(startOfDay: Date, endOfDay: Date) async throws -> SleepRecord? {
+        return try await fetchSleep(from: startOfDay, to: endOfDay)
+    }
+
+    func fetchHRVData(from startDate: Date, to endDate: Date) async throws -> HRVData? {
+        guard let hrvType = HKQuantityType.quantityType(forIdentifier: .heartRateVariabilitySDNN) else {
+            return nil
+        }
+
+        return try await withCheckedThrowingContinuation { continuation in
+            let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
+
+            let query = HKSampleQuery(
+                sampleType: hrvType,
+                predicate: predicate,
+                limit: HKObjectQueryNoLimit,
+                sortDescriptors: [NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: true)]
+            ) { _, samples, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                    return
+                }
+
+                guard let quantitySamples = samples as? [HKQuantitySample], !quantitySamples.isEmpty else {
+                    continuation.resume(returning: nil)
+                    return
+                }
+
+                let unit = HKUnit.secondUnit(with: .milli)
+                let values = quantitySamples.map { $0.quantity.doubleValue(for: unit) }
+
+                let minVal = values.min() ?? 0
+                let maxVal = values.max() ?? 0
+                let avgVal = values.reduce(0, +) / Double(values.count)
+
+                continuation.resume(returning: HRVData(
+                    min: minVal,
+                    max: maxVal,
+                    avg: avgVal,
+                    sampleCount: values.count
+                ))
+            }
+
+            self.healthStore.execute(query)
+        }
+    }
+
     private func fetchSleep(from startDate: Date, to endDate: Date) async throws -> SleepRecord? {
         let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
 
-        return try await withCheckedThrowingContinuation { continuation in
+        let samples: [HKCategorySample]? = try await withCheckedThrowingContinuation { continuation in
             let query = HKSampleQuery(
                 sampleType: sleepType,
                 predicate: predicate,
@@ -94,23 +142,49 @@ class HealthKitService: ObservableObject {
                     continuation.resume(throwing: error)
                     return
                 }
-
                 guard let samples = samples as? [HKCategorySample], !samples.isEmpty else {
                     continuation.resume(returning: nil)
                     return
                 }
-
-                let record = self.processSleepSamples(samples, date: startDate)
-                continuation.resume(returning: record)
+                continuation.resume(returning: samples)
             }
-
             self.healthStore.execute(query)
         }
+
+        guard let samples = samples, !samples.isEmpty else { return nil }
+
+        // Process sleep stages synchronously
+        let stages = processStages(from: samples)
+
+        let totalDuration = stages.reduce(0) { $0 + $1.duration }
+
+        let fellAsleepTime = stages.first?.startDate ?? startDate
+        let wokeUpTime = stages.last?.endDate ?? endDate
+
+        let score = calculateSleepScore(stages: stages, totalDuration: totalDuration)
+
+        // Fetch heart rate and HRV concurrently
+        async let heartRateTask: (min: Int, max: Int, avg: Int)? = fetchHeartRateData(from: fellAsleepTime, to: wokeUpTime)
+        async let hrvTask: HRVData? = fetchHRVData(from: fellAsleepTime, to: wokeUpTime)
+
+        let (heartRateResult, hrvResult) = await (try? await heartRateTask, try? await hrvTask)
+
+        return SleepRecord(
+            date: startDate,
+            totalDuration: totalDuration,
+            fellAsleepTime: fellAsleepTime,
+            wokeUpTime: wokeUpTime,
+            stages: stages,
+            score: score,
+            heartRateMin: heartRateResult?.min,
+            heartRateMax: heartRateResult?.max,
+            heartRateAvg: heartRateResult?.avg,
+            hrvAvg: hrvResult?.avg,
+            insight: nil
+        )
     }
 
-    private func processSleepSamples(_ samples: [HKCategorySample], date: Date) -> SleepRecord {
-        var stages: [SleepStage] = []
-
+    private func processStages(from samples: [HKCategorySample]) -> [SleepStage] {
         let sleepPhaseMap: [Int: SleepStageType] = [
             HKCategoryValueSleepAnalysis.asleepUnspecified.rawValue: .light,
             HKCategoryValueSleepAnalysis.asleepCore.rawValue: .light,
@@ -119,74 +193,21 @@ class HealthKitService: ObservableObject {
             HKCategoryValueSleepAnalysis.awake.rawValue: .awake
         ]
 
+        var stages: [SleepStage] = []
         for sample in samples {
-            let value = sample.value
             let stageType: SleepStageType
-
-            if let mapped = sleepPhaseMap[value] {
+            if let mapped = sleepPhaseMap[sample.value] {
                 stageType = mapped
-            } else if #available(iOS 26.0, *) {
-                if value == HKCategoryValueSleepAnalysis.asleepUnspecified.rawValue {
-                    stageType = .light
-                } else {
-                    stageType = .light
-                }
             } else {
                 stageType = .light
             }
-
-            let stage = SleepStage(
+            stages.append(SleepStage(
                 type: stageType,
                 startDate: sample.startDate,
                 endDate: sample.endDate
-            )
-            stages.append(stage)
+            ))
         }
-
-        stages.sort { $0.startDate < $1.startDate }
-
-        let totalDuration = stages.reduce(0) { $0 + $1.duration }
-
-        let fellAsleepTime: Date
-        if let first = stages.first {
-            fellAsleepTime = first.startDate
-        } else {
-            fellAsleepTime = date
-        }
-
-        let wokeUpTime: Date
-        if let last = stages.last {
-            wokeUpTime = last.endDate
-        } else {
-            wokeUpTime = date
-        }
-
-        let score = calculateSleepScore(stages: stages, totalDuration: totalDuration)
-
-        var heartRateMin: Int?
-        var heartRateMax: Int?
-        var heartRateAvg: Int?
-
-        Task {
-            if let hrData = try? await fetchHeartRateData(from: fellAsleepTime, to: wokeUpTime) {
-                heartRateMin = hrData.min
-                heartRateMax = hrData.max
-                heartRateAvg = hrData.avg
-            }
-        }
-
-        return SleepRecord(
-            date: date,
-            totalDuration: totalDuration,
-            fellAsleepTime: fellAsleepTime,
-            wokeUpTime: wokeUpTime,
-            stages: stages,
-            score: score,
-            heartRateMin: heartRateMin,
-            heartRateMax: heartRateMax,
-            heartRateAvg: heartRateAvg,
-            insight: nil
-        )
+        return stages.sorted { $0.startDate < $1.startDate }
     }
 
     private func calculateSleepScore(stages: [SleepStage], totalDuration: TimeInterval) -> Int {
@@ -253,4 +274,13 @@ class HealthKitService: ObservableObject {
             self.healthStore.execute(query)
         }
     }
+}
+
+// MARK: - HRV Data
+
+struct HRVData {
+    let min: Double
+    let max: Double
+    let avg: Double
+    let sampleCount: Int
 }

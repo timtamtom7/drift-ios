@@ -16,7 +16,25 @@ class DatabaseService: ObservableObject {
     private let colHeartRateMin = SQLite.Expression<Int?>("heart_rate_min")
     private let colHeartRateMax = SQLite.Expression<Int?>("heart_rate_max")
     private let colHeartRateAvg = SQLite.Expression<Int?>("heart_rate_avg")
+    private let colHrvAvg = SQLite.Expression<Double?>("hrv_avg")
     private let colInsight = SQLite.Expression<String?>("insight")
+
+    // Weekly Reports table
+    private let weeklyReports = Table("weekly_reports")
+    private let colReportId = SQLite.Expression<String>("id")
+    private let colWeekStartDate = SQLite.Expression<Date>("week_start_date")
+    private let colWeekEndDate = SQLite.Expression<Date>("week_end_date")
+    private let colGeneratedAt = SQLite.Expression<Date>("generated_at")
+    private let colAverageScore = SQLite.Expression<Int>("average_score")
+    private let colAverageHours = SQLite.Expression<Double>("average_hours")
+    private let colTotalNights = SQLite.Expression<Int>("total_nights")
+    private let colAverageDeepMinutes = SQLite.Expression<Int>("average_deep_minutes")
+    private let colAverageRemMinutes = SQLite.Expression<Int>("average_rem_minutes")
+    private let colBestNightJSON = SQLite.Expression<String?>("best_night_json")
+    private let colWorstNightJSON = SQLite.Expression<String?>("worst_night_json")
+    private let colInsightsJSON = SQLite.Expression<String>("insights_json")
+    private let colTrend = SQLite.Expression<String>("trend")
+    private let colHrvAverage = SQLite.Expression<Double?>("hrv_average")
 
     init() {
         setupDatabase()
@@ -45,7 +63,25 @@ class DatabaseService: ObservableObject {
             t.column(colHeartRateMin)
             t.column(colHeartRateMax)
             t.column(colHeartRateAvg)
+            t.column(colHrvAvg)
             t.column(colInsight)
+        })
+
+        try db?.run(weeklyReports.create(ifNotExists: true) { t in
+            t.column(colReportId, primaryKey: true)
+            t.column(colWeekStartDate)
+            t.column(colWeekEndDate)
+            t.column(colGeneratedAt)
+            t.column(colAverageScore)
+            t.column(colAverageHours)
+            t.column(colTotalNights)
+            t.column(colAverageDeepMinutes)
+            t.column(colAverageRemMinutes)
+            t.column(colBestNightJSON)
+            t.column(colWorstNightJSON)
+            t.column(colInsightsJSON)
+            t.column(colTrend)
+            t.column(colHrvAverage)
         })
     }
 
@@ -67,6 +103,7 @@ class DatabaseService: ObservableObject {
             colHeartRateMin <- record.heartRateMin,
             colHeartRateMax <- record.heartRateMax,
             colHeartRateAvg <- record.heartRateAvg,
+            colHrvAvg <- record.hrvAvg,
             colInsight <- record.insight
         )
 
@@ -96,6 +133,7 @@ class DatabaseService: ObservableObject {
                 heartRateMin: row[colHeartRateMin],
                 heartRateMax: row[colHeartRateMax],
                 heartRateAvg: row[colHeartRateAvg],
+                hrvAvg: row[colHrvAvg],
                 insight: row[colInsight]
             )
             records.append(record)
@@ -119,5 +157,107 @@ class DatabaseService: ObservableObject {
         guard let db = db else { return }
         let record = sleepRecords.filter(colId == recordId.uuidString)
         try db.run(record.delete())
+    }
+
+    // MARK: - Weekly Reports
+
+    func saveWeeklyReport(_ report: WeeklyReport) throws {
+        guard let db = db else { return }
+
+        let encoder = JSONEncoder()
+
+        let bestNightString: String?
+        if let best = report.bestNight {
+            let data = try encoder.encode(best)
+            bestNightString = String(data: data, encoding: .utf8)
+        } else {
+            bestNightString = nil
+        }
+
+        let worstNightString: String?
+        if let worst = report.worstNight {
+            let data = try encoder.encode(worst)
+            worstNightString = String(data: data, encoding: .utf8)
+        } else {
+            worstNightString = nil
+        }
+
+        let insightsData = try encoder.encode(report.insights)
+        let insightsString = String(data: insightsData, encoding: .utf8) ?? "[]"
+
+        let insert = weeklyReports.insert(or: .replace,
+            colReportId <- report.id.uuidString,
+            colWeekStartDate <- report.weekStartDate,
+            colWeekEndDate <- report.weekEndDate,
+            colGeneratedAt <- report.generatedAt,
+            colAverageScore <- report.averageScore,
+            colAverageHours <- report.averageHours,
+            colTotalNights <- report.totalNights,
+            colAverageDeepMinutes <- report.averageDeepMinutes,
+            colAverageRemMinutes <- report.averageRemMinutes,
+            colBestNightJSON <- bestNightString,
+            colWorstNightJSON <- worstNightString,
+            colInsightsJSON <- insightsString,
+            colTrend <- report.trend.rawValue,
+            colHrvAverage <- report.hrvAverage
+        )
+
+        try db.run(insert)
+    }
+
+    func fetchWeeklyReports() throws -> [WeeklyReport] {
+        guard let db = db else { return [] }
+
+        let decoder = JSONDecoder()
+        var reports: [WeeklyReport] = []
+
+        for row in try db.prepare(weeklyReports.order(colWeekStartDate.desc)) {
+            guard let reportId = UUID(uuidString: row[colReportId]) else { continue }
+
+            var bestNight: WeeklyReport.NightSummary?
+            if let bestString = row[colBestNightJSON],
+               let bestData = bestString.data(using: .utf8) {
+                bestNight = try? decoder.decode(WeeklyReport.NightSummary.self, from: bestData)
+            }
+
+            var worstNight: WeeklyReport.NightSummary?
+            if let worstString = row[colWorstNightJSON],
+               let worstData = worstString.data(using: .utf8) {
+                worstNight = try? decoder.decode(WeeklyReport.NightSummary.self, from: worstData)
+            }
+
+            var insights: [String] = []
+            if let insightsData = row[colInsightsJSON].data(using: .utf8) {
+                insights = (try? decoder.decode([String].self, from: insightsData)) ?? []
+            }
+
+            let trend = WeeklyReport.TrendDirection(rawValue: row[colTrend]) ?? .stable
+
+            let report = WeeklyReport(
+                id: reportId,
+                weekStartDate: row[colWeekStartDate],
+                weekEndDate: row[colWeekEndDate],
+                generatedAt: row[colGeneratedAt],
+                averageScore: row[colAverageScore],
+                averageHours: row[colAverageHours],
+                totalNights: row[colTotalNights],
+                averageDeepMinutes: row[colAverageDeepMinutes],
+                averageRemMinutes: row[colAverageRemMinutes],
+                bestNight: bestNight,
+                worstNight: worstNight,
+                insights: insights,
+                trend: trend,
+                hrvAverage: row[colHrvAverage]
+            )
+            reports.append(report)
+        }
+
+        return reports
+    }
+
+    func fetchWeeklyReport(for weekStartDate: Date) throws -> WeeklyReport? {
+        let allReports = try fetchWeeklyReports()
+        let calendar = Calendar.current
+        return allReports.first { calendar.isDate($0.weekStartDate, inSameDayAs: weekStartDate) }
     }
 }

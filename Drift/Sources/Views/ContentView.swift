@@ -39,17 +39,23 @@ struct ContentView: View {
                     }
                     .tag(1)
 
+                TrendsView()
+                    .tabItem {
+                        Label("Trends", systemImage: "chart.line.uptrend.xyaxis")
+                    }
+                    .tag(2)
+
                 HistoryView()
                     .tabItem {
                         Label("History", systemImage: "clock.fill")
                     }
-                    .tag(2)
+                    .tag(3)
 
                 SettingsView(showPricing: $showPricing)
                     .tabItem {
                         Label("Settings", systemImage: "gearshape.fill")
                     }
-                    .tag(3)
+                    .tag(4)
             }
             .tint(Theme.lightSleep)
         }

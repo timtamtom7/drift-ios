@@ -11,6 +11,7 @@ struct SleepRecord: Identifiable, Codable {
     let heartRateMin: Int?
     let heartRateMax: Int?
     let heartRateAvg: Int?
+    let hrvAvg: Double?
     let insight: String?
 
     var totalHours: Double {
@@ -50,6 +51,7 @@ struct SleepRecord: Identifiable, Codable {
         heartRateMin: Int? = nil,
         heartRateMax: Int? = nil,
         heartRateAvg: Int? = nil,
+        hrvAvg: Double? = nil,
         insight: String? = nil
     ) {
         self.id = id
@@ -62,6 +64,7 @@ struct SleepRecord: Identifiable, Codable {
         self.heartRateMin = heartRateMin
         self.heartRateMax = heartRateMax
         self.heartRateAvg = heartRateAvg
+        self.hrvAvg = hrvAvg
         self.insight = insight
     }
 }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0B8F91E1CEA892557CDF107D /* SleepScoreRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9602DCF97DB848E55CB99E /* SleepScoreRing.swift */; };
+		0DCC2F1D79B9AD43D8C5E901 /* WeeklyReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70DC9B83A99DE62A4C7E512 /* WeeklyReportView.swift */; };
 		0FA7FFE408C85D2C1B17FFA6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F807D101A4DEE12019634849 /* Assets.xcassets */; };
 		1E31543793320085328EF5EF /* SleepInsight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEAE76CDFB4B43D230F250E /* SleepInsight.swift */; };
 		238FB48AF96C022423A9FEDD /* PricingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C0567F2A6F6ED90797EC8 /* PricingView.swift */; };
@@ -17,15 +18,21 @@
 		41A4672C1A2DFFFA40CE8FD6 /* SleepRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDDBE6D05FC5B13AB73016D /* SleepRecord.swift */; };
 		5E4336F9026D44561F18683A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F182F680CF572F90E2AF48 /* HomeView.swift */; };
 		6116D6BAF59B763C3D3FF220 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8212DA6DDF662D7B428B97 /* Theme.swift */; };
+		66E61D7F32DF8CDDF95B0158 /* HRVCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407D264C57BAA614D28EA4DF /* HRVCard.swift */; };
 		6D0A95960ED9528AA3BEB38D /* AIInsightService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B2C652916FEC6A7A567ACD /* AIInsightService.swift */; };
 		6E5376A2D250BE21B5BF5ADE /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2F953D4C4EA97BD2872A32 /* HistoryView.swift */; };
 		700DD6A36875841F648C5288 /* SleepStagesBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064DDBEFCB49FF611C91EA16 /* SleepStagesBar.swift */; };
+		74CE8AF194C1C067F0ECE49E /* WeeklyReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECE3F1BDF14E3E7C8551E6A /* WeeklyReport.swift */; };
 		77FE91D877BCAE0892C79022 /* SleepStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814E7C9DD9A7CAF4B6667657 /* SleepStage.swift */; };
 		7D853763C3083AF1641F0287 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CC5606E120922F6A17CB523 /* OnboardingView.swift */; };
+		81068B96CC247D11DCBB9FCB /* SmartWakeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6CA0EE00375008F020C2EB /* SmartWakeView.swift */; };
 		82E0A663A993CCD8F5C23F4B /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11165945BD81B7D48FA8C44 /* DatabaseService.swift */; };
+		85203CD5CC2DD620023B758A /* WeeklyReportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB44B3A0A21A46931E7C7AEC /* WeeklyReportService.swift */; };
 		9970C4196A31D63E36F14C01 /* InsightCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD39A3C118D723BDD144CFEB /* InsightCard.swift */; };
 		9CE5318CFB8DD56F5B3148A3 /* ErrorStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F098FA456347820D95C5EEDC /* ErrorStateView.swift */; };
+		A06948946AE840A33EB97CC1 /* SmartWakeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9103A7D6E8D2F430655635E1 /* SmartWakeService.swift */; };
 		B7C800DB386E1CD39DA16A68 /* DriftApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3655206C81AF14ABB877112D /* DriftApp.swift */; };
+		BF5BCD6E8F163CBD249D695F /* TrendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99E371898F02C71492560B6 /* TrendsView.swift */; };
 		D52B4E7A7BDADB404C2E76B8 /* AppStoreContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FF8F314CA04E3DB5A7A7A2 /* AppStoreContent.swift */; };
 		D6378B6176EE9737AB2F207A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F1AAF3C973934C2582327A /* ContentView.swift */; };
 		EA461A149CE8C537C738BF00 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 1A169E20A2F2BB337064EF46 /* SQLite */; };
@@ -36,24 +43,31 @@
 		064DDBEFCB49FF611C91EA16 /* SleepStagesBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepStagesBar.swift; sourceTree = "<group>"; };
 		07B2C652916FEC6A7A567ACD /* AIInsightService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIInsightService.swift; sourceTree = "<group>"; };
 		185A7E3991F0BE37BAB698CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		1B6CA0EE00375008F020C2EB /* SmartWakeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartWakeView.swift; sourceTree = "<group>"; };
 		1B7C0567F2A6F6ED90797EC8 /* PricingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricingView.swift; sourceTree = "<group>"; };
 		1CC5606E120922F6A17CB523 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		3320D6B5A66F6084B9199F89 /* WeeklyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyView.swift; sourceTree = "<group>"; };
 		3655206C81AF14ABB877112D /* DriftApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriftApp.swift; sourceTree = "<group>"; };
+		407D264C57BAA614D28EA4DF /* HRVCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HRVCard.swift; sourceTree = "<group>"; };
 		4A2F953D4C4EA97BD2872A32 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		51F1AAF3C973934C2582327A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		552F5AE6789DA294DDB91E8B /* Drift.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Drift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		71F182F680CF572F90E2AF48 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		74FF8F314CA04E3DB5A7A7A2 /* AppStoreContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreContent.swift; sourceTree = "<group>"; };
 		7E8212DA6DDF662D7B428B97 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		7ECE3F1BDF14E3E7C8551E6A /* WeeklyReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyReport.swift; sourceTree = "<group>"; };
 		7FEAE76CDFB4B43D230F250E /* SleepInsight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepInsight.swift; sourceTree = "<group>"; };
 		814E7C9DD9A7CAF4B6667657 /* SleepStage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepStage.swift; sourceTree = "<group>"; };
+		9103A7D6E8D2F430655635E1 /* SmartWakeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartWakeService.swift; sourceTree = "<group>"; };
+		AB44B3A0A21A46931E7C7AEC /* WeeklyReportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyReportService.swift; sourceTree = "<group>"; };
+		B99E371898F02C71492560B6 /* TrendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendsView.swift; sourceTree = "<group>"; };
 		C11165945BD81B7D48FA8C44 /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
 		DD39A3C118D723BDD144CFEB /* InsightCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightCard.swift; sourceTree = "<group>"; };
 		DDDDBE6D05FC5B13AB73016D /* SleepRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepRecord.swift; sourceTree = "<group>"; };
 		EC9602DCF97DB848E55CB99E /* SleepScoreRing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepScoreRing.swift; sourceTree = "<group>"; };
 		F098FA456347820D95C5EEDC /* ErrorStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorStateView.swift; sourceTree = "<group>"; };
 		F4EEEDECF6C65F72755D5D45 /* HealthKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitService.swift; sourceTree = "<group>"; };
+		F70DC9B83A99DE62A4C7E512 /* WeeklyReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyReportView.swift; sourceTree = "<group>"; };
 		F807D101A4DEE12019634849 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FBBFEBC6B17ED5D85544AF8E /* Drift.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Drift.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -94,12 +108,16 @@
 				F098FA456347820D95C5EEDC /* ErrorStateView.swift */,
 				4A2F953D4C4EA97BD2872A32 /* HistoryView.swift */,
 				71F182F680CF572F90E2AF48 /* HomeView.swift */,
+				407D264C57BAA614D28EA4DF /* HRVCard.swift */,
 				DD39A3C118D723BDD144CFEB /* InsightCard.swift */,
 				1CC5606E120922F6A17CB523 /* OnboardingView.swift */,
 				1B7C0567F2A6F6ED90797EC8 /* PricingView.swift */,
 				01A95998EE00CB87DD07C2BC /* SettingsView.swift */,
 				EC9602DCF97DB848E55CB99E /* SleepScoreRing.swift */,
 				064DDBEFCB49FF611C91EA16 /* SleepStagesBar.swift */,
+				1B6CA0EE00375008F020C2EB /* SmartWakeView.swift */,
+				B99E371898F02C71492560B6 /* TrendsView.swift */,
+				F70DC9B83A99DE62A4C7E512 /* WeeklyReportView.swift */,
 				3320D6B5A66F6084B9199F89 /* WeeklyView.swift */,
 			);
 			path = Views;
@@ -131,6 +149,7 @@
 				7FEAE76CDFB4B43D230F250E /* SleepInsight.swift */,
 				DDDDBE6D05FC5B13AB73016D /* SleepRecord.swift */,
 				814E7C9DD9A7CAF4B6667657 /* SleepStage.swift */,
+				7ECE3F1BDF14E3E7C8551E6A /* WeeklyReport.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -141,6 +160,8 @@
 				07B2C652916FEC6A7A567ACD /* AIInsightService.swift */,
 				C11165945BD81B7D48FA8C44 /* DatabaseService.swift */,
 				F4EEEDECF6C65F72755D5D45 /* HealthKitService.swift */,
+				9103A7D6E8D2F430655635E1 /* SmartWakeService.swift */,
+				AB44B3A0A21A46931E7C7AEC /* WeeklyReportService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -246,6 +267,7 @@
 				82E0A663A993CCD8F5C23F4B /* DatabaseService.swift in Sources */,
 				B7C800DB386E1CD39DA16A68 /* DriftApp.swift in Sources */,
 				9CE5318CFB8DD56F5B3148A3 /* ErrorStateView.swift in Sources */,
+				66E61D7F32DF8CDDF95B0158 /* HRVCard.swift in Sources */,
 				36714185CFCF9F604896E7F0 /* HealthKitService.swift in Sources */,
 				6E5376A2D250BE21B5BF5ADE /* HistoryView.swift in Sources */,
 				5E4336F9026D44561F18683A /* HomeView.swift in Sources */,
@@ -258,7 +280,13 @@
 				0B8F91E1CEA892557CDF107D /* SleepScoreRing.swift in Sources */,
 				77FE91D877BCAE0892C79022 /* SleepStage.swift in Sources */,
 				700DD6A36875841F648C5288 /* SleepStagesBar.swift in Sources */,
+				A06948946AE840A33EB97CC1 /* SmartWakeService.swift in Sources */,
+				81068B96CC247D11DCBB9FCB /* SmartWakeView.swift in Sources */,
 				6116D6BAF59B763C3D3FF220 /* Theme.swift in Sources */,
+				BF5BCD6E8F163CBD249D695F /* TrendsView.swift in Sources */,
+				74CE8AF194C1C067F0ECE49E /* WeeklyReport.swift in Sources */,
+				85203CD5CC2DD620023B758A /* WeeklyReportService.swift in Sources */,
+				0DCC2F1D79B9AD43D8C5E901 /* WeeklyReportView.swift in Sources */,
 				39E2330E307F64B5A45D6716 /* WeeklyView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

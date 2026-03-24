@@ -2,6 +2,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @EnvironmentObject var healthKitService: HealthKitService
+    @EnvironmentObject var smartWakeService: SmartWakeService
     @Binding var showPricing: Bool
     @AppStorage("notificationsEnabled") private var notificationsEnabled = true
     @AppStorage("hapticFeedback") private var hapticFeedback = true
@@ -21,6 +22,40 @@ struct SettingsView: View {
                         healthKitStatusRow
                     } header: {
                         Text("HealthKit")
+                            .foregroundColor(Theme.textSecondary)
+                    }
+                    .listRowBackground(Theme.surfaceGlass)
+
+                    Section {
+                        NavigationLink {
+                            SmartWakeView()
+                        } label: {
+                            HStack {
+                                SettingsRow(
+                                    icon: "alarm.watch",
+                                    iconColor: Theme.deepSleep,
+                                    title: "Smart Wake"
+                                )
+                                Spacer()
+                                if let nextAlarm = smartWakeService.nextAlarm(), nextAlarm.isEnabled {
+                                    Text(nextAlarm.formattedTime)
+                                        .font(.system(size: 12))
+                                        .foregroundColor(Theme.insightAccent)
+                                }
+                            }
+                        }
+
+                        NavigationLink {
+                            WeeklyReportView()
+                        } label: {
+                            SettingsRow(
+                                icon: "doc.text.fill",
+                                iconColor: Theme.remSleep,
+                                title: "Weekly Reports"
+                            )
+                        }
+                    } header: {
+                        Text("Sleep Features")
                             .foregroundColor(Theme.textSecondary)
                     }
                     .listRowBackground(Theme.surfaceGlass)
