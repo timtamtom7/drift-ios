@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-enum SleepStageType: String, Codable, CaseIterable {
+enum SleepStageType: String, Codable, CaseIterable, Hashable {
     case deep = "Deep"
     case rem = "REM"
     case light = "Light"
@@ -40,7 +40,7 @@ enum SleepStageType: String, Codable, CaseIterable {
     }
 }
 
-struct SleepStage: Identifiable, Codable {
+struct SleepStage: Identifiable, Codable, Hashable {
     let id: UUID
     let type: SleepStageType
     let startDate: Date

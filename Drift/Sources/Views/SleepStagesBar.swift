@@ -2,22 +2,44 @@ import SwiftUI
 
 struct SleepStagesBar: View {
     let stages: [SleepStage]
+    @State private var isExpanded = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Sleep Stages")
-                .font(.system(size: 12, weight: .semibold))
-                .foregroundColor(Theme.textSecondary)
-                .textCase(.uppercase)
-                .tracking(1)
+            HStack {
+                Text("Sleep Stages")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundColor(Theme.textSecondary)
+                    .textCase(.uppercase)
+                    .tracking(1)
+
+                Spacer()
+
+                if !stages.isEmpty {
+                    Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
+                        .font(.caption)
+                        .foregroundColor(Theme.textSecondary)
+                }
+            }
 
             if stages.isEmpty {
                 emptyBar
             } else {
                 stackedBar
+
+                if isExpanded {
+                    expandedStagesView
+                        .transition(.opacity.combined(with: .move(edge: .top)))
+                }
             }
 
             stageLegend
+        }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            withAnimation(.spring(duration: 0.3)) {
+                isExpanded.toggle()
+            }
         }
     }
 
@@ -72,7 +94,56 @@ struct SleepStagesBar: View {
         }
     }
 
+    private var expandedStagesView: some View {
+        VStack(spacing: 8) {
+            ForEach(groupedStages, id: \.type) { group in
+                HStack {
+                    Circle()
+                        .fill(group.type.color)
+                        .frame(width: 10, height: 10)
+
+                    Text(group.type.rawValue)
+                        .font(.subheadline)
+                        .foregroundColor(Theme.textPrimary)
+
+                    Spacer()
+
+                    Text("\(group.durationMinutes)m")
+                        .font(.system(.subheadline, design: .monospaced).bold())
+                        .foregroundColor(group.type.color)
+
+                    Text(String(format: "%.0f%%", group.percentage))
+                        .font(.caption)
+                        .foregroundColor(Theme.textSecondary)
+                        .frame(width: 40, alignment: .trailing)
+                }
+                .padding(.vertical, 4)
+            }
+        }
+        .padding(.top, 8)
+    }
+
+    private var groupedStages: [StageGroup] {
+        let total = totalStageDuration > 0 ? totalStageDuration : 1
+        return SleepStageType.allCases.compactMap { type in
+            let minutes = minutesForStage(type)
+            guard minutes > 0 else { return nil }
+            let duration = TimeInterval(minutes * 60)
+            return StageGroup(
+                type: type,
+                durationMinutes: minutes,
+                percentage: (duration / total) * 100
+            )
+        }
+    }
+
     private func minutesForStage(_ type: SleepStageType) -> Int {
         stages.filter { $0.type == type }.reduce(0) { $0 + $1.durationMinutes }
     }
+}
+
+struct StageGroup {
+    let type: SleepStageType
+    let durationMinutes: Int
+    let percentage: Double
 }

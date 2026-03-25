@@ -5,6 +5,7 @@ struct HomeView: View {
     @Binding var showPricing: Bool
     @State private var currentInsight: SleepInsight?
     @State private var showHRVDetail = false
+    @State private var selectedRecord: SleepRecord?
     private let insightService = AIInsightService()
 
     var body: some View {
@@ -53,6 +54,9 @@ struct HomeView: View {
             .sheet(isPresented: $showHRVDetail) {
                 HRVTrendChartView(records: healthKitService.weeklySleep)
             }
+            .navigationDestination(item: $selectedRecord) { record in
+                SleepScoreDetailView(record: record)
+            }
         }
     }
 
@@ -71,45 +75,80 @@ struct HomeView: View {
                 )
 
             VStack(spacing: 12) {
-                Text("Unlock Your Sleep Data")
-                    .font(.title3.bold())
-                    .foregroundColor(Theme.textPrimary)
+                if healthKitService.authorizationDenied {
+                    Text("Health Access Denied")
+                        .font(.title3.bold())
+                        .foregroundColor(Theme.textPrimary)
 
-                Text("Drift needs access to your HealthKit sleep data to show your nightly insights.")
-                    .font(.subheadline)
-                    .foregroundColor(Theme.textSecondary)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, 40)
+                    Text("You denied HealthKit access. Enable it in Settings → Privacy → Health → Drift to see your sleep insights.")
+                        .font(.subheadline)
+                        .foregroundColor(Theme.textSecondary)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 40)
+                } else {
+                    Text("Unlock Your Sleep Data")
+                        .font(.title3.bold())
+                        .foregroundColor(Theme.textPrimary)
+
+                    Text("Drift needs access to your HealthKit sleep data to show your nightly insights.")
+                        .font(.subheadline)
+                        .foregroundColor(Theme.textSecondary)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 40)
+                }
             }
 
-            Button {
-                Task {
-                    await healthKitService.requestAuthorization()
-                    if healthKitService.isAuthorized {
-                        await healthKitService.fetchTodaySleep()
-                        await healthKitService.fetchWeeklySleep()
+            if !healthKitService.authorizationDenied {
+                Button {
+                    Task {
+                        await healthKitService.requestAuthorization()
+                        if healthKitService.isAuthorized {
+                            await healthKitService.fetchTodaySleep()
+                            await healthKitService.fetchWeeklySleep()
+                        }
                     }
-                }
-            } label: {
-                HStack(spacing: 8) {
-                    Image(systemName: "heart.fill")
-                    Text("Allow Health Access")
-                }
-                .font(.headline)
-                .foregroundColor(.white)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 16)
-                .background(
-                    LinearGradient(
-                        colors: [Theme.deepSleep, Theme.remSleep],
-                        startPoint: .leading,
-                        endPoint: .trailing
+                } label: {
+                    HStack(spacing: 8) {
+                        Image(systemName: "heart.fill")
+                        Text("Allow Health Access")
+                    }
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 16)
+                    .background(
+                        LinearGradient(
+                            colors: [Theme.deepSleep, Theme.remSleep],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
                     )
-                )
-                .clipShape(RoundedRectangle(cornerRadius: 16))
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                }
+                .padding(.horizontal, 32)
+                .padding(.top, 8)
+            } else {
+                Link(destination: URL(string: UIApplication.openSettingsURLString)!) {
+                    HStack(spacing: 8) {
+                        Image(systemName: "gear")
+                        Text("Open Settings")
+                    }
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 16)
+                    .background(
+                        LinearGradient(
+                            colors: [Theme.deepSleep, Theme.remSleep],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                }
+                .padding(.horizontal, 32)
+                .padding(.top, 8)
             }
-            .padding(.horizontal, 32)
-            .padding(.top, 8)
 
             Spacer()
         }
@@ -178,8 +217,13 @@ struct HomeView: View {
             VStack(spacing: 20) {
                 greetingHeader
 
-                SleepScoreRing(score: record.score)
-                    .frame(height: 200)
+                Button {
+                    selectedRecord = record
+                } label: {
+                    SleepScoreRing(score: record.score)
+                        .frame(height: 200)
+                }
+                .buttonStyle(.plain)
 
                 statsRow(record: record)
 

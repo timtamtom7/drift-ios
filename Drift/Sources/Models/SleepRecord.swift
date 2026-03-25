@@ -1,6 +1,6 @@
 import Foundation
 
-struct SleepRecord: Identifiable, Codable {
+struct SleepRecord: Identifiable, Codable, Hashable {
     let id: UUID
     let date: Date
     let totalDuration: TimeInterval
@@ -23,6 +23,10 @@ struct SleepRecord: Identifiable, Codable {
 
     var totalHours: Double {
         totalDuration / 3600.0
+    }
+
+    var totalMinutes: Int {
+        Int(totalDuration / 60)
     }
 
     var totalHoursFormatted: String {

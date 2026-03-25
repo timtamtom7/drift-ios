@@ -12,6 +12,7 @@ class HealthKitService: ObservableObject {
     @Published var isLoading = false
     @Published var hrvDataUnavailable = false
     @Published var respiratoryDataUnavailable = false
+    @Published var authorizationDenied = false
 
     private let sleepType = HKObjectType.categoryType(forIdentifier: .sleepAnalysis)!
 
@@ -36,9 +37,25 @@ class HealthKitService: ObservableObject {
 
         do {
             try await healthStore.requestAuthorization(toShare: [], read: typesToRead)
-            isAuthorized = true
+
+            // Check actual authorization status after user interaction
+            let sleepStatus = healthStore.authorizationStatus(for: sleepType)
+            switch sleepStatus {
+            case .sharingAuthorized, .notDetermined:
+                // User authorized OR not yet decided (will prompt again)
+                isAuthorized = true
+                authorizationDenied = false
+            case .sharingDenied:
+                // User explicitly denied access
+                isAuthorized = false
+                authorizationDenied = true
+            @unknown default:
+                isAuthorized = true
+            }
         } catch {
             print("HealthKit authorization failed: \(error)")
+            isAuthorized = false
+            authorizationDenied = false
         }
     }
 

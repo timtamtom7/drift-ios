@@ -3,7 +3,7 @@ import SwiftUI
 struct SleepScoreRing: View {
     let score: Int
     @State private var animatedScore: Int = 0
-
+    @State private var ringRotation: Double = -90
     var body: some View {
         ZStack {
             Circle()
@@ -18,7 +18,7 @@ struct SleepScoreRing: View {
                     scoreGradient,
                     style: StrokeStyle(lineWidth: 16, lineCap: .round)
                 )
-                .rotationEffect(.degrees(-90))
+                .rotationEffect(.degrees(ringRotation))
                 .shadow(color: scoreColor.opacity(0.5), radius: 10, x: 0, y: 0)
 
             VStack(spacing: 4) {
@@ -38,9 +38,20 @@ struct SleepScoreRing: View {
         .padding(40)
         .onAppear {
             animatedScore = score
+            withAnimation(.spring(duration: 1.4, bounce: 0.3)) {
+                ringRotation = 270
+            }
         }
         .onChange(of: score) { _, newValue in
             animatedScore = newValue
+            withAnimation(.spring(duration: 1.2, bounce: 0.3)) {
+                ringRotation = -90
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                withAnimation(.spring(duration: 1.4, bounce: 0.3)) {
+                    ringRotation = 270
+                }
+            }
         }
     }
 
