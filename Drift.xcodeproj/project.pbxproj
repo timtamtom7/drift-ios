@@ -11,8 +11,10 @@
 		0B8F91E1CEA892557CDF107D /* SleepScoreRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9602DCF97DB848E55CB99E /* SleepScoreRing.swift */; };
 		0DCC2F1D79B9AD43D8C5E901 /* WeeklyReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70DC9B83A99DE62A4C7E512 /* WeeklyReportView.swift */; };
 		0FA7FFE408C85D2C1B17FFA6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F807D101A4DEE12019634849 /* Assets.xcassets */; };
+		0FAB38F1A7613788826E8532 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = C60D3C3B61B73C1456CF689E /* SQLite */; };
 		115B2066E0E834FB00D636E0 /* WithingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E7C2F74D85738AA13CC2F5 /* WithingsService.swift */; };
 		1E31543793320085328EF5EF /* SleepInsight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEAE76CDFB4B43D230F250E /* SleepInsight.swift */; };
+		20CE6304522DE99121737290 /* MacHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AB8F5E2DFD16959BFCF5064 /* MacHomeView.swift */; };
 		238FB48AF96C022423A9FEDD /* PricingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C0567F2A6F6ED90797EC8 /* PricingView.swift */; };
 		3394A101E7FD449749C2F148 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB53D49C71B5C8E43B6451ED /* Assets.xcassets */; };
 		36291A92C95865835A45F985 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A95998EE00CB87DD07C2BC /* SettingsView.swift */; };
@@ -41,6 +43,7 @@
 		9970C4196A31D63E36F14C01 /* InsightCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD39A3C118D723BDD144CFEB /* InsightCard.swift */; };
 		9CE5318CFB8DD56F5B3148A3 /* ErrorStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F098FA456347820D95C5EEDC /* ErrorStateView.swift */; };
 		A06948946AE840A33EB97CC1 /* SmartWakeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9103A7D6E8D2F430655635E1 /* SmartWakeService.swift */; };
+		A299F8FE87211509DC7AA1BA /* DriftMacApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B226C519F9D8DEFBD02D70F /* DriftMacApp.swift */; };
 		AC921DC57A274F4B06A2CC53 /* DeepSleepAnalysis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A6E6A9EF605DBB8EF8C7C7 /* DeepSleepAnalysis.swift */; };
 		AFD8B76FB33368C4AC6C7043 /* DriftWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D97E53CF7EBF9C32E15678 /* DriftWatchApp.swift */; };
 		B5EA181376C055A27F085AC5 /* SleepQualityMeterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9021B0FD9EBD6AE275B136 /* SleepQualityMeterView.swift */; };
@@ -78,9 +81,12 @@
 		4F1DF8511F21C91BA96282B6 /* RespiratoryCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RespiratoryCard.swift; sourceTree = "<group>"; };
 		51F1AAF3C973934C2582327A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		552F5AE6789DA294DDB91E8B /* Drift.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Drift.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B226C519F9D8DEFBD02D70F /* DriftMacApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriftMacApp.swift; sourceTree = "<group>"; };
 		6C9021B0FD9EBD6AE275B136 /* SleepQualityMeterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepQualityMeterView.swift; sourceTree = "<group>"; };
 		71F182F680CF572F90E2AF48 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		74FF8F314CA04E3DB5A7A7A2 /* AppStoreContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreContent.swift; sourceTree = "<group>"; };
+		76E10B6392D6F308FC0F4A38 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		7AB8F5E2DFD16959BFCF5064 /* MacHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacHomeView.swift; sourceTree = "<group>"; };
 		7E8212DA6DDF662D7B428B97 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		7ECE3F1BDF14E3E7C8551E6A /* WeeklyReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyReport.swift; sourceTree = "<group>"; };
 		7FEAE76CDFB4B43D230F250E /* SleepInsight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepInsight.swift; sourceTree = "<group>"; };
@@ -89,6 +95,7 @@
 		82F890D0D8EF54848AD9A92C /* SleepScoreDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepScoreDetailView.swift; sourceTree = "<group>"; };
 		88B218511AB4F1A3B144FEAE /* WatchContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchContentView.swift; sourceTree = "<group>"; };
 		9103A7D6E8D2F430655635E1 /* SmartWakeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartWakeService.swift; sourceTree = "<group>"; };
+		979B8A986214D9C5E8977736 /* DriftMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DriftMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8A67E062A98CDF8D93049B5 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		AB44B3A0A21A46931E7C7AEC /* WeeklyReportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyReportService.swift; sourceTree = "<group>"; };
 		B2421772A78BE8ABBEC35B77 /* FamilyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyView.swift; sourceTree = "<group>"; };
@@ -99,6 +106,7 @@
 		DB53D49C71B5C8E43B6451ED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DD39A3C118D723BDD144CFEB /* InsightCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightCard.swift; sourceTree = "<group>"; };
 		DDDDBE6D05FC5B13AB73016D /* SleepRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepRecord.swift; sourceTree = "<group>"; };
+		DFDFBCBD7D307B76FD2918F2 /* DriftMac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DriftMac.entitlements; sourceTree = "<group>"; };
 		E7EC613A85F7B06A4C67D0D9 /* SleepCommunityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepCommunityView.swift; sourceTree = "<group>"; };
 		EC9602DCF97DB848E55CB99E /* SleepScoreRing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepScoreRing.swift; sourceTree = "<group>"; };
 		F098FA456347820D95C5EEDC /* ErrorStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorStateView.swift; sourceTree = "<group>"; };
@@ -118,6 +126,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3A0C62F6D80E21AB7596B0AE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0FAB38F1A7613788826E8532 /* SQLite in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -125,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				552F5AE6789DA294DDB91E8B /* Drift.app */,
+				979B8A986214D9C5E8977736 /* DriftMac.app */,
 				8004F6D56C092B13C2E68A2A /* DriftWatch.app */,
 			);
 			name = Products;
@@ -135,8 +152,10 @@
 			children = (
 				3AD4B1502C63CCD22104EFE1 /* Resources */,
 				A748F5E845F09C76A570580B /* Resources */,
+				A26C32E3F93B6560F5997E3C /* Resources */,
 				B6495617EF8C84B0E9FE27AF /* Sources */,
 				1FD1E161834CE6E8AF7C6127 /* Sources */,
+				37B557F606B47C74014BDBEA /* Sources */,
 				0EA67573775347F2DA7F1A99 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -144,11 +163,11 @@
 		1FD1E161834CE6E8AF7C6127 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				D5D97E53CF7EBF9C32E15678 /* DriftWatchApp.swift */,
-				88B218511AB4F1A3B144FEAE /* WatchContentView.swift */,
+				5B226C519F9D8DEFBD02D70F /* DriftMacApp.swift */,
+				7AB8F5E2DFD16959BFCF5064 /* MacHomeView.swift */,
 			);
 			name = Sources;
-			path = DriftWatch/Sources;
+			path = DriftMac/Sources;
 			sourceTree = "<group>";
 		};
 		2827ED89339EA2CB790B02A8 /* Views */ = {
@@ -177,6 +196,16 @@
 				3320D6B5A66F6084B9199F89 /* WeeklyView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		37B557F606B47C74014BDBEA /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				D5D97E53CF7EBF9C32E15678 /* DriftWatchApp.swift */,
+				88B218511AB4F1A3B144FEAE /* WatchContentView.swift */,
+			);
+			name = Sources;
+			path = DriftWatch/Sources;
 			sourceTree = "<group>";
 		};
 		3A5B9C61A13C7E7DD19B13D8 /* App */ = {
@@ -230,15 +259,25 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
-		A748F5E845F09C76A570580B /* Resources */ = {
+		A26C32E3F93B6560F5997E3C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
 				DB53D49C71B5C8E43B6451ED /* Assets.xcassets */,
 				2F85D6B00DDB0034A3133787 /* DriftWatch.entitlements */,
-				308CEA5337E187E719E35090 /* Info.plist */,
+				76E10B6392D6F308FC0F4A38 /* Info.plist */,
 			);
 			name = Resources;
 			path = DriftWatch/Resources;
+			sourceTree = "<group>";
+		};
+		A748F5E845F09C76A570580B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				DFDFBCBD7D307B76FD2918F2 /* DriftMac.entitlements */,
+				308CEA5337E187E719E35090 /* Info.plist */,
+			);
+			name = Resources;
+			path = DriftMac/Resources;
 			sourceTree = "<group>";
 		};
 		B6495617EF8C84B0E9FE27AF /* Sources */ = {
@@ -289,6 +328,25 @@
 			productReference = 8004F6D56C092B13C2E68A2A /* DriftWatch.app */;
 			productType = "com.apple.product-type.application";
 		};
+		49F7DB477E33B8531AF37C8C /* DriftMac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 52B4F9478D92E41FB9CEE705 /* Build configuration list for PBXNativeTarget "DriftMac" */;
+			buildPhases = (
+				3FE7E1AB0C40B41ED1BFABE4 /* Sources */,
+				3A0C62F6D80E21AB7596B0AE /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DriftMac;
+			packageProductDependencies = (
+				C60D3C3B61B73C1456CF689E /* SQLite */,
+			);
+			productName = DriftMac;
+			productReference = 979B8A986214D9C5E8977736 /* DriftMac.app */;
+			productType = "com.apple.product-type.application";
+		};
 		CAEDCE34417A91D973F68377 /* Drift */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F406649AF13D92F90944A7F1 /* Build configuration list for PBXNativeTarget "Drift" */;
@@ -322,6 +380,10 @@
 						DevelopmentTeam = "";
 						ProvisioningStyle = Automatic;
 					};
+					49F7DB477E33B8531AF37C8C = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
 					CAEDCE34417A91D973F68377 = {
 						DevelopmentTeam = "";
 						ProvisioningStyle = Automatic;
@@ -344,6 +406,7 @@
 			projectRoot = "";
 			targets = (
 				CAEDCE34417A91D973F68377 /* Drift */,
+				49F7DB477E33B8531AF37C8C /* DriftMac */,
 				14822A20A4034DFE8438897F /* DriftWatch */,
 			);
 		};
@@ -426,6 +489,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3FE7E1AB0C40B41ED1BFABE4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A299F8FE87211509DC7AA1BA /* DriftMacApp.swift in Sources */,
+				20CE6304522DE99121737290 /* MacHomeView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
@@ -486,7 +558,7 @@
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 6.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Release;
@@ -505,6 +577,32 @@
 			};
 			name = Release;
 		};
+		6A88B77C7AF8257A7A81F0C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				CODE_SIGN_ENTITLEMENTS = DriftMac/Resources/DriftMac.entitlements;
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
+				INFOPLIST_FILE = DriftMac/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.drift.app.macos;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
 		7C190047C04497DC44F492BC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -519,6 +617,32 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.drift.app;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		8A576EDE831B325124C1C562 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				CODE_SIGN_ENTITLEMENTS = DriftMac/Resources/DriftMac.entitlements;
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
+				INFOPLIST_FILE = DriftMac/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.drift.app.macos;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};
@@ -600,7 +724,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 6.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Debug;
@@ -625,6 +749,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		52B4F9478D92E41FB9CEE705 /* Build configuration list for PBXNativeTarget "DriftMac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6A88B77C7AF8257A7A81F0C8 /* Debug */,
+				8A576EDE831B325124C1C562 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		68F4AD629CB425B82407650A /* Build configuration list for PBXProject "Drift" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -667,6 +800,11 @@
 
 /* Begin XCSwiftPackageProductDependency section */
 		1A169E20A2F2BB337064EF46 /* SQLite */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 71C0A8CD05AFA41D13D0BAF0 /* XCRemoteSwiftPackageReference "SQLite.swift" */;
+			productName = SQLite;
+		};
+		C60D3C3B61B73C1456CF689E /* SQLite */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 71C0A8CD05AFA41D13D0BAF0 /* XCRemoteSwiftPackageReference "SQLite.swift" */;
 			productName = SQLite;
