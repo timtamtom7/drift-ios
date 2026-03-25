@@ -53,6 +53,7 @@
 		C866FBD9C92EF7B2E9D8FD13 /* OuraService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF126C669AEA5ECA2859DDC /* OuraService.swift */; };
 		D52B4E7A7BDADB404C2E76B8 /* AppStoreContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FF8F314CA04E3DB5A7A7A2 /* AppStoreContent.swift */; };
 		D6378B6176EE9737AB2F207A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F1AAF3C973934C2582327A /* ContentView.swift */; };
+		D7EDA79E743D2E02B12468C4 /* IPadHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8842580F494A65D410104AE /* IPadHomeView.swift */; };
 		DC70217AD0ABA8DA41F685EC /* HealthExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B19977ACAE13D097F92A88 /* HealthExportService.swift */; };
 		E81935BD553F38C09D21578E /* SleepInsightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442E9CC2AA9F6C108919081C /* SleepInsightsView.swift */; };
 		EA461A149CE8C537C738BF00 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 1A169E20A2F2BB337064EF46 /* SQLite */; };
@@ -96,6 +97,7 @@
 		88B218511AB4F1A3B144FEAE /* WatchContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchContentView.swift; sourceTree = "<group>"; };
 		9103A7D6E8D2F430655635E1 /* SmartWakeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartWakeService.swift; sourceTree = "<group>"; };
 		979B8A986214D9C5E8977736 /* DriftMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DriftMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A8842580F494A65D410104AE /* IPadHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPadHomeView.swift; sourceTree = "<group>"; };
 		A8A67E062A98CDF8D93049B5 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		AB44B3A0A21A46931E7C7AEC /* WeeklyReportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyReportService.swift; sourceTree = "<group>"; };
 		B2421772A78BE8ABBEC35B77 /* FamilyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyView.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 				71F182F680CF572F90E2AF48 /* HomeView.swift */,
 				407D264C57BAA614D28EA4DF /* HRVCard.swift */,
 				DD39A3C118D723BDD144CFEB /* InsightCard.swift */,
+				A8842580F494A65D410104AE /* IPadHomeView.swift */,
 				1CC5606E120922F6A17CB523 /* OnboardingView.swift */,
 				1B7C0567F2A6F6ED90797EC8 /* PricingView.swift */,
 				4F1DF8511F21C91BA96282B6 /* RespiratoryCard.swift */,
@@ -461,6 +464,7 @@
 				36714185CFCF9F604896E7F0 /* HealthKitService.swift in Sources */,
 				6E5376A2D250BE21B5BF5ADE /* HistoryView.swift in Sources */,
 				5E4336F9026D44561F18683A /* HomeView.swift in Sources */,
+				D7EDA79E743D2E02B12468C4 /* IPadHomeView.swift in Sources */,
 				9970C4196A31D63E36F14C01 /* InsightCard.swift in Sources */,
 				8F04A913021D375937865DC0 /* NotificationService.swift in Sources */,
 				7D853763C3083AF1641F0287 /* OnboardingView.swift in Sources */,
