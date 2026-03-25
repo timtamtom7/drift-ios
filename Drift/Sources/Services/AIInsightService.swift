@@ -462,6 +462,292 @@ actor AIInsightService {
 
         return insights
     }
+
+    // MARK: - R7: Deep Sleep Analysis
+
+    /// Generate comprehensive R7 deep sleep analysis
+    func generateDeepAnalysis(for record: SleepRecord) async -> DeepSleepAnalysis {
+        let sleepDebt = calculateSleepDebt(for: record)
+        let bestWindow = detectBestSleepWindow()
+        let patterns = detectPatterns(for: record)
+        let weeklyTrend = calculateWeeklyTrend()
+        let stageSummaries = generateStageSummaries()
+        let snoringRisk = assessSnoringRisk(for: record)
+        let breathing = assessBreathingRegularity(for: record)
+        let predictedScore = predictNextScore()
+
+        return DeepSleepAnalysis(
+            sleepDebtMinutes: sleepDebt,
+            bestSleepWindow: bestWindow,
+            detectedPatterns: patterns,
+            weeklyTrend: weeklyTrend,
+            recommendations: generateRecommendations(for: record),
+            sleepStagesSummary: stageSummaries,
+            snoringRisk: snoringRisk,
+            breathingRegularity: breathing,
+            predictedNextScore: predictedScore
+        )
+    }
+
+    /// Calculate sleep debt compared to 8hr (480min) target
+    private func calculateSleepDebt(for record: SleepRecord) -> Int {
+        let targetMinutes = 480
+        let actualMinutes = record.totalMinutes
+        return max(0, targetMinutes - actualMinutes)
+    }
+
+    /// Detect the best sleep window based on historical data
+    private func detectBestSleepWindow() -> String? {
+        guard historicalRecords.count >= 3 else { return nil }
+
+        let formatter = DateFormatter()
+        formatter.dateFormat = "ha"
+
+        var sleepWindows: [String: [Int]] = [:]
+
+        for record in historicalRecords {
+            let sleepHour = Calendar.current.component(.hour, from: record.fellAsleepTime)
+            let window: String
+            if sleepHour >= 21 || sleepHour < 3 {
+                window = "Early (9pm-midnight)"
+            } else if sleepHour >= 3 && sleepHour < 6 {
+                window = "Late (3am-6am)"
+            } else {
+                window = "Average"
+            }
+
+            sleepWindows[window, default: []].append(record.score)
+        }
+
+        // Find best window by average score
+        var bestWindow: String?
+        var bestAvg = 0
+        for (window, scores) in sleepWindows {
+            let avg = scores.reduce(0, +) / max(1, scores.count)
+            if avg > bestAvg {
+                bestAvg = avg
+                bestWindow = window
+            }
+        }
+
+        // Format as time range
+        if bestWindow == "Early (9pm-midnight)" {
+            return "10pm-6am"
+        } else if bestWindow == "Late (3am-6am)" {
+            return "12am-8am"
+        }
+        return "11pm-7am"
+    }
+
+    /// Detect patterns in sleep behavior
+    private func detectPatterns(for record: SleepRecord) -> [String] {
+        var patterns: [String] = []
+
+        guard historicalRecords.count >= 3 else { return patterns }
+
+        let recent = Array(historicalRecords.suffix(5))
+
+        // Weekend vs weekday consistency
+        let weekdayRecords = recent.filter { Calendar.current.isDateInWeekend($0.date) == false }
+        let weekendRecords = recent.filter { Calendar.current.isDateInWeekend($0.date) }
+
+        if !weekdayRecords.isEmpty && !weekendRecords.isEmpty {
+            let weekdayAvg = weekdayRecords.map { $0.score }.reduce(0, +) / weekdayRecords.count
+            let weekendAvg = weekendRecords.map { $0.score }.reduce(0, +) / weekendRecords.count
+
+            if weekendAvg > weekdayAvg + 10 {
+                patterns.append("Sleep better on weekends")
+            } else if weekdayAvg > weekendAvg + 10 {
+                patterns.append("Weekday sleep is better")
+            } else {
+                patterns.append("Consistent sleep quality")
+            }
+        }
+
+        // Deep sleep consistency
+        let deepScores = recent.map { $0.deepSleepMinutes }
+        if deepScores.count >= 2 {
+            let variance = deepScores.reduce(0) { $0 + abs($1 - (deepScores.reduce(0, +) / deepScores.count)) }
+            if variance < 10 {
+                patterns.append("Stable deep sleep")
+            } else {
+                patterns.append("Variable deep sleep")
+            }
+        }
+
+        // Early riser or night owl
+        let sleepHours = recent.map { Calendar.current.component(.hour, from: $0.fellAsleepTime) }
+        let avgHour = sleepHours.reduce(0, +) / sleepHours.count
+        if avgHour >= 23 || avgHour < 1 {
+            patterns.append("Night owl tendency")
+        } else if avgHour >= 21 && avgHour < 23 {
+            patterns.append("Early sleeper")
+        }
+
+        return patterns
+    }
+
+    /// Calculate weekly trend
+    private func calculateWeeklyTrend() -> String {
+        guard historicalRecords.count >= 4 else { return "Not enough data" }
+
+        let recent = Array(historicalRecords.suffix(7))
+        guard recent.count >= 4 else { return "Not enough data" }
+
+        let halfPoint = recent.count / 2
+        let firstHalf = Array(recent.prefix(halfPoint))
+        let secondHalf = Array(recent.suffix(halfPoint))
+
+        let firstAvg = firstHalf.map { $0.score }.reduce(0, +) / firstHalf.count
+        let secondAvg = secondHalf.map { $0.score }.reduce(0, +) / secondHalf.count
+
+        let diff = secondAvg - firstAvg
+        if diff > 5 { return "Improving" }
+        if diff < -5 { return "Declining" }
+        return "Stable"
+    }
+
+    /// Generate sleep stage summaries
+    private func generateStageSummaries() -> [SleepStageSummary] {
+        guard historicalRecords.count >= 3 else { return [] }
+
+        let deepAvg = historicalRecords.map { $0.deepSleepMinutes }.reduce(0, +) / historicalRecords.count
+        let remAvg = historicalRecords.map { $0.remSleepMinutes }.reduce(0, +) / historicalRecords.count
+        let lightAvg = historicalRecords.map { $0.lightSleepMinutes }.reduce(0, +) / historicalRecords.count
+
+        return [
+            SleepStageSummary(stage: "deep", avgMinutes: deepAvg, trend: deepAvg >= 90 ? "above_avg" : (deepAvg < 60 ? "below_avg" : "normal")),
+            SleepStageSummary(stage: "rem", avgMinutes: remAvg, trend: remAvg >= 90 ? "above_avg" : (remAvg < 60 ? "below_avg" : "normal")),
+            SleepStageSummary(stage: "light", avgMinutes: lightAvg, trend: "normal")
+        ]
+    }
+
+    /// Assess snoring risk based on respiratory data
+    private func assessSnoringRisk(for record: SleepRecord) -> String? {
+        guard let spo2 = record.spo2Avg else { return nil }
+
+        // Low SpO2 indicates potential snoring/breathing issues
+        if spo2 < 93 { return "High" }
+        if spo2 < 95 { return "Medium" }
+        return "Low"
+    }
+
+    /// Assess breathing regularity from respiratory rate
+    private func assessBreathingRegularity(for record: SleepRecord) -> String? {
+        guard record.hasRespiratoryData else { return nil }
+
+        // High variability in respiratory rate could indicate breathing issues
+        // Simple heuristic: if awake time is high and respiratory data exists, flag as irregular
+        if record.awakeMinutes > 45 { return "Irregular" }
+        return "Regular"
+    }
+
+    /// Simple ML-like prediction of next night's score
+    private func predictNextScore() -> Int? {
+        guard historicalRecords.count >= 5 else { return nil }
+
+        let recent = Array(historicalRecords.suffix(5))
+        let scores = recent.map { $0.score }
+        let avg = scores.reduce(0, +) / scores.count
+
+        // Simple weighted average (more recent = more weight)
+        var weightedSum = 0
+        var totalWeight = 0
+        for (i, score) in scores.enumerated() {
+            let weight = i + 1
+            weightedSum += score * weight
+            totalWeight += weight
+        }
+
+        return weightedSum / totalWeight
+    }
+
+    /// Generate personalized recommendations
+    private func generateRecommendations(for record: SleepRecord) -> [String] {
+        var recommendations: [String] = []
+
+        // Sleep debt recommendation
+        let debt = calculateSleepDebt(for: record)
+        if debt > 60 {
+            recommendations.append("You're \(debt) minutes behind on sleep. Try adding 20-minute naps this week to recover.")
+        } else if debt > 30 {
+            recommendations.append("Mild sleep debt. An extra 30 minutes tonight could help.")
+        }
+
+        // Deep sleep recommendation
+        if record.deepSleepMinutes < 60 {
+            recommendations.append("Your deep sleep was low. Avoid alcohol within 3 hours of bedtime — it's one of the biggest suppressors of deep sleep.")
+        }
+
+        // REM recommendation
+        if record.remSleepMinutes < 60 {
+            recommendations.append("Low REM sleep. Late-night screen time before bed may be interfering. Try reading instead.")
+        }
+
+        // Breathing recommendation
+        if let spo2 = record.spo2Avg, spo2 < 95 {
+            recommendations.append("Your blood oxygen dropped during sleep (avg \(Int(spo2))%). Consider sleeping on your side and consulting a doctor if this persists.")
+        }
+
+        // Caffeine/exercise correlation
+        if let caffeine = record.caffeineMg, caffeine > 200 {
+            recommendations.append("You had \(Int(caffeine))mg of caffeine today. For better sleep, try stopping caffeine by 2pm.")
+        }
+
+        if let exercise = record.exerciseMinutes, exercise > 30 {
+            recommendations.append("Good: \(Int(exercise)) minutes of exercise today. Exercise consistently improves sleep quality over time.")
+        }
+
+        return recommendations
+    }
+
+    /// Generate weekly narrative summary
+    func generateWeeklyNarrative() async -> WeeklySleepNarrative {
+        let recent = Array(historicalRecords.suffix(7))
+        guard !recent.isEmpty else {
+            return WeeklySleepNarrative(
+                startDate: Date(),
+                endDate: Date(),
+                averageScore: 0,
+                totalNights: 0,
+                nightsWith7HoursPlus: 0,
+                bestNight: nil,
+                worstNight: nil,
+                trend: "stable",
+                narrative: "No sleep data available."
+            )
+        }
+
+        let avgScore = recent.map { $0.score }.reduce(0, +) / recent.count
+        let nights7Plus = recent.filter { $0.totalDuration >= 7 * 3600 }.count
+
+        let best = recent.max(by: { $0.score < $1.score })
+        let worst = recent.min(by: { $0.score < $1.score })
+
+        let sortedByDate = recent.sorted { $0.date < $1.date }
+        let trend = await calculateWeeklyTrend()
+
+        let narrative: String
+        if avgScore >= 82 {
+            narrative = "This was a great week of sleep. Your average score of \(avgScore) puts you in the top tier of sleepers. Keep doing what you're doing — consistency is the key."
+        } else if avgScore >= 70 {
+            narrative = "A solid week overall at \(avgScore) average. You're getting enough sleep on \(nights7Plus) out of \(recent.count) nights. A few small tweaks could push you into excellent territory."
+        } else {
+            narrative = "This week has been challenging for sleep (average \(avgScore)). Sleep quality often reflects what's happening in your life — stress, schedule changes, or lifestyle factors. Try to identify one thing you can improve."
+        }
+
+        return WeeklySleepNarrative(
+            startDate: sortedByDate.first?.date ?? Date(),
+            endDate: sortedByDate.last?.date ?? Date(),
+            averageScore: avgScore,
+            totalNights: recent.count,
+            nightsWith7HoursPlus: nights7Plus,
+            bestNight: best?.date,
+            worstNight: worst?.date,
+            trend: trend,
+            narrative: narrative
+        )
+    }
 }
 
 extension SleepRecord {

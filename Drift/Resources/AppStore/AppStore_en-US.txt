@@ -1,0 +1,39 @@
+# Drift — App Store Listing
+
+## App Name
+Drift
+
+## Subtitle
+Sleep Tracker & Insights
+
+## Short Description (150 characters)
+Track your sleep with AI-powered insights. HealthKit integration, personalized recommendations, and family sharing.
+
+## Full Description (500 characters)
+Drift is the sleep tracker that helps you understand and improve your sleep with AI-powered insights.
+
+KEY FEATURES:
+• Automatic sleep tracking via HealthKit
+• AI sleep score with personalized insights
+• Sleep debt tracking and recommendations
+• Deep sleep, REM, and light sleep analysis
+• Best sleep window detection
+• Family sleep tracking (share with loved ones)
+• Snoring and breathing regularity assessment
+• Weekly sleep reports with trends
+• Apple Watch companion app
+
+PREMIUM FEATURES:
+• 90-day sleep history
+• Advanced AI correlations (exercise, caffeine, stress)
+• Personalized sleep coaching
+• Export sleep data
+
+## Keywords
+sleep, tracker, healthkit, sleep tracker, rest, hrv, heart rate, wellness, fitness, bedtime, alarm, REM, deep sleep, apple watch
+
+## Category
+Health & Fitness
+
+## Age Rating
+4+
