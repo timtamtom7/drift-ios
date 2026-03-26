@@ -27,7 +27,10 @@ class HealthExportService: ObservableObject {
         do {
             // Write sleep analysis samples for each stage
             for stage in record.stages {
-                let sleepType = HKObjectType.categoryType(forIdentifier: .sleepAnalysis)!
+                guard let sleepType = HKObjectType.categoryType(forIdentifier: .sleepAnalysis) else {
+                    error = "Sleep analysis type unavailable."
+                    return false
+                }
 
                 // Map our stage type to HKCategoryValueSleepAnalysis
                 let hkSleepValue: HKCategoryValueSleepAnalysis

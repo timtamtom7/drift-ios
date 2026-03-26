@@ -394,8 +394,9 @@ actor AIInsightService {
 
         // Find shortest and longest seasons
         let sorted = seasonalDurations.sorted { $0.avgMinutes < $1.avgMinutes }
-        let shortest = sorted.first!
-        let longest = sorted.last!
+        guard let shortest = sorted.first, let longest = sorted.last else {
+            return nil
+        }
         let diff = longest.avgMinutes - shortest.avgMinutes
 
         if diff >= 20 {

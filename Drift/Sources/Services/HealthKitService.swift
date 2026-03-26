@@ -14,7 +14,15 @@ class HealthKitService: ObservableObject {
     @Published var respiratoryDataUnavailable = false
     @Published var authorizationDenied = false
 
-    private let sleepType = HKObjectType.categoryType(forIdentifier: .sleepAnalysis)!
+    private let sleepType: HKCategoryType? = HKObjectType.categoryType(forIdentifier: .sleepAnalysis)
+    private let mindfulType: HKCategoryType? = HKObjectType.categoryType(forIdentifier: .mindfulSession)
+    private var heartRateType: HKQuantityType? { HKObjectType.quantityType(forIdentifier: .heartRate) }
+    private var hrvType: HKQuantityType? { HKObjectType.quantityType(forIdentifier: .heartRateVariabilitySDNN) }
+    private var respiratoryType: HKQuantityType? { HKObjectType.quantityType(forIdentifier: .respiratoryRate) }
+    private var oxygenType: HKQuantityType? { HKObjectType.quantityType(forIdentifier: .oxygenSaturation) }
+    private var temperatureType: HKQuantityType? { HKObjectType.quantityType(forIdentifier: .bodyTemperature) }
+    private var caffeineType: HKQuantityType? { HKObjectType.quantityType(forIdentifier: .dietaryCaffeine) }
+    private var energyType: HKQuantityType? { HKObjectType.quantityType(forIdentifier: .activeEnergyBurned) }
 
     var isHealthKitAvailable: Bool {
         HKHealthStore.isHealthDataAvailable()
@@ -23,23 +31,24 @@ class HealthKitService: ObservableObject {
     func requestAuthorization() async {
         guard isHealthKitAvailable else { return }
 
-        let typesToRead: Set<HKSampleType> = [
-            HKObjectType.categoryType(forIdentifier: .sleepAnalysis)!,
-            HKObjectType.quantityType(forIdentifier: .heartRate)!,
-            HKObjectType.quantityType(forIdentifier: .heartRateVariabilitySDNN)!,
-            HKObjectType.quantityType(forIdentifier: .respiratoryRate)!,
-            HKObjectType.quantityType(forIdentifier: .oxygenSaturation)!,
-            HKObjectType.quantityType(forIdentifier: .bodyTemperature)!,
-            HKObjectType.quantityType(forIdentifier: .dietaryCaffeine)!,
-            HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!,
-            HKObjectType.categoryType(forIdentifier: .mindfulSession)!
-        ]
+        var typesToRead: Set<HKSampleType> = []
+        if let s = sleepType { typesToRead.insert(s) }
+        if let h = heartRateType { typesToRead.insert(h) }
+        if let r = hrvType { typesToRead.insert(r) }
+        if let r = respiratoryType { typesToRead.insert(r) }
+        if let o = oxygenType { typesToRead.insert(o) }
+        if let t = temperatureType { typesToRead.insert(t) }
+        if let c = caffeineType { typesToRead.insert(c) }
+        if let e = energyType { typesToRead.insert(e) }
+        if let m = mindfulType { typesToRead.insert(m) }
+
+        guard !typesToRead.isEmpty else { return }
 
         do {
             try await healthStore.requestAuthorization(toShare: [], read: typesToRead)
 
             // Check actual authorization status after user interaction
-            let sleepStatus = healthStore.authorizationStatus(for: sleepType)
+            let sleepStatus: HKAuthorizationStatus = sleepType.flatMap { healthStore.authorizationStatus(for: $0) } ?? .notDetermined
             switch sleepStatus {
             case .sharingAuthorized, .notDetermined:
                 // User authorized OR not yet decided (will prompt again)
@@ -386,6 +395,10 @@ class HealthKitService: ObservableObject {
         let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
 
         let samples: [HKCategorySample]? = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[HKCategorySample]?, Error>) in
+            guard let sleepType = sleepType else {
+                continuation.resume(returning: nil)
+                return
+            }
             let query = HKSampleQuery(
                 sampleType: sleepType,
                 predicate: predicate,
