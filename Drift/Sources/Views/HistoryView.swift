@@ -143,8 +143,10 @@ struct HistoryView: View {
     }
 
     private var daysInMonth: [Date?] {
-        let range = calendar.range(of: .day, in: .month, for: currentMonth)!
-        let firstOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: currentMonth))!
+        guard let range = calendar.range(of: .day, in: .month, for: currentMonth),
+              let firstOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: currentMonth)) else {
+            return []
+        }
         let firstWeekday = calendar.component(.weekday, from: firstOfMonth)
 
         var days: [Date?] = Array(repeating: nil, count: firstWeekday - 1)

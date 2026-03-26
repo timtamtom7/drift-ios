@@ -259,11 +259,6 @@ struct HomeView: View {
                         .padding(.horizontal)
                 }
 
-                if record.hasRespiratoryData {
-                    RespiratoryCard(record: record)
-                        .padding(.horizontal)
-                }
-
                 Spacer(minLength: 40)
             }
             .padding(.top)
