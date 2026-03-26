@@ -21,6 +21,7 @@
 		36714185CFCF9F604896E7F0 /* HealthKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EEEDECF6C65F72755D5D45 /* HealthKitService.swift */; };
 		39E2330E307F64B5A45D6716 /* WeeklyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3320D6B5A66F6084B9199F89 /* WeeklyView.swift */; };
 		41A4672C1A2DFFFA40CE8FD6 /* SleepRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDDBE6D05FC5B13AB73016D /* SleepRecord.swift */; };
+		4AD88E4A6D2F94B8D90D7B8C /* DriftR12R20Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D2F83C4613C14EB4535A676 /* DriftR12R20Service.swift */; };
 		52AA6A4F4B2B303B94AB52AB /* RespiratoryCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1DF8511F21C91BA96282B6 /* RespiratoryCard.swift */; };
 		57DC51DA96AE70B4B47702A8 /* SleepCommunityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EC613A85F7B06A4C67D0D9 /* SleepCommunityView.swift */; };
 		5C5D57A4457E3BC8550553C9 /* FamilyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2421772A78BE8ABBEC35B77 /* FamilyView.swift */; };
@@ -57,6 +58,7 @@
 		DC70217AD0ABA8DA41F685EC /* HealthExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B19977ACAE13D097F92A88 /* HealthExportService.swift */; };
 		E81935BD553F38C09D21578E /* SleepInsightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442E9CC2AA9F6C108919081C /* SleepInsightsView.swift */; };
 		EA461A149CE8C537C738BF00 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 1A169E20A2F2BB337064EF46 /* SQLite */; };
+		F97F61D9FC4E08478159E902 /* DriftR12R20.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AEBA6C8A8CF74D201C979B8 /* DriftR12R20.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +72,7 @@
 		1B7C0567F2A6F6ED90797EC8 /* PricingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricingView.swift; sourceTree = "<group>"; };
 		1CC5606E120922F6A17CB523 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		2458D3DB0CC534630A931FE6 /* FamilyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyService.swift; sourceTree = "<group>"; };
+		2D2F83C4613C14EB4535A676 /* DriftR12R20Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriftR12R20Service.swift; sourceTree = "<group>"; };
 		2F85D6B00DDB0034A3133787 /* DriftWatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DriftWatch.entitlements; sourceTree = "<group>"; };
 		308CEA5337E187E719E35090 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3320D6B5A66F6084B9199F89 /* WeeklyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyView.swift; sourceTree = "<group>"; };
@@ -95,6 +98,7 @@
 		814E7C9DD9A7CAF4B6667657 /* SleepStage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepStage.swift; sourceTree = "<group>"; };
 		82F890D0D8EF54848AD9A92C /* SleepScoreDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepScoreDetailView.swift; sourceTree = "<group>"; };
 		88B218511AB4F1A3B144FEAE /* WatchContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchContentView.swift; sourceTree = "<group>"; };
+		8AEBA6C8A8CF74D201C979B8 /* DriftR12R20.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriftR12R20.swift; sourceTree = "<group>"; };
 		9103A7D6E8D2F430655635E1 /* SmartWakeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartWakeService.swift; sourceTree = "<group>"; };
 		979B8A986214D9C5E8977736 /* DriftMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DriftMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8842580F494A65D410104AE /* IPadHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPadHomeView.swift; sourceTree = "<group>"; };
@@ -236,6 +240,7 @@
 			isa = PBXGroup;
 			children = (
 				37A6E6A9EF605DBB8EF8C7C7 /* DeepSleepAnalysis.swift */,
+				8AEBA6C8A8CF74D201C979B8 /* DriftR12R20.swift */,
 				3541CF53EC0094A13EF42A31 /* FamilyMember.swift */,
 				7FEAE76CDFB4B43D230F250E /* SleepInsight.swift */,
 				DDDDBE6D05FC5B13AB73016D /* SleepRecord.swift */,
@@ -250,6 +255,7 @@
 			children = (
 				07B2C652916FEC6A7A567ACD /* AIInsightService.swift */,
 				C11165945BD81B7D48FA8C44 /* DatabaseService.swift */,
+				2D2F83C4613C14EB4535A676 /* DriftR12R20Service.swift */,
 				2458D3DB0CC534630A931FE6 /* FamilyService.swift */,
 				07B19977ACAE13D097F92A88 /* HealthExportService.swift */,
 				F4EEEDECF6C65F72755D5D45 /* HealthKitService.swift */,
@@ -455,6 +461,8 @@
 				82E0A663A993CCD8F5C23F4B /* DatabaseService.swift in Sources */,
 				AC921DC57A274F4B06A2CC53 /* DeepSleepAnalysis.swift in Sources */,
 				B7C800DB386E1CD39DA16A68 /* DriftApp.swift in Sources */,
+				F97F61D9FC4E08478159E902 /* DriftR12R20.swift in Sources */,
+				4AD88E4A6D2F94B8D90D7B8C /* DriftR12R20Service.swift in Sources */,
 				9CE5318CFB8DD56F5B3148A3 /* ErrorStateView.swift in Sources */,
 				60BF59F5902A94DFB7BBD3D9 /* FamilyMember.swift in Sources */,
 				66CDEF15104D287789A061D5 /* FamilyService.swift in Sources */,
