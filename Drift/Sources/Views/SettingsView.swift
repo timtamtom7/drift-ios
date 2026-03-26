@@ -793,12 +793,19 @@ struct SyncItem: View {
 
 struct HealthExportView: View {
     @Environment(\.dismiss) private var dismiss
-    @StateObject private var exportService = HealthExportService()
-    @State private var selectedFormat: HealthExportService.ExportFormat = .json
+    @StateObject private var healthExportService = HealthExportService()
+    @StateObject private var sleepExportService = SleepExportService()
+    @EnvironmentObject var healthKitService: HealthKitService
+    @State private var selectedFormat: ExportFormatOption = .pdf
     @State private var isExporting = false
     @State private var exportURL: URL?
     @State private var exportedCount = 0
     @State private var showShareSheet = false
+    @State private var exportError: String?
+
+    enum ExportFormatOption {
+        case pdf, json, csv
+    }
 
     var body: some View {
         NavigationStack {
@@ -828,7 +835,7 @@ struct HealthExportView: View {
                                 .font(.title2.bold())
                                 .foregroundColor(Theme.textPrimary)
 
-                            Text("Download your complete sleep history as a JSON or CSV file for backup or analysis.")
+                            Text("Download your sleep history for backup, medical consultations, or personal analysis.")
                                 .font(.subheadline)
                                 .foregroundColor(Theme.textSecondary)
                                 .multilineTextAlignment(.center)
@@ -839,15 +846,29 @@ struct HealthExportView: View {
                         // Format picker
                         formatPickerCard
 
-                        // Export to HealthKit
+                        // Export status
+                        if let error = exportError {
+                            HStack {
+                                Image(systemName: "exclamationmark.triangle.fill")
+                                    .foregroundColor(Theme.heartRate)
+                                Text(error)
+                                    .font(.caption)
+                                    .foregroundColor(Theme.heartRate)
+                                Spacer()
+                            }
+                            .padding()
+                            .glassCard()
+                        }
+
+                        // HealthKit sync card
                         exportToHealthKitCard
 
                         // Last export info
-                        if let lastExport = exportService.lastExportDate {
+                        if let lastExport = healthExportService.lastExportDate {
                             HStack {
                                 Image(systemName: "checkmark.circle.fill")
                                     .foregroundColor(Theme.insightAccent)
-                                Text("Last exported: \(lastExport.formatted(date: .abbreviated, time: .shortened))")
+                                Text("Last synced to HealthKit: \(lastExport.formatted(date: .abbreviated, time: .shortened))")
                                     .font(.caption)
                                     .foregroundColor(Theme.textSecondary)
                                 Spacer()
@@ -889,6 +910,15 @@ struct HealthExportView: View {
 
             HStack(spacing: 12) {
                 FormatOption(
+                    title: "PDF",
+                    subtitle: "Report",
+                    icon: "doc.richtext.fill",
+                    isSelected: selectedFormat == .pdf
+                ) {
+                    selectedFormat = .pdf
+                }
+
+                FormatOption(
                     title: "JSON",
                     subtitle: "Full data",
                     icon: "curlybraces",
@@ -907,15 +937,30 @@ struct HealthExportView: View {
                 }
             }
 
+            Text(formatDescription)
+                .font(.system(size: 12))
+                .foregroundColor(Theme.textSecondary.opacity(0.7))
+                .lineSpacing(2)
+
             Button {
                 isExporting = true
+                exportError = nil
                 Task {
                     do {
-                        exportURL = try await exportService.getExportURL(format: selectedFormat)
+                        let records = healthKitService.weeklySleep
+                        switch selectedFormat {
+                        case .pdf:
+                            exportURL = try await sleepExportService.generatePDFReport(records: records)
+                        case .json:
+                            exportURL = try await sleepExportService.generateJSONExport(records: records)
+                        case .csv:
+                            exportURL = try await sleepExportService.generateCSVExport(records: records)
+                        }
                         isExporting = false
                         showShareSheet = true
                     } catch {
                         isExporting = false
+                        exportError = "Export failed: \(error.localizedDescription)"
                     }
                 }
             } label: {
@@ -924,7 +969,7 @@ struct HealthExportView: View {
                         ProgressView()
                             .tint(.white)
                     }
-                    Text(isExporting ? "Exporting..." : "Export \(selectedFormat == .json ? "JSON" : "CSV")")
+                    Text(isExporting ? "Exporting..." : "Export \(formatName)")
                 }
                 .font(.headline)
                 .foregroundColor(.white)
@@ -945,37 +990,71 @@ struct HealthExportView: View {
         .glassCard()
     }
 
+    private var formatDescription: String {
+        switch selectedFormat {
+        case .pdf:
+            return "A formatted PDF report with your sleep scores, trends, and insights — ideal for sharing with your doctor."
+        case .json:
+            return "Complete machine-readable data export including all sleep stages, vitals, and metadata."
+        case .csv:
+            return "Spreadsheet-compatible format with one row per night. Opens in Excel, Google Sheets, etc."
+        }
+    }
+
+    private var formatName: String {
+        switch selectedFormat {
+        case .pdf: return "PDF Report"
+        case .json: return "JSON"
+        case .csv: return "CSV"
+        }
+    }
+
     private var exportToHealthKitCard: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Apple Health Export")
+            Text("Apple Health Sync")
                 .font(.system(size: 12, weight: .semibold))
                 .foregroundColor(Theme.textSecondary)
                 .textCase(.uppercase)
                 .tracking(1)
 
-            Text("Write your Drift sleep data back to Apple Health so other apps can access it.")
+            Text("Write your Drift sleep data back to Apple Health so other apps can read it.")
                 .font(.subheadline)
                 .foregroundColor(Theme.textSecondary)
 
-            Button {
-                Task {
-                    exportedCount = await exportService.exportAllFromDatabase()
+            HStack(spacing: 12) {
+                Button {
+                    Task {
+                        exportedCount = await healthExportService.exportAllFromDatabase()
+                    }
+                } label: {
+                    HStack {
+                        Image(systemName: "arrow.up.arrow.down.circle.fill")
+                        Text("Sync to HealthKit")
+                    }
+                    .font(.subheadline.bold())
+                    .foregroundColor(Theme.deepSleep)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 14)
+                    .background(Theme.deepSleep.opacity(0.15))
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
                 }
-            } label: {
-                HStack {
-                    Image(systemName: "heart.fill")
-                    Text("Sync All to HealthKit")
+
+                Button {
+                    Task {
+                        exportedCount = await healthExportService.exportAllFromDatabase()
+                    }
+                } label: {
+                    Image(systemName: "questionmark.circle")
+                        .font(.subheadline)
+                        .foregroundColor(Theme.textSecondary)
+                        .frame(width: 44, height: 44)
+                        .background(Theme.surface)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
                 }
-                .font(.subheadline.bold())
-                .foregroundColor(Theme.deepSleep)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 14)
-                .background(Theme.deepSleep.opacity(0.15))
-                .clipShape(RoundedRectangle(cornerRadius: 12))
             }
 
             if exportedCount > 0 {
-                Text("Successfully exported \(exportedCount) sleep records to HealthKit.")
+                Text("Successfully synced \(exportedCount) sleep records to HealthKit.")
                     .font(.caption)
                     .foregroundColor(Theme.insightAccent)
             }

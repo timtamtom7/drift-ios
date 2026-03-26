@@ -65,11 +65,17 @@ struct ContentView: View {
                     }
                     .tag(5)
 
+                SleepScheduleView()
+                    .tabItem {
+                        Label("Schedule", systemImage: "moon.zzz.fill")
+                    }
+                    .tag(6)
+
                 SettingsView(showPricing: $showPricing)
                     .tabItem {
                         Label("Settings", systemImage: "gearshape.fill")
                     }
-                    .tag(6)
+                    .tag(7)
             }
             .tint(Theme.lightSleep)
         }

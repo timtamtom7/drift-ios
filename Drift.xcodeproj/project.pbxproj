@@ -39,6 +39,14 @@
 		81068B96CC247D11DCBB9FCB /* SmartWakeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6CA0EE00375008F020C2EB /* SmartWakeView.swift */; };
 		82E0A663A993CCD8F5C23F4B /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11165945BD81B7D48FA8C44 /* DatabaseService.swift */; };
 		85203CD5CC2DD620023B758A /* WeeklyReportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB44B3A0A21A46931E7C7AEC /* WeeklyReportService.swift */; };
+		BB0102030405060708090A1B2C3D4E5F /* SleepSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepSchedule.swift; sourceTree = "<group>"; };
+		DD0102030405060708090A1B2C3D4E5F /* SleepScheduleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepScheduleService.swift; sourceTree = "<group>"; };
+		FF0102030405060708090A1B2C3D4E5F /* SleepScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepScheduleView.swift; sourceTree = "<group>"; };
+		HH0102030405060708090A1B2C3D4E5F /* SleepExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepExportService.swift; sourceTree = "<group>"; };
+		AA0102030405060708090A1B2C3D4E5F /* SleepSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0102030405060708090A1B2C3D4E5F /* SleepSchedule.swift */; };
+		CC0102030405060708090A1B2C3D4E5F /* SleepScheduleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0102030405060708090A1B2C3D4E5F /* SleepScheduleService.swift */; };
+		EE0102030405060708090A1B2C3D4E5F /* SleepScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0102030405060708090A1B2C3D4E5F /* SleepScheduleView.swift */; };
+		GG0102030405060708090A1B2C3D4E5F /* SleepExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = HH0102030405060708090A1B2C3D4E5F /* SleepExportService.swift */; };
 		8D89B5E0E484B4BB9C681C05 /* WatchContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B218511AB4F1A3B144FEAE /* WatchContentView.swift */; };
 		8F04A913021D375937865DC0 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A67E062A98CDF8D93049B5 /* NotificationService.swift */; };
 		9970C4196A31D63E36F14C01 /* InsightCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD39A3C118D723BDD144CFEB /* InsightCard.swift */; };
@@ -201,6 +209,7 @@
 				B99E371898F02C71492560B6 /* TrendsView.swift */,
 				F70DC9B83A99DE62A4C7E512 /* WeeklyReportView.swift */,
 				3320D6B5A66F6084B9199F89 /* WeeklyView.swift */,
+				FF0102030405060708090A1B2C3D4E5F /* SleepScheduleView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -246,6 +255,7 @@
 				DDDDBE6D05FC5B13AB73016D /* SleepRecord.swift */,
 				814E7C9DD9A7CAF4B6667657 /* SleepStage.swift */,
 				7ECE3F1BDF14E3E7C8551E6A /* WeeklyReport.swift */,
+				BB0102030405060708090A1B2C3D4E5F /* SleepSchedule.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -263,6 +273,9 @@
 				FEF126C669AEA5ECA2859DDC /* OuraService.swift */,
 				9103A7D6E8D2F430655635E1 /* SmartWakeService.swift */,
 				AB44B3A0A21A46931E7C7AEC /* WeeklyReportService.swift */,
+				DD0102030405060708090A1B2C3D4E5F /* SleepScheduleService.swift */,
+				HH0102030405060708090A1B2C3D4E5F /* SleepExportService.swift */,
+
 				12E7C2F74D85738AA13CC2F5 /* WithingsService.swift */,
 			);
 			path = Services;
@@ -495,6 +508,10 @@
 				BF5BCD6E8F163CBD249D695F /* TrendsView.swift in Sources */,
 				74CE8AF194C1C067F0ECE49E /* WeeklyReport.swift in Sources */,
 				85203CD5CC2DD620023B758A /* WeeklyReportService.swift in Sources */,
+			AA0102030405060708090A1B2C3D4E5F /* SleepSchedule.swift in Sources */,
+			CC0102030405060708090A1B2C3D4E5F /* SleepScheduleService.swift in Sources */,
+			EE0102030405060708090A1B2C3D4E5F /* SleepScheduleView.swift in Sources */,
+			GG0102030405060708090A1B2C3D4E5F /* SleepExportService.swift in Sources */,
 				0DCC2F1D79B9AD43D8C5E901 /* WeeklyReportView.swift in Sources */,
 				39E2330E307F64B5A45D6716 /* WeeklyView.swift in Sources */,
 				115B2066E0E834FB00D636E0 /* WithingsService.swift in Sources */,
