@@ -454,9 +454,9 @@ struct OuraIntegrationView: View {
             }
         }
         .onAppear {
-            if ouraService.accessToken != nil {
+            if let token = ouraService.accessToken {
                 Task {
-                    await ouraService.connect(with: ouraService.accessToken!)
+                    await ouraService.connect(with: token)
                 }
             }
         }

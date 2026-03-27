@@ -128,23 +128,25 @@ struct HomeView: View {
                 .padding(.horizontal, 32)
                 .padding(.top, 8)
             } else {
-                Link(destination: URL(string: UIApplication.openSettingsURLString)!) {
-                    HStack(spacing: 8) {
-                        Image(systemName: "gear")
-                        Text("Open Settings")
-                    }
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 16)
-                    .background(
-                        LinearGradient(
-                            colors: [Theme.deepSleep, Theme.remSleep],
-                            startPoint: .leading,
-                            endPoint: .trailing
+                if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+                    Link(destination: settingsURL) {
+                        HStack(spacing: 8) {
+                            Image(systemName: "gear")
+                            Text("Open Settings")
+                        }
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 16)
+                        .background(
+                            LinearGradient(
+                                colors: [Theme.deepSleep, Theme.remSleep],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
                         )
-                    )
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                    }
                 }
                 .padding(.horizontal, 32)
                 .padding(.top, 8)
