@@ -100,37 +100,7 @@ struct SleepScoreDetailView: View {
 
                     // Vitals if available
                     if record.heartRateMin != nil || record.hrvAvg != nil {
-                        VStack(alignment: .leading, spacing: 12) {
-                            Text("Sleep Vitals")
-                                .font(.headline)
-                                .foregroundColor(Theme.textPrimary)
-
-                            LazyVGrid(columns: [
-                                GridItem(.flexible()),
-                                GridItem(.flexible())
-                            ], spacing: 12) {
-                                if let hrMin = record.heartRateMin {
-                                    VitalCell(title: "Min HR", value: "\(hrMin)", unit: "bpm", color: Theme.heartRate)
-                                }
-                                if let hrMax = record.heartRateMax {
-                                    VitalCell(title: "Max HR", value: "\(hrMax)", unit: "bpm", color: Theme.heartRate)
-                                }
-                                if let hrAvg = record.heartRateAvg {
-                                    VitalCell(title: "Avg HR", value: "\(hrAvg)", unit: "bpm", color: Theme.heartRate)
-                                }
-                                if let hrv = record.hrvAvg {
-                                    VitalCell(title: "HRV Avg", value: String(format: "%.0f", hrv), unit: "ms", color: Theme.insightAccent)
-                                }
-                                if let resp = record.respiratoryRateAvg {
-                                    VitalCell(title: "Resp Rate", value: String(format: "%.1f", resp), unit: "brpm", color: Theme.deepSleep)
-                                }
-                                if let spo2 = record.spo2Avg {
-                                    VitalCell(title: "SpO₂ Avg", value: String(format: "%.0f", spo2), unit: "%", color: Theme.insightAccent)
-                                }
-                            }
-                        }
-                        .padding()
-                        .glassCard()
+                        vitalsSection
                     }
 
                     Spacer(minLength: 40)
@@ -140,6 +110,40 @@ struct SleepScoreDetailView: View {
         }
         .navigationTitle("Sleep Details")
         .navigationBarTitleDisplayMode(.inline)
+    }
+
+    private var vitalsSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Sleep Vitals")
+                .font(.headline)
+                .foregroundColor(Theme.textPrimary)
+
+            LazyVGrid(columns: [
+                GridItem(.flexible()),
+                GridItem(.flexible())
+            ], spacing: 12) {
+                if let hrMin = record.heartRateMin {
+                    VitalCell(title: "Min HR", value: "\(hrMin)", unit: "bpm", color: Theme.heartRate)
+                }
+                if let hrMax = record.heartRateMax {
+                    VitalCell(title: "Max HR", value: "\(hrMax)", unit: "bpm", color: Theme.heartRate)
+                }
+                if let hrAvg = record.heartRateAvg {
+                    VitalCell(title: "Avg HR", value: "\(hrAvg)", unit: "bpm", color: Theme.heartRate)
+                }
+                if let hrv = record.hrvAvg {
+                    VitalCell(title: "HRV Avg", value: String(format: "%.0f", hrv), unit: "ms", color: Theme.insightAccent)
+                }
+                if let resp = record.respiratoryRateAvg {
+                    VitalCell(title: "Resp Rate", value: String(format: "%.1f", resp), unit: "brpm", color: Theme.deepSleep)
+                }
+                if let spo2 = record.spo2Avg {
+                    VitalCell(title: "SpO₂ Avg", value: String(format: "%.0f", spo2), unit: "%", color: Theme.insightAccent)
+                }
+            }
+        }
+        .padding()
+        .glassCard()
     }
 
     private var formattedDate: String {
@@ -245,13 +249,13 @@ struct VitalCell: View {
                     .font(.system(.title3, design: .rounded).bold())
                     .foregroundColor(color)
                 Text(unit)
-                    .font(.caption2)
+                    .font(.caption)
                     .foregroundColor(Theme.textSecondary)
             }
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 12)
         .background(Theme.surface.opacity(0.5))
-        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
     }
 }

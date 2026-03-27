@@ -3,119 +3,220 @@ import SwiftUI
 struct HomeView: View {
     @EnvironmentObject var healthKitService: HealthKitService
     @Binding var showPricing: Bool
-    @State private var currentInsight: SleepInsight?
-    @State private var showHRVDetail = false
-    @State private var selectedRecord: SleepRecord?
-    private let insightService = AIInsightService()
+    @State private var showOnboarding = false
+    @State private var showError = false
+    @State private var errorType: ErrorStateType = .healthKitNotAuthorized
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                LinearGradient(
-                    colors: [Theme.background, Theme.backgroundGradient],
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
-                .ignoresSafeArea()
+        ZStack {
+            LinearGradient(
+                colors: [Theme.background, Theme.backgroundGradient],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
 
-                if !healthKitService.isAuthorized {
-                    healthKitNotAuthorizedView
-                } else if healthKitService.isLoading {
-                    loadingView
-                } else if let record = healthKitService.todaySleep {
-                    sleepSummaryView(record: record)
-                } else {
-                    noSleepDataYetView
-                }
-            }
-            .navigationTitle("Drift")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    HStack(spacing: 16) {
-                        Button {
-                            Task {
-                                await healthKitService.fetchTodaySleep()
+            ScrollView {
+                VStack(spacing: 16) {
+                    if !healthKitService.isAuthorized {
+                        errorBanner
+                    }
+
+                    if let record = healthKitService.todaySleep {
+                        tonightSleepSection(record)
+                    } else {
+                        emptyTonightSection
+                    }
+
+                    if !healthKitService.weeklySleep.isEmpty {
+                        weeklyOverview
+                        if let todayRecord = healthKitService.todaySleep {
+                            HRVCard(record: todayRecord)
+                            if todayRecord.hasRespiratoryData {
+                                RespiratoryCard(record: todayRecord)
                             }
-                        } label: {
-                            Image(systemName: "arrow.clockwise")
-                                .foregroundColor(Theme.textSecondary)
                         }
-
-                        Button {
-                            showPricing = true
-                        } label: {
-                            Image(systemName: "crown.fill")
-                                .foregroundColor(Theme.warningAccent)
-                        }
+                        QuickStatsRow(records: healthKitService.weeklySleep)
                     }
                 }
+                .padding()
             }
-            .sheet(isPresented: $showHRVDetail) {
-                HRVTrendChartView(records: healthKitService.weeklySleep)
-            }
-            .navigationDestination(item: $selectedRecord) { record in
-                SleepScoreDetailView(record: record)
-            }
+        }
+        .task {
+            await healthKitService.fetchTodaySleep()
+        }
+        .sheet(isPresented: $showOnboarding) {
+            OnboardingView()
         }
     }
 
-    private var healthKitNotAuthorizedView: some View {
-        VStack(spacing: 24) {
-            Spacer()
+    private var errorBanner: some View {
+        Button {
+            Theme.haptic(.light)
+            Task {
+                await healthKitService.requestAuthorization()
+            }
+        } label: {
+            HStack(spacing: 12) {
+                Image(systemName: "exclamationmark.triangle.fill")
+                    .font(.title3)
+                    .foregroundColor(Theme.warningAccent)
 
-            Image(systemName: "heart.text.square.fill")
-                .font(.system(size: 72))
-                .foregroundStyle(
-                    LinearGradient(
-                        colors: [Theme.deepSleep, Theme.remSleep],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
-
-            VStack(spacing: 12) {
-                if healthKitService.authorizationDenied {
-                    Text("Health Access Denied")
-                        .font(.title3.bold())
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("HealthKit Access Required")
+                        .font(.subheadline.bold())
                         .foregroundColor(Theme.textPrimary)
-
-                    Text("You denied HealthKit access. Enable it in Settings → Privacy → Health → Drift to see your sleep insights.")
-                        .font(.subheadline)
+                    Text("Tap to enable sleep tracking")
+                        .font(.caption)
                         .foregroundColor(Theme.textSecondary)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, 40)
-                } else {
-                    Text("Unlock Your Sleep Data")
-                        .font(.title3.bold())
-                        .foregroundColor(Theme.textPrimary)
-
-                    Text("Drift needs access to your HealthKit sleep data to show your nightly insights.")
-                        .font(.subheadline)
-                        .foregroundColor(Theme.textSecondary)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, 40)
                 }
+
+                Spacer()
+
+                Image(systemName: "chevron.right")
+                    .font(.caption)
+                    .foregroundColor(Theme.textSecondary)
+            }
+            .padding()
+            .background(Theme.warningAccent.opacity(0.15))
+            .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel("HealthKit access required. Tap to enable sleep tracking.")
+    }
+
+    private func tonightSleepSection(_ record: SleepRecord) -> some View {
+        VStack(spacing: 20) {
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(greetingText)
+                        .font(.title2.bold())
+                        .foregroundColor(Theme.textPrimary)
+
+                    Text(formattedDate)
+                        .font(.subheadline)
+                        .foregroundColor(Theme.textSecondary)
+                }
+
+                Spacer()
+
+                NavigationLink {
+                    SleepScoreDetailView(record: record)
+                } label: {
+                    Image(systemName: "brain.head.profile")
+                        .font(.title2)
+                        .foregroundColor(Theme.insightAccent)
+                }
+                .accessibilityLabel("View sleep score details")
             }
 
-            if !healthKitService.authorizationDenied {
+            SleepScoreRing(score: record.score)
+                .frame(height: 200)
+
+            HStack(spacing: 24) {
+                TimeCard(
+                    icon: "bed.double.fill",
+                    label: "Bedtime",
+                    time: formatTime(record.fellAsleepTime),
+                    color: Theme.deepSleep
+                )
+
+                TimeCard(
+                    icon: "sunrise.fill",
+                    label: "Wake Time",
+                    time: formatTime(record.wokeUpTime),
+                    color: Theme.warningAccent
+                )
+
+                TimeCard(
+                    icon: "clock.fill",
+                    label: "Duration",
+                    time: record.totalHoursFormatted,
+                    color: Theme.lightSleep
+                )
+            }
+
+            SleepStagesBar(stages: record.stages)
+
+            if record.heartRateAvg != nil || record.hrvAvg != nil {
+                VitalsRow(record: record)
+            }
+
+            // AI insight navigation
+            NavigationLink {
+                SleepScoreDetailView(record: record)
+            } label: {
+                HStack {
+                    Image(systemName: "lightbulb.fill")
+                        .foregroundColor(.yellow)
+                    Text("View detailed analysis")
+                        .font(.subheadline)
+                        .foregroundColor(Theme.textPrimary)
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .font(.caption)
+                        .foregroundColor(Theme.textSecondary)
+                }
+                .padding()
+                .background(Theme.insightAccent.opacity(0.1))
+                .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
+            }
+            .accessibilityLabel("View detailed sleep analysis")
+        }
+    }
+
+    private var emptyTonightSection: some View {
+        VStack(spacing: 20) {
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(greetingText)
+                        .font(.title2.bold())
+                        .foregroundColor(Theme.textPrimary)
+
+                    Text(formattedDate)
+                        .font(.subheadline)
+                        .foregroundColor(Theme.textSecondary)
+                }
+
+                Spacer()
+            }
+
+            VStack(spacing: 16) {
+                Image(systemName: "moon.zzz")
+                    .font(.system(size: 64))
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [Theme.deepSleep.opacity(0.6), Theme.remSleep.opacity(0.6)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+
+                VStack(spacing: 8) {
+                    Text("No Sleep Data Yet")
+                        .font(.title3.bold())
+                        .foregroundColor(Theme.textPrimary)
+
+                    Text("Wear your Apple Watch to bed to track your sleep.")
+                        .font(.subheadline)
+                        .foregroundColor(Theme.textSecondary)
+                        .multilineTextAlignment(.center)
+                }
+
                 Button {
+                    Theme.haptic(.light)
                     Task {
-                        await healthKitService.requestAuthorization()
-                        if healthKitService.isAuthorized {
-                            await healthKitService.fetchTodaySleep()
-                            await healthKitService.fetchWeeklySleep()
-                        }
+                        await healthKitService.fetchTodaySleep()
                     }
                 } label: {
                     HStack(spacing: 8) {
-                        Image(systemName: "heart.fill")
-                        Text("Allow Health Access")
+                        Image(systemName: "arrow.clockwise")
+                        Text("Refresh")
                     }
-                    .font(.headline)
+                    .font(.subheadline.bold())
                     .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 16)
+                    .padding(.horizontal, 24)
+                    .padding(.vertical, 12)
                     .background(
                         LinearGradient(
                             colors: [Theme.deepSleep, Theme.remSleep],
@@ -123,214 +224,58 @@ struct HomeView: View {
                             endPoint: .trailing
                         )
                     )
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                    .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
                 }
-                .padding(.horizontal, 32)
-                .padding(.top, 8)
-            } else {
-                if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
-                    Link(destination: settingsURL) {
-                        HStack(spacing: 8) {
-                            Image(systemName: "gear")
-                            Text("Open Settings")
-                        }
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 16)
-                        .background(
-                            LinearGradient(
-                                colors: [Theme.deepSleep, Theme.remSleep],
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            )
-                        )
-                        .clipShape(RoundedRectangle(cornerRadius: 16))
-                    }
-                }
-                .padding(.horizontal, 32)
-                .padding(.top, 8)
+                .accessibilityLabel("Refresh sleep data")
             }
-
-            Spacer()
+            .padding(.vertical, 40)
         }
     }
 
-    private var loadingView: some View {
-        VStack(spacing: 16) {
-            ProgressView()
-                .scaleEffect(1.5)
-                .tint(Theme.deepSleep)
-            Text("Loading sleep data...")
-                .foregroundColor(Theme.textSecondary)
-        }
-    }
+    private var weeklyOverview: some View {
+        NavigationLink {
+            WeeklyView()
+        } label: {
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("This Week")
+                        .font(.subheadline.bold())
+                        .foregroundColor(Theme.textPrimary)
 
-    private var noSleepDataYetView: some View {
-        VStack(spacing: 24) {
-            Spacer()
+                    Text("\(healthKitService.weeklySleep.count) nights tracked")
+                        .font(.caption)
+                        .foregroundColor(Theme.textSecondary)
+                }
 
-            Image(systemName: "moon.stars")
-                .font(.system(size: 72))
-                .foregroundColor(Theme.textSecondary.opacity(0.5))
+                Spacer()
 
-            VStack(spacing: 12) {
-                Text("No Sleep Data Yet")
-                    .font(.title3.bold())
-                    .foregroundColor(Theme.textPrimary)
+                WeeklyMiniChart(records: healthKitService.weeklySleep)
 
-                Text("Wear your Apple Watch to bed and sync in the morning. Your sleep data will appear here.")
-                    .font(.subheadline)
+                Image(systemName: "chevron.right")
+                    .font(.caption)
                     .foregroundColor(Theme.textSecondary)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, 40)
             }
-
-            Button {
-                Task {
-                    await healthKitService.fetchTodaySleep()
-                }
-            } label: {
-                HStack(spacing: 8) {
-                    Image(systemName: "arrow.clockwise")
-                    Text("Refresh")
-                }
-                .font(.headline)
-                .foregroundColor(.white)
-                .padding(.horizontal, 32)
-                .padding(.vertical, 14)
-                .background(
-                    LinearGradient(
-                        colors: [Theme.deepSleep, Theme.remSleep],
-                        startPoint: .leading,
-                        endPoint: .trailing
-                    )
-                )
-                .clipShape(RoundedRectangle(cornerRadius: 14))
-            }
-            .padding(.top, 8)
-
-            Spacer()
+            .padding()
+            .background(Theme.surface.opacity(0.5))
+            .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
         }
+        .buttonStyle(.plain)
+        .accessibilityLabel("View this week's sleep summary")
     }
 
-    private func sleepSummaryView(record: SleepRecord) -> some View {
-        ScrollView {
-            VStack(spacing: 20) {
-                greetingHeader
-
-                Button {
-                    selectedRecord = record
-                } label: {
-                    SleepScoreRing(score: record.score)
-                        .frame(height: 200)
-                }
-                .buttonStyle(.plain)
-
-                statsRow(record: record)
-
-                SleepStagesBar(stages: record.stages)
-                    .frame(height: 120)
-                    .padding(.horizontal)
-                    .glassCard()
-
-                if let insight = currentInsight {
-                    InsightCard(insight: insight)
-                        .padding(.horizontal)
-                } else {
-                    // Skeleton insight
-                    InsightSkeletonCard()
-                        .padding(.horizontal)
-                }
-
-                if record.heartRateMin != nil {
-                    heartRateRow(record: record)
-                        .padding(.horizontal)
-                }
-
-                Button {
-                    showHRVDetail = true
-                } label: {
-                    HRVCard(record: record)
-                }
-                .buttonStyle(.plain)
-                .padding(.horizontal)
-
-                if record.hasRespiratoryData {
-                    RespiratoryCard(record: record)
-                        .padding(.horizontal)
-                }
-
-                Spacer(minLength: 40)
-            }
-            .padding(.top)
-        }
-        .task {
-            await insightService.setHistoricalRecords(healthKitService.weeklySleep)
-            currentInsight = await insightService.generateInsight(for: record)
-        }
-    }
-
-    private var greetingHeader: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(greeting)
-                .font(.title2.bold())
-                .foregroundColor(Theme.textPrimary)
-            Text(formattedDate)
-                .font(.subheadline)
-                .foregroundColor(Theme.textSecondary)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.horizontal)
-    }
-
-    private func statsRow(record: SleepRecord) -> some View {
-        HStack(spacing: 12) {
-            StatCard(
-                title: "Total",
-                value: record.totalHoursFormatted,
-                icon: "clock.fill",
-                color: Theme.lightSleep
-            )
-
-            StatCard(
-                title: "Fell Asleep",
-                value: formatTime(record.fellAsleepTime),
-                icon: "bed.double.fill",
-                color: Theme.deepSleep
-            )
-        }
-        .padding(.horizontal)
-    }
-
-    private func heartRateRow(record: SleepRecord) -> some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("Heart Rate")
-                .font(.system(size: 12, weight: .semibold))
-                .foregroundColor(Theme.textSecondary)
-                .textCase(.uppercase)
-                .tracking(1)
-
-            HStack(spacing: 16) {
-                HeartRateStat(value: "\(record.heartRateMin ?? 0)", label: "Min", color: Theme.insightAccent)
-                HeartRateStat(value: "\(record.heartRateMax ?? 0)", label: "Max", color: Theme.heartRate)
-                HeartRateStat(value: "\(record.heartRateAvg ?? 0)", label: "Avg", color: Theme.warningAccent)
-            }
-        }
-        .padding()
-        .glassCard()
-    }
-
-    private var greeting: String {
+    private var greetingText: String {
         let hour = Calendar.current.component(.hour, from: Date())
-        if hour < 12 { return "Good morning"
-        } else if hour < 17 { return "Good afternoon"
-        } else { return "Good evening" }
+        switch hour {
+        case 5..<12: return "Good Morning"
+        case 12..<17: return "Good Afternoon"
+        case 17..<21: return "Good Evening"
+        default: return "Good Night"
+        }
     }
 
     private var formattedDate: String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "EEEE, MMM d"
+        formatter.dateFormat = "EEEE, MMMM d"
         return formatter.string(from: Date())
     }
 
@@ -341,103 +286,198 @@ struct HomeView: View {
     }
 }
 
-// MARK: - Insight Skeleton
-struct InsightSkeletonCard: View {
-    @State private var shimmer = false
+// MARK: - Supporting Views
+
+struct TimeCard: View {
+    let icon: String
+    let label: String
+    let time: String
+    let color: Color
 
     var body: some View {
-        HStack(alignment: .top, spacing: 12) {
-            Rectangle()
-                .fill(Theme.surface)
-                .frame(width: 3, height: 50)
-                .clipShape(RoundedRectangle(cornerRadius: 2))
+        VStack(spacing: 8) {
+            Image(systemName: icon)
+                .font(.system(size: 18))
+                .foregroundColor(color)
 
-            VStack(alignment: .leading, spacing: 8) {
-                HStack(spacing: 6) {
-                    Text("💡")
-                        .font(.system(size: 14))
-                    Text("Insight")
-                        .font(.system(size: 12, weight: .semibold))
-                        .foregroundColor(Theme.textSecondary)
-                }
+            Text(time)
+                .font(.system(size: 15, weight: .bold, design: .rounded))
+                .foregroundColor(Theme.textPrimary)
 
-                RoundedRectangle(cornerRadius: 4)
-                    .fill(Theme.surface.opacity(shimmer ? 0.5 : 0.3))
-                    .frame(height: 14)
-                    .frame(maxWidth: 220)
+            Text(label)
+                .font(.caption)
+                .foregroundColor(Theme.textSecondary)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 12)
+        .background(color.opacity(0.1))
+        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
+    }
+}
 
-                RoundedRectangle(cornerRadius: 4)
-                    .fill(Theme.surface.opacity(shimmer ? 0.3 : 0.2))
-                    .frame(height: 14)
-                    .frame(maxWidth: 160)
+struct VitalsRow: View {
+    let record: SleepRecord
+
+    var body: some View {
+        HStack(spacing: 12) {
+            if let hrAvg = record.heartRateAvg {
+                VitalBox(
+                    icon: "heart.fill",
+                    value: "\(hrAvg)",
+                    unit: "bpm",
+                    label: "Avg HR",
+                    color: Theme.heartRate
+                )
             }
 
-            Spacer()
-        }
-        .padding()
-        .glassCard()
-        .onAppear {
-            withAnimation(.easeInOut(duration: 1.2).repeatForever(autoreverses: true)) {
-                shimmer = true
+            if let hrv = record.hrvAvg {
+                VitalBox(
+                    icon: "waveform.path.ecg",
+                    value: String(format: "%.0f", hrv),
+                    unit: "ms",
+                    label: "HRV",
+                    color: Theme.insightAccent
+                )
+            }
+
+            if let spo2 = record.spo2Avg {
+                VitalBox(
+                    icon: "lungs.fill",
+                    value: String(format: "%.0f", spo2),
+                    unit: "%",
+                    label: "SpO₂",
+                    color: Theme.lightSleep
+                )
+            }
+
+            if record.hasRespiratoryData, let resp = record.respiratoryRateAvg {
+                VitalBox(
+                    icon: "wind",
+                    value: String(format: "%.1f", resp),
+                    unit: "brpm",
+                    label: "Resp",
+                    color: Theme.deepSleep
+                )
             }
         }
     }
 }
 
-struct StatCard: View {
+struct VitalBox: View {
+    let icon: String
+    let value: String
+    let unit: String
+    let label: String
+    let color: Color
+
+    var body: some View {
+        VStack(spacing: 6) {
+            Image(systemName: icon)
+                .font(.system(size: 12))
+                .foregroundColor(color)
+
+            HStack(alignment: .lastTextBaseline, spacing: 2) {
+                Text(value)
+                    .font(.system(size: 16, weight: .bold, design: .rounded))
+                    .foregroundColor(Theme.textPrimary)
+                Text(unit)
+                    .font(.caption)
+                    .foregroundColor(Theme.textSecondary)
+            }
+
+            Text(label)
+                .font(.caption)
+                .foregroundColor(Theme.textSecondary)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 12)
+        .background(Theme.surface.opacity(0.5))
+        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
+    }
+}
+
+struct QuickStatsRow: View {
+    let records: [SleepRecord]
+
+    var body: some View {
+        HStack(spacing: 12) {
+            QuickStatBox(
+                title: "Avg Score",
+                value: "\(averageScore)",
+                icon: "chart.line.uptrend.xyaxis",
+                color: Theme.scoreColor(for: averageScore)
+            )
+
+            QuickStatBox(
+                title: "Avg Hours",
+                value: String(format: "%.1f", averageHours),
+                icon: "clock.fill",
+                color: Theme.lightSleep
+            )
+
+            QuickStatBox(
+                title: "Avg Deep",
+                value: "\(averageDeepMinutes)m",
+                icon: "moon.fill",
+                color: Theme.deepSleep
+            )
+        }
+    }
+
+    private var averageScore: Int {
+        guard !records.isEmpty else { return 0 }
+        return records.map { $0.score }.reduce(0, +) / records.count
+    }
+
+    private var averageHours: Double {
+        guard !records.isEmpty else { return 0 }
+        return records.map { $0.totalDuration / 3600 }.reduce(0, +) / Double(records.count)
+    }
+
+    private var averageDeepMinutes: Int {
+        guard !records.isEmpty else { return 0 }
+        return records.map { $0.deepSleepMinutes }.reduce(0, +) / records.count
+    }
+}
+
+struct QuickStatBox: View {
     let title: String
     let value: String
     let icon: String
     let color: Color
 
     var body: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 4) {
-                Text(title.uppercased())
-                    .font(.system(size: 11, weight: .semibold))
-                    .foregroundColor(Theme.textSecondary)
-                    .tracking(1)
-                Text(value)
-                    .font(.system(.title3, design: .monospaced).bold())
-                    .foregroundColor(Theme.textPrimary)
-            }
-            Spacer()
+        VStack(alignment: .leading, spacing: 8) {
             Image(systemName: icon)
-                .font(.title2)
-                .foregroundColor(color.opacity(0.8))
-        }
-        .padding()
-        .frame(maxWidth: .infinity)
-        .glassCard()
-    }
-}
-
-struct HeartRateStat: View {
-    let value: String
-    let label: String
-    let color: Color
-
-    var body: some View {
-        VStack(spacing: 4) {
-            Text(value)
-                .font(.system(.title3, design: .monospaced).bold())
+                .font(.title3)
                 .foregroundColor(color)
-            Text(label)
-                .font(.system(size: 11))
+
+            Text(value)
+                .font(.system(.title3, design: .rounded).bold())
+                .foregroundColor(Theme.textPrimary)
+
+            Text(title)
+                .font(.caption)
                 .foregroundColor(Theme.textSecondary)
         }
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding()
+        .background(Theme.surface.opacity(0.5))
+        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
     }
 }
 
-extension View {
-    func glassCard() -> some View {
-        self
-            .background(Theme.surfaceGlass)
-            .clipShape(RoundedRectangle(cornerRadius: 20))
-            .overlay(
-                RoundedRectangle(cornerRadius: 20)
-                    .stroke(Color.white.opacity(0.08), lineWidth: 1)
-            )
+struct WeeklyMiniChart: View {
+    let records: [SleepRecord]
+
+    var body: some View {
+        HStack(spacing: 4) {
+            ForEach(records.suffix(7)) { record in
+                RoundedRectangle(cornerRadius: 2)
+                    .fill(Theme.scoreColor(for: record.score))
+                    .frame(width: 8, height: CGFloat(record.score) / 100.0 * 24 + 8)
+            }
+        }
+        .frame(height: 40)
     }
 }

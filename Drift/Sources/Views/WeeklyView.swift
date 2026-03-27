@@ -94,6 +94,7 @@ struct WeeklyView: View {
 
             ForEach(healthKitService.weeklySleep) { record in
                 WeeklyCard(record: record) {
+                    Theme.haptic(.light)
                     selectedRecord = record
                 }
             }
@@ -128,7 +129,7 @@ struct WeeklyStatBox: View {
                 .foregroundColor(Theme.textPrimary)
 
             Text(title)
-                .font(.system(size: 11))
+                .font(.caption)
                 .foregroundColor(Theme.textSecondary)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -162,7 +163,7 @@ struct WeeklyCard: View {
                             .font(.system(.subheadline, design: .monospaced).bold())
                             .foregroundColor(Theme.textPrimary)
                         Text("Total")
-                            .font(.system(size: 10))
+                            .font(.caption2)
                             .foregroundColor(Theme.textSecondary)
                     }
 
@@ -173,6 +174,7 @@ struct WeeklyCard: View {
             .glassCard()
         }
         .buttonStyle(.plain)
+        .accessibilityLabel("\(dayOfWeek), \(formattedDate), sleep score \(record.score)")
     }
 
     private var dayOfWeek: String {
@@ -214,7 +216,6 @@ struct MiniScoreRing: View {
 }
 
 /// Rich, full-screen detail view for a single sleep record.
-/// Shown when tapping a day in History or a card in Weekly view.
 struct RecordDetailSheet: View {
     let record: SleepRecord
     @Environment(\.dismiss) private var dismiss
@@ -232,25 +233,13 @@ struct RecordDetailSheet: View {
 
                 ScrollView {
                     VStack(spacing: 24) {
-                        // Score header
                         scoreHeaderSection
-
-                        // Time details
                         timeDetailsSection
-
-                        // Sleep stages
                         sleepStagesSection
-
-                        // Vitals grid
                         vitalsSection
-
-                        // Lifestyle factors
                         lifestyleSection
-
-                        // Night quality summary
                         qualitySummarySection
 
-                        // AI Insight for this night
                         if let insight = generateNightInsight() {
                             nightInsightSection(insight)
                         }
@@ -264,8 +253,12 @@ struct RecordDetailSheet: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Done") { dismiss() }
-                        .foregroundColor(Theme.deepSleep)
+                    Button("Done") {
+                        Theme.haptic(.light)
+                        dismiss()
+                    }
+                    .foregroundColor(Theme.deepSleep)
+                    .accessibilityLabel("Close sleep details")
                 }
             }
         }
@@ -369,7 +362,6 @@ struct RecordDetailSheet: View {
             SleepStagesBar(stages: record.stages)
                 .frame(height: 80)
 
-            // Stage breakdown
             HStack(spacing: 8) {
                 StageDetailPill(
                     label: "Deep",
@@ -494,14 +486,13 @@ struct RecordDetailSheet: View {
                 }
             }
 
-            // Alert if SpO2 drops
             if let drops = record.spo2DropsBelow90, drops > 0 {
                 HStack(spacing: 8) {
                     Image(systemName: "exclamationmark.triangle.fill")
                         .foregroundColor(Theme.warningAccent)
                         .font(.caption)
                     Text("\(drops) SpO₂ drop\(drops == 1 ? "" : "s") below 90% detected")
-                        .font(.system(size: 12))
+                        .font(.caption)
                         .foregroundColor(Theme.warningAccent)
                     Spacer()
                 }
@@ -559,7 +550,7 @@ struct RecordDetailSheet: View {
 
             if record.caffeineMg == nil && record.exerciseMinutes == nil && record.mindfulMinutes == nil {
                 Text("No lifestyle data available for this night. Keep your Apple Watch and health apps connected to track these factors.")
-                    .font(.system(size: 12))
+                    .font(.caption)
                     .foregroundColor(Theme.textSecondary.opacity(0.7))
                     .lineSpacing(2)
             }
@@ -685,7 +676,6 @@ struct RecordDetailSheet: View {
     }
 
     private func generateNightInsight() -> String? {
-        // Generate a contextual insight for this specific night
         var insights: [String] = []
 
         if record.awakeMinutes > 45 {
@@ -775,13 +765,13 @@ struct TimeDetailCell: View {
                 .foregroundColor(Theme.textPrimary)
 
             Text(label)
-                .font(.system(size: 10))
+                .font(.caption)
                 .foregroundColor(Theme.textSecondary)
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 12)
         .background(color.opacity(0.1))
-        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
     }
 }
 
@@ -798,17 +788,17 @@ struct StageDetailPill: View {
                 .foregroundColor(color)
 
             Text(label)
-                .font(.system(size: 10))
+                .font(.caption)
                 .foregroundColor(Theme.textSecondary)
 
             Text("\(minutes)m")
-                .font(.system(size: 10, design: .monospaced))
+                .font(.caption)
                 .foregroundColor(Theme.textSecondary.opacity(0.7))
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 10)
         .background(color.opacity(0.1))
-        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
     }
 }
 
@@ -828,7 +818,7 @@ struct VitalPill: View {
                     .font(.system(size: 10))
                     .foregroundColor(color)
                 Text(title)
-                    .font(.system(size: 9))
+                    .font(.caption)
                     .foregroundColor(Theme.textSecondary)
             }
 
@@ -837,20 +827,20 @@ struct VitalPill: View {
                     .font(.system(size: 18, weight: .bold, design: .rounded))
                     .foregroundColor(color)
                 Text(unit)
-                    .font(.system(size: 9))
+                    .font(.caption)
                     .foregroundColor(Theme.textSecondary)
             }
 
             if let goodLabel = goodLabel {
                 Text(goodLabel)
-                    .font(.system(size: 8))
+                    .font(.caption2)
                     .foregroundColor(isGood == true ? Theme.insightAccent : Theme.warningAccent)
             }
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 10)
         .background(color.opacity(0.08))
-        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
     }
 }
 
@@ -874,7 +864,7 @@ struct LifestylePill: View {
 
             VStack(alignment: .leading, spacing: 2) {
                 Text(title)
-                    .font(.system(size: 11))
+                    .font(.caption)
                     .foregroundColor(Theme.textSecondary)
 
                 Text(value)
@@ -882,7 +872,7 @@ struct LifestylePill: View {
                     .foregroundColor(Theme.textPrimary)
 
                 Text(note)
-                    .font(.system(size: 9))
+                    .font(.caption)
                     .foregroundColor(color)
             }
 
@@ -890,7 +880,7 @@ struct LifestylePill: View {
         }
         .padding(10)
         .background(color.opacity(0.06))
-        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
     }
 }
 
@@ -913,7 +903,7 @@ struct QualityRow: View {
             Spacer()
 
             Text(detail)
-                .font(.system(size: 12, design: .monospaced))
+                .font(.caption)
                 .foregroundColor(Theme.textSecondary)
         }
         .padding(.vertical, 4)

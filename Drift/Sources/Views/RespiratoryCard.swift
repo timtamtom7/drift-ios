@@ -17,6 +17,7 @@ struct RespiratoryCard: View {
                 Spacer()
 
                 Button {
+                    Theme.haptic(.light)
                     withAnimation(.spring(duration: 0.3)) {
                         isExpanded.toggle()
                     }
@@ -25,6 +26,7 @@ struct RespiratoryCard: View {
                         .font(.system(size: 12, weight: .semibold))
                         .foregroundColor(Theme.textSecondary)
                 }
+                .accessibilityLabel(isExpanded ? "Collapse breathing details" : "Expand breathing details")
             }
 
             if healthKitService.respiratoryDataUnavailable {
@@ -55,6 +57,7 @@ struct RespiratoryCard: View {
                 .lineSpacing(2)
 
             Button {
+                Theme.haptic(.light)
                 Task {
                     await healthKitService.fetchTodaySleep()
                 }
@@ -68,8 +71,9 @@ struct RespiratoryCard: View {
                 .padding(.horizontal, 12)
                 .padding(.vertical, 6)
                 .background(Theme.deepSleep)
-                .clipShape(RoundedRectangle(cornerRadius: 6))
+                .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall))
             }
+            .accessibilityLabel("Refresh breathing data")
         }
     }
 
@@ -209,12 +213,12 @@ struct SpO2StatItem: View {
             }
 
             Text("SpO₂")
-                .font(.system(size: 10))
+                .font(.caption)
                 .foregroundColor(Theme.textSecondary)
 
             if dropsBelow90 > 0 {
                 Text("\(dropsBelow90) drops <90%")
-                    .font(.system(size: 9))
+                    .font(.caption2)
                     .foregroundColor(Theme.heartRate.opacity(0.8))
             }
         }
@@ -238,7 +242,7 @@ struct RespiratoryStatItem: View {
             }
 
             Text("Resp. Rate")
-                .font(.system(size: 10))
+                .font(.caption)
                 .foregroundColor(Theme.textSecondary)
         }
     }
@@ -274,11 +278,13 @@ struct HRVTrendChartView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
+                        Theme.haptic(.light)
                         dismiss()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundColor(Theme.textSecondary)
                     }
+                    .accessibilityLabel("Close HRV analysis")
                 }
             }
         }
@@ -313,7 +319,7 @@ struct HRVTrendChartView: View {
                                 .foregroundColor(hrvColor(avg).opacity(0.7))
                         }
                         Text("Average HRV")
-                            .font(.system(size: 12))
+                            .font(.caption)
                             .foregroundColor(Theme.textSecondary)
                     }
 
@@ -329,7 +335,7 @@ struct HRVTrendChartView: View {
                                 .foregroundColor(hrvColor(avg))
                         }
                         Text("\(hrvRecords.count) nights tracked")
-                            .font(.system(size: 11))
+                            .font(.caption)
                             .foregroundColor(Theme.textSecondary)
                     }
                 }
@@ -372,7 +378,7 @@ struct HRVTrendChartView: View {
                 .foregroundColor(Theme.textSecondary)
 
             Text("Wear your Apple Watch to bed to start tracking Heart Rate Variability.")
-                .font(.system(size: 11))
+                .font(.caption)
                 .foregroundColor(Theme.textSecondary.opacity(0.6))
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 20)
@@ -445,7 +451,7 @@ struct HRLFactorRow: View {
                     .font(.system(size: 11, weight: .semibold))
                     .foregroundColor(Theme.textPrimary)
                 Text(description)
-                    .font(.system(size: 10))
+                    .font(.caption2)
                     .foregroundColor(Theme.textSecondary.opacity(0.7))
             }
         }

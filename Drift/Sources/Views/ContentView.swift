@@ -11,7 +11,10 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             if showOnboarding {
-                OnboardingView(isCompleted: $showOnboarding)
+                OnboardingView {
+                    showOnboarding = false
+                    UserDefaults.standard.set(true, forKey: "onboardingCompleted")
+                }
             } else {
                 mainTabView
                     .environmentObject(smartWakeService)
