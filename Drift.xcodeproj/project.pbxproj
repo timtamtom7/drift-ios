@@ -19,10 +19,12 @@
 		29868869682F6B6854B00E17 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = BFB96937F57C0BF989039212 /* PrivacyInfo.xcprivacy */; };
 		2D1A0667406187CED0E01958 /* SleepDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CAC288F06CCE279CF78ABE /* SleepDashboardView.swift */; };
 		2E56A0BC9BDEE2A01A1CB3A8 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF649C50FE27DA7F5D7CF8F /* Theme.swift */; };
+		35C18F20EE49931D7B61CF44 /* SleepDebtView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD233607CBEDA6B3BA61663 /* SleepDebtView.swift */; };
 		36291A92C95865835A45F985 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A95998EE00CB87DD07C2BC /* SettingsView.swift */; };
 		36714185CFCF9F604896E7F0 /* HealthKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EEEDECF6C65F72755D5D45 /* HealthKitService.swift */; };
 		39E2330E307F64B5A45D6716 /* WeeklyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3320D6B5A66F6084B9199F89 /* WeeklyView.swift */; };
 		3ECBEE821C66A7A6F0198541 /* SleepGoalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7F2172BF01B3F2A17D4EB8 /* SleepGoalsView.swift */; };
+		40CA5D0046F5EC8896AFDFF2 /* HealthKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A4FDA92C97E7460BC0681E7 /* HealthKitService.swift */; };
 		41A4672C1A2DFFFA40CE8FD6 /* SleepRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDDBE6D05FC5B13AB73016D /* SleepRecord.swift */; };
 		42C08E70CA6257A0BA521974 /* SleepPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B354C0193A01B7D57A77BC08 /* SleepPhase.swift */; };
 		4AD88E4A6D2F94B8D90D7B8C /* DriftR12R20Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D2F83C4613C14EB4535A676 /* DriftR12R20Service.swift */; };
@@ -51,6 +53,7 @@
 		8AB77F3460005CDBD0A57640 /* SleepExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1D60BA123A09098CC87380 /* SleepExportService.swift */; };
 		8D89B5E0E484B4BB9C681C05 /* WatchContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B218511AB4F1A3B144FEAE /* WatchContentView.swift */; };
 		8F04A913021D375937865DC0 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A67E062A98CDF8D93049B5 /* NotificationService.swift */; };
+		9473BE1A620966BB1422B53C /* SmartWakeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6A75F65AB4A63129A0CFA0 /* SmartWakeService.swift */; };
 		9970C4196A31D63E36F14C01 /* InsightCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD39A3C118D723BDD144CFEB /* InsightCard.swift */; };
 		9CE5318CFB8DD56F5B3148A3 /* ErrorStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F098FA456347820D95C5EEDC /* ErrorStateView.swift */; };
 		A06948946AE840A33EB97CC1 /* SmartWakeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9103A7D6E8D2F430655635E1 /* SmartWakeService.swift */; };
@@ -110,6 +113,7 @@
 		74FF8F314CA04E3DB5A7A7A2 /* AppStoreContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreContent.swift; sourceTree = "<group>"; };
 		762C96F7E25634B40A01E639 /* SleepSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepSchedule.swift; sourceTree = "<group>"; };
 		76E10B6392D6F308FC0F4A38 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		7A4FDA92C97E7460BC0681E7 /* HealthKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitService.swift; sourceTree = "<group>"; };
 		7E8212DA6DDF662D7B428B97 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		7ECE3F1BDF14E3E7C8551E6A /* WeeklyReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyReport.swift; sourceTree = "<group>"; };
 		7FEAE76CDFB4B43D230F250E /* SleepInsight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepInsight.swift; sourceTree = "<group>"; };
@@ -121,9 +125,11 @@
 		8BF649C50FE27DA7F5D7CF8F /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		9103A7D6E8D2F430655635E1 /* SmartWakeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartWakeService.swift; sourceTree = "<group>"; };
 		979B8A986214D9C5E8977736 /* DriftMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DriftMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A6A75F65AB4A63129A0CFA0 /* SmartWakeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartWakeService.swift; sourceTree = "<group>"; };
 		A8842580F494A65D410104AE /* IPadHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPadHomeView.swift; sourceTree = "<group>"; };
 		A8A67E062A98CDF8D93049B5 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		AB44B3A0A21A46931E7C7AEC /* WeeklyReportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyReportService.swift; sourceTree = "<group>"; };
+		AFD233607CBEDA6B3BA61663 /* SleepDebtView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepDebtView.swift; sourceTree = "<group>"; };
 		B2421772A78BE8ABBEC35B77 /* FamilyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyView.swift; sourceTree = "<group>"; };
 		B354C0193A01B7D57A77BC08 /* SleepPhase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepPhase.swift; sourceTree = "<group>"; };
 		B99E371898F02C71492560B6 /* TrendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendsView.swift; sourceTree = "<group>"; };
@@ -169,6 +175,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		01E78E3B602AF77266D6C17B /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				7A4FDA92C97E7460BC0681E7 /* HealthKitService.swift */,
+				9A6A75F65AB4A63129A0CFA0 /* SmartWakeService.swift */,
+			);
+			name = Services;
+			path = DriftMac/Services;
+			sourceTree = "<group>";
+		};
 		0EA67573775347F2DA7F1A99 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -185,6 +201,7 @@
 				3AD4B1502C63CCD22104EFE1 /* Resources */,
 				A748F5E845F09C76A570580B /* Resources */,
 				A26C32E3F93B6560F5997E3C /* Resources */,
+				01E78E3B602AF77266D6C17B /* Services */,
 				B6495617EF8C84B0E9FE27AF /* Sources */,
 				1FD1E161834CE6E8AF7C6127 /* Sources */,
 				37B557F606B47C74014BDBEA /* Sources */,
@@ -197,6 +214,7 @@
 			children = (
 				E471183C1E7621B2F3556452 /* ContentView.swift */,
 				5B226C519F9D8DEFBD02D70F /* DriftMacApp.swift */,
+				AFD233607CBEDA6B3BA61663 /* SleepDebtView.swift */,
 				B354C0193A01B7D57A77BC08 /* SleepPhase.swift */,
 				8BF649C50FE27DA7F5D7CF8F /* Theme.swift */,
 				BA103E4A0D567ECCA426C4FA /* Views */,
@@ -568,12 +586,15 @@
 			files = (
 				E796A5C67C3901BEE10EC018 /* ContentView.swift in Sources */,
 				A299F8FE87211509DC7AA1BA /* DriftMacApp.swift in Sources */,
+				40CA5D0046F5EC8896AFDFF2 /* HealthKitService.swift in Sources */,
 				7F9C24B8970F2EF39BC99A38 /* MenuBarView.swift in Sources */,
 				59C9B642207BC6AA8DDFA16A /* SettingsView.swift in Sources */,
 				2D1A0667406187CED0E01958 /* SleepDashboardView.swift in Sources */,
+				35C18F20EE49931D7B61CF44 /* SleepDebtView.swift in Sources */,
 				3ECBEE821C66A7A6F0198541 /* SleepGoalsView.swift in Sources */,
 				54B84B7E868E2757E61070EF /* SleepHistoryView.swift in Sources */,
 				42C08E70CA6257A0BA521974 /* SleepPhase.swift in Sources */,
+				9473BE1A620966BB1422B53C /* SmartWakeService.swift in Sources */,
 				2E56A0BC9BDEE2A01A1CB3A8 /* Theme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

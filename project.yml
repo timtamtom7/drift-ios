@@ -69,6 +69,7 @@ targets:
     platform: macOS
     sources:
       - path: DriftMac/Sources
+      - path: DriftMac/Services
       - path: DriftMac/Resources
     settings:
       base:
