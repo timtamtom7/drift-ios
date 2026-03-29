@@ -58,9 +58,9 @@ struct SleepDebtView: View {
             Divider()
 
             HStack {
-                debtStat(title: "Slept", value: viewModel.totalSleptFormatted, icon: "bed.double.fill", color: .blue)
+                debtStat(title: "Slept", value: viewModel.totalSleptFormatted, icon: "bed.double.fill", color: Theme.purple)
                 Spacer()
-                debtStat(title: "Optimal", value: viewModel.optimalFormatted, icon: "target", color: .green)
+                debtStat(title: "Optimal", value: viewModel.optimalFormatted, icon: "target", color: Theme.insightAccent)
                 Spacer()
                 debtStat(title: "Debt", value: viewModel.debtFormatted, icon: "exclamationmark.triangle.fill", color: debtColor)
             }
@@ -109,13 +109,13 @@ struct SleepDebtView: View {
 
     private var debtColor: Color {
         if viewModel.sleepDebtSeconds > 3600 {
-            return .red
+            return Theme.heartRate
         } else if viewModel.sleepDebtSeconds > 0 {
-            return .orange
+            return Theme.warningAccent
         } else if viewModel.sleepDebtSeconds < -3600 {
-            return .blue // Overslept
+            return Theme.deepPurple // Overslept
         } else {
-            return .green
+            return Theme.insightAccent
         }
     }
 
@@ -132,10 +132,10 @@ struct SleepDebtView: View {
                         x: .value("Day", day.dayName),
                         y: .value("Hours", day.hoursSlept)
                     )
-                    .foregroundStyle(day.hoursSlept >= 7 ? Color.green.gradient : Color.orange.gradient)
+                    .foregroundStyle(day.hoursSlept >= 7 ? Theme.insightAccent.gradient : Theme.warningAccent.gradient)
 
                     RuleMark(y: .value("Optimal", 8))
-                        .foregroundStyle(Color.blue.opacity(0.5))
+                        .foregroundStyle(Theme.purple.opacity(0.5))
                         .lineStyle(StrokeStyle(lineWidth: 1, dash: [5]))
                 }
                 .frame(height: 200)
@@ -155,7 +155,7 @@ struct SleepDebtView: View {
                     ForEach(viewModel.dailyData) { day in
                         VStack(spacing: 4) {
                             Rectangle()
-                                .fill(day.hoursSlept >= 7 ? Color.green : Color.orange)
+                                .fill(day.hoursSlept >= 7 ? Theme.insightAccent : Theme.warningAccent)
                                 .frame(width: 30, height: CGFloat(day.hoursSlept) * 20)
 
                             Text(day.dayName)
@@ -168,7 +168,7 @@ struct SleepDebtView: View {
 
             HStack {
                 Circle()
-                    .fill(Color.green)
+                    .fill(Theme.insightAccent)
                     .frame(width: 8, height: 8)
                 Text("Met goal (7h+)")
                     .font(.caption)
@@ -177,7 +177,7 @@ struct SleepDebtView: View {
                 Spacer()
 
                 Circle()
-                    .fill(Color.orange)
+                    .fill(Theme.warningAccent)
                     .frame(width: 8, height: 8)
                 Text("Below goal")
                     .font(.caption)
@@ -186,7 +186,7 @@ struct SleepDebtView: View {
                 Spacer()
 
                 Rectangle()
-                    .stroke(Color.blue, lineWidth: 1)
+                    .stroke(Theme.purple, lineWidth: 1)
                     .frame(width: 20, height: 0)
                 Text("Optimal (8h)")
                     .font(.caption)
@@ -258,7 +258,7 @@ struct SleepDebtView: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Image(systemName: "info.circle.fill")
-                    .foregroundColor(.blue)
+                    .foregroundColor(Theme.deepPurple)
                 Text("You're sleeping more than needed")
                     .font(.headline)
             }
@@ -272,7 +272,7 @@ struct SleepDebtView: View {
     private var healthySleepMessage: some View {
         HStack {
             Image(systemName: "checkmark.circle.fill")
-                .foregroundColor(.green)
+                .foregroundColor(Theme.insightAccent)
             Text("Great job! You're meeting your sleep goals.")
                 .font(.headline)
         }
@@ -282,7 +282,7 @@ struct SleepDebtView: View {
         HStack(alignment: .top, spacing: 12) {
             Image(systemName: icon)
                 .font(.title3)
-                .foregroundColor(.blue)
+                .foregroundColor(Theme.purple)
                 .frame(width: 24)
 
             VStack(alignment: .leading, spacing: 2) {

@@ -77,7 +77,7 @@ struct SleepTrendsView: View {
                 Spacer()
             }
             .padding()
-            .background(Color.accentColor.opacity(0.1))
+            .background(Theme.purple.opacity(0.1))
             .cornerRadius(12)
         }
     }
@@ -162,7 +162,7 @@ struct SleepTrendsView: View {
 
                     // Current
                     RoundedRectangle(cornerRadius: 4)
-                        .fill(Color.accentColor)
+                        .fill(Theme.purple)
                         .frame(width: currentWidth, height: 24)
                         .overlay(
                             Text("Current: \(data.avgScore)")
@@ -443,7 +443,7 @@ struct SleepTrendChart: View {
                     // Data points
                     ForEach(scoreHistory.indices, id: \.self) { index in
                         Circle()
-                            .fill(Color.accentColor)
+                            .fill(Theme.purple)
                             .frame(width: 6, height: 6)
                             .position(points[index])
                     }
