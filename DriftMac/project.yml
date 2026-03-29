@@ -1,0 +1,29 @@
+name: DriftMac
+options:
+  bundleIdPrefix: com.tommaso
+  deploymentTarget:
+    macOS: "15.0"
+targets:
+  DriftMac:
+    type: application
+    platform: macOS
+    sources:
+      - path: DriftMac/Sources
+      - path: DriftMac/Resources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.tommaso.drift.mac
+        PRODUCT_NAME: Drift
+        INFOPLIST_FILE: DriftMac/Resources/Info.plist
+        MARKETING_VERSION: "1.0.0"
+        CURRENT_PROJECT_VERSION: "1"
+        SWIFT_VERSION: "6.0"
+        MACOSX_DEPLOYMENT_TARGET: "15.0"
+        CODE_SIGN_IDENTITY: "-"
+        CODE_SIGN_STYLE: Manual
+        ENABLE_HARDENED_RUNTIME: YES
+        COMBINE_HIDPI_IMAGES: YES
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+    entitlements:
+      path: DriftMac/Resources/DriftMac.entitlements
+    dependencies: []

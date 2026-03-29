@@ -13,48 +13,52 @@
 		0FA7FFE408C85D2C1B17FFA6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F807D101A4DEE12019634849 /* Assets.xcassets */; };
 		0FAB38F1A7613788826E8532 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = C60D3C3B61B73C1456CF689E /* SQLite */; };
 		115B2066E0E834FB00D636E0 /* WithingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E7C2F74D85738AA13CC2F5 /* WithingsService.swift */; };
+		187186A071EE5DBD74852CCD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB53D49C71B5C8E43B6451ED /* Assets.xcassets */; };
 		1E31543793320085328EF5EF /* SleepInsight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEAE76CDFB4B43D230F250E /* SleepInsight.swift */; };
-		20CE6304522DE99121737290 /* MacHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AB8F5E2DFD16959BFCF5064 /* MacHomeView.swift */; };
 		238FB48AF96C022423A9FEDD /* PricingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C0567F2A6F6ED90797EC8 /* PricingView.swift */; };
-		3394A101E7FD449749C2F148 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB53D49C71B5C8E43B6451ED /* Assets.xcassets */; };
+		29868869682F6B6854B00E17 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = BFB96937F57C0BF989039212 /* PrivacyInfo.xcprivacy */; };
+		2D1A0667406187CED0E01958 /* SleepDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CAC288F06CCE279CF78ABE /* SleepDashboardView.swift */; };
+		2E56A0BC9BDEE2A01A1CB3A8 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF649C50FE27DA7F5D7CF8F /* Theme.swift */; };
 		36291A92C95865835A45F985 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A95998EE00CB87DD07C2BC /* SettingsView.swift */; };
 		36714185CFCF9F604896E7F0 /* HealthKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EEEDECF6C65F72755D5D45 /* HealthKitService.swift */; };
 		39E2330E307F64B5A45D6716 /* WeeklyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3320D6B5A66F6084B9199F89 /* WeeklyView.swift */; };
+		3ECBEE821C66A7A6F0198541 /* SleepGoalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7F2172BF01B3F2A17D4EB8 /* SleepGoalsView.swift */; };
 		41A4672C1A2DFFFA40CE8FD6 /* SleepRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDDBE6D05FC5B13AB73016D /* SleepRecord.swift */; };
+		42C08E70CA6257A0BA521974 /* SleepPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B354C0193A01B7D57A77BC08 /* SleepPhase.swift */; };
 		4AD88E4A6D2F94B8D90D7B8C /* DriftR12R20Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D2F83C4613C14EB4535A676 /* DriftR12R20Service.swift */; };
+		51829D0ABE64825750244E50 /* SleepSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762C96F7E25634B40A01E639 /* SleepSchedule.swift */; };
 		52AA6A4F4B2B303B94AB52AB /* RespiratoryCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1DF8511F21C91BA96282B6 /* RespiratoryCard.swift */; };
+		54B84B7E868E2757E61070EF /* SleepHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2030CF80AD1B65B8D29440D8 /* SleepHistoryView.swift */; };
 		57DC51DA96AE70B4B47702A8 /* SleepCommunityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EC613A85F7B06A4C67D0D9 /* SleepCommunityView.swift */; };
+		59C9B642207BC6AA8DDFA16A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3558C8AE5D75F491AF56E229 /* SettingsView.swift */; };
 		5C5D57A4457E3BC8550553C9 /* FamilyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2421772A78BE8ABBEC35B77 /* FamilyView.swift */; };
 		5E4336F9026D44561F18683A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F182F680CF572F90E2AF48 /* HomeView.swift */; };
 		60BF59F5902A94DFB7BBD3D9 /* FamilyMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3541CF53EC0094A13EF42A31 /* FamilyMember.swift */; };
 		6116D6BAF59B763C3D3FF220 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8212DA6DDF662D7B428B97 /* Theme.swift */; };
 		66CDEF15104D287789A061D5 /* FamilyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2458D3DB0CC534630A931FE6 /* FamilyService.swift */; };
 		66E61D7F32DF8CDDF95B0158 /* HRVCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407D264C57BAA614D28EA4DF /* HRVCard.swift */; };
+		6BF41472578A91237BB18527 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C901FBF84B8F511C5FD0807A /* Assets.xcassets */; };
 		6D0A95960ED9528AA3BEB38D /* AIInsightService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B2C652916FEC6A7A567ACD /* AIInsightService.swift */; };
 		6E5376A2D250BE21B5BF5ADE /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2F953D4C4EA97BD2872A32 /* HistoryView.swift */; };
 		700DD6A36875841F648C5288 /* SleepStagesBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064DDBEFCB49FF611C91EA16 /* SleepStagesBar.swift */; };
 		74CE8AF194C1C067F0ECE49E /* WeeklyReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ECE3F1BDF14E3E7C8551E6A /* WeeklyReport.swift */; };
 		77FE91D877BCAE0892C79022 /* SleepStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814E7C9DD9A7CAF4B6667657 /* SleepStage.swift */; };
 		7D853763C3083AF1641F0287 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CC5606E120922F6A17CB523 /* OnboardingView.swift */; };
+		7F9C24B8970F2EF39BC99A38 /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6B67C73BC40CBBE31253B5 /* MenuBarView.swift */; };
 		81068B96CC247D11DCBB9FCB /* SmartWakeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6CA0EE00375008F020C2EB /* SmartWakeView.swift */; };
 		82E0A663A993CCD8F5C23F4B /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11165945BD81B7D48FA8C44 /* DatabaseService.swift */; };
 		85203CD5CC2DD620023B758A /* WeeklyReportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB44B3A0A21A46931E7C7AEC /* WeeklyReportService.swift */; };
-		BB0102030405060708090A1B2C3D4E5F /* SleepSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepSchedule.swift; sourceTree = "<group>"; };
-		DD0102030405060708090A1B2C3D4E5F /* SleepScheduleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepScheduleService.swift; sourceTree = "<group>"; };
-		FF0102030405060708090A1B2C3D4E5F /* SleepScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepScheduleView.swift; sourceTree = "<group>"; };
-		HH0102030405060708090A1B2C3D4E5F /* SleepExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepExportService.swift; sourceTree = "<group>"; };
-		AA0102030405060708090A1B2C3D4E5F /* SleepSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0102030405060708090A1B2C3D4E5F /* SleepSchedule.swift */; };
-		CC0102030405060708090A1B2C3D4E5F /* SleepScheduleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0102030405060708090A1B2C3D4E5F /* SleepScheduleService.swift */; };
-		EE0102030405060708090A1B2C3D4E5F /* SleepScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0102030405060708090A1B2C3D4E5F /* SleepScheduleView.swift */; };
-		GG0102030405060708090A1B2C3D4E5F /* SleepExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = HH0102030405060708090A1B2C3D4E5F /* SleepExportService.swift */; };
+		8AB77F3460005CDBD0A57640 /* SleepExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1D60BA123A09098CC87380 /* SleepExportService.swift */; };
 		8D89B5E0E484B4BB9C681C05 /* WatchContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B218511AB4F1A3B144FEAE /* WatchContentView.swift */; };
 		8F04A913021D375937865DC0 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A67E062A98CDF8D93049B5 /* NotificationService.swift */; };
 		9970C4196A31D63E36F14C01 /* InsightCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD39A3C118D723BDD144CFEB /* InsightCard.swift */; };
 		9CE5318CFB8DD56F5B3148A3 /* ErrorStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F098FA456347820D95C5EEDC /* ErrorStateView.swift */; };
 		A06948946AE840A33EB97CC1 /* SmartWakeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9103A7D6E8D2F430655635E1 /* SmartWakeService.swift */; };
 		A299F8FE87211509DC7AA1BA /* DriftMacApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B226C519F9D8DEFBD02D70F /* DriftMacApp.swift */; };
+		AA7A700913327435510AE507 /* SleepScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DADD9F2CE863D19E83415A4 /* SleepScheduleView.swift */; };
 		AC921DC57A274F4B06A2CC53 /* DeepSleepAnalysis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A6E6A9EF605DBB8EF8C7C7 /* DeepSleepAnalysis.swift */; };
 		AFD8B76FB33368C4AC6C7043 /* DriftWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D97E53CF7EBF9C32E15678 /* DriftWatchApp.swift */; };
+		B3195BF247D791C5ACB4D3F0 /* SleepScheduleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDDC1189C2048110C7482A4D /* SleepScheduleService.swift */; };
 		B5EA181376C055A27F085AC5 /* SleepQualityMeterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9021B0FD9EBD6AE275B136 /* SleepQualityMeterView.swift */; };
 		B7C800DB386E1CD39DA16A68 /* DriftApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3655206C81AF14ABB877112D /* DriftApp.swift */; };
 		BDCD4F8E2326EAF1D046D6D7 /* AppStore_en-US.txt in Resources */ = {isa = PBXBuildFile; fileRef = BF1EF9B01A4DDDC9DAD211E6 /* AppStore_en-US.txt */; };
@@ -64,6 +68,7 @@
 		D6378B6176EE9737AB2F207A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F1AAF3C973934C2582327A /* ContentView.swift */; };
 		D7EDA79E743D2E02B12468C4 /* IPadHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8842580F494A65D410104AE /* IPadHomeView.swift */; };
 		DC70217AD0ABA8DA41F685EC /* HealthExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B19977ACAE13D097F92A88 /* HealthExportService.swift */; };
+		E796A5C67C3901BEE10EC018 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E471183C1E7621B2F3556452 /* ContentView.swift */; };
 		E81935BD553F38C09D21578E /* SleepInsightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442E9CC2AA9F6C108919081C /* SleepInsightsView.swift */; };
 		EA461A149CE8C537C738BF00 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 1A169E20A2F2BB337064EF46 /* SQLite */; };
 		F97F61D9FC4E08478159E902 /* DriftR12R20.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AEBA6C8A8CF74D201C979B8 /* DriftR12R20.swift */; };
@@ -71,6 +76,7 @@
 
 /* Begin PBXFileReference section */
 		01A95998EE00CB87DD07C2BC /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		02CAC288F06CCE279CF78ABE /* SleepDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepDashboardView.swift; sourceTree = "<group>"; };
 		064DDBEFCB49FF611C91EA16 /* SleepStagesBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepStagesBar.swift; sourceTree = "<group>"; };
 		07B19977ACAE13D097F92A88 /* HealthExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthExportService.swift; sourceTree = "<group>"; };
 		07B2C652916FEC6A7A567ACD /* AIInsightService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIInsightService.swift; sourceTree = "<group>"; };
@@ -79,16 +85,21 @@
 		1B6CA0EE00375008F020C2EB /* SmartWakeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartWakeView.swift; sourceTree = "<group>"; };
 		1B7C0567F2A6F6ED90797EC8 /* PricingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricingView.swift; sourceTree = "<group>"; };
 		1CC5606E120922F6A17CB523 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		2030CF80AD1B65B8D29440D8 /* SleepHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepHistoryView.swift; sourceTree = "<group>"; };
 		2458D3DB0CC534630A931FE6 /* FamilyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyService.swift; sourceTree = "<group>"; };
 		2D2F83C4613C14EB4535A676 /* DriftR12R20Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriftR12R20Service.swift; sourceTree = "<group>"; };
+		2DADD9F2CE863D19E83415A4 /* SleepScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepScheduleView.swift; sourceTree = "<group>"; };
 		2F85D6B00DDB0034A3133787 /* DriftWatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DriftWatch.entitlements; sourceTree = "<group>"; };
 		308CEA5337E187E719E35090 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3320D6B5A66F6084B9199F89 /* WeeklyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyView.swift; sourceTree = "<group>"; };
 		3541CF53EC0094A13EF42A31 /* FamilyMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyMember.swift; sourceTree = "<group>"; };
+		3558C8AE5D75F491AF56E229 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		3655206C81AF14ABB877112D /* DriftApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriftApp.swift; sourceTree = "<group>"; };
 		37A6E6A9EF605DBB8EF8C7C7 /* DeepSleepAnalysis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepSleepAnalysis.swift; sourceTree = "<group>"; };
+		3E6B67C73BC40CBBE31253B5 /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
 		407D264C57BAA614D28EA4DF /* HRVCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HRVCard.swift; sourceTree = "<group>"; };
 		442E9CC2AA9F6C108919081C /* SleepInsightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepInsightsView.swift; sourceTree = "<group>"; };
+		4A1D60BA123A09098CC87380 /* SleepExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepExportService.swift; sourceTree = "<group>"; };
 		4A2F953D4C4EA97BD2872A32 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		4F1DF8511F21C91BA96282B6 /* RespiratoryCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RespiratoryCard.swift; sourceTree = "<group>"; };
 		51F1AAF3C973934C2582327A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -97,8 +108,8 @@
 		6C9021B0FD9EBD6AE275B136 /* SleepQualityMeterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepQualityMeterView.swift; sourceTree = "<group>"; };
 		71F182F680CF572F90E2AF48 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		74FF8F314CA04E3DB5A7A7A2 /* AppStoreContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreContent.swift; sourceTree = "<group>"; };
+		762C96F7E25634B40A01E639 /* SleepSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepSchedule.swift; sourceTree = "<group>"; };
 		76E10B6392D6F308FC0F4A38 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		7AB8F5E2DFD16959BFCF5064 /* MacHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacHomeView.swift; sourceTree = "<group>"; };
 		7E8212DA6DDF662D7B428B97 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		7ECE3F1BDF14E3E7C8551E6A /* WeeklyReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyReport.swift; sourceTree = "<group>"; };
 		7FEAE76CDFB4B43D230F250E /* SleepInsight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepInsight.swift; sourceTree = "<group>"; };
@@ -107,20 +118,26 @@
 		82F890D0D8EF54848AD9A92C /* SleepScoreDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepScoreDetailView.swift; sourceTree = "<group>"; };
 		88B218511AB4F1A3B144FEAE /* WatchContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchContentView.swift; sourceTree = "<group>"; };
 		8AEBA6C8A8CF74D201C979B8 /* DriftR12R20.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriftR12R20.swift; sourceTree = "<group>"; };
+		8BF649C50FE27DA7F5D7CF8F /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		9103A7D6E8D2F430655635E1 /* SmartWakeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartWakeService.swift; sourceTree = "<group>"; };
 		979B8A986214D9C5E8977736 /* DriftMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DriftMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8842580F494A65D410104AE /* IPadHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPadHomeView.swift; sourceTree = "<group>"; };
 		A8A67E062A98CDF8D93049B5 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		AB44B3A0A21A46931E7C7AEC /* WeeklyReportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyReportService.swift; sourceTree = "<group>"; };
 		B2421772A78BE8ABBEC35B77 /* FamilyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyView.swift; sourceTree = "<group>"; };
+		B354C0193A01B7D57A77BC08 /* SleepPhase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepPhase.swift; sourceTree = "<group>"; };
 		B99E371898F02C71492560B6 /* TrendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendsView.swift; sourceTree = "<group>"; };
+		BE7F2172BF01B3F2A17D4EB8 /* SleepGoalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepGoalsView.swift; sourceTree = "<group>"; };
 		BF1EF9B01A4DDDC9DAD211E6 /* AppStore_en-US.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "AppStore_en-US.txt"; sourceTree = "<group>"; };
+		BFB96937F57C0BF989039212 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		C11165945BD81B7D48FA8C44 /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
+		C901FBF84B8F511C5FD0807A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D5D97E53CF7EBF9C32E15678 /* DriftWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriftWatchApp.swift; sourceTree = "<group>"; };
 		DB53D49C71B5C8E43B6451ED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DD39A3C118D723BDD144CFEB /* InsightCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightCard.swift; sourceTree = "<group>"; };
 		DDDDBE6D05FC5B13AB73016D /* SleepRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepRecord.swift; sourceTree = "<group>"; };
 		DFDFBCBD7D307B76FD2918F2 /* DriftMac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DriftMac.entitlements; sourceTree = "<group>"; };
+		E471183C1E7621B2F3556452 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E7EC613A85F7B06A4C67D0D9 /* SleepCommunityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepCommunityView.swift; sourceTree = "<group>"; };
 		EC9602DCF97DB848E55CB99E /* SleepScoreRing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepScoreRing.swift; sourceTree = "<group>"; };
 		F098FA456347820D95C5EEDC /* ErrorStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorStateView.swift; sourceTree = "<group>"; };
@@ -128,6 +145,7 @@
 		F70DC9B83A99DE62A4C7E512 /* WeeklyReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyReportView.swift; sourceTree = "<group>"; };
 		F807D101A4DEE12019634849 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FBBFEBC6B17ED5D85544AF8E /* Drift.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Drift.entitlements; sourceTree = "<group>"; };
+		FDDC1189C2048110C7482A4D /* SleepScheduleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepScheduleService.swift; sourceTree = "<group>"; };
 		FEF126C669AEA5ECA2859DDC /* OuraService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OuraService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -177,8 +195,11 @@
 		1FD1E161834CE6E8AF7C6127 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				E471183C1E7621B2F3556452 /* ContentView.swift */,
 				5B226C519F9D8DEFBD02D70F /* DriftMacApp.swift */,
-				7AB8F5E2DFD16959BFCF5064 /* MacHomeView.swift */,
+				B354C0193A01B7D57A77BC08 /* SleepPhase.swift */,
+				8BF649C50FE27DA7F5D7CF8F /* Theme.swift */,
+				BA103E4A0D567ECCA426C4FA /* Views */,
 			);
 			name = Sources;
 			path = DriftMac/Sources;
@@ -202,6 +223,7 @@
 				E7EC613A85F7B06A4C67D0D9 /* SleepCommunityView.swift */,
 				442E9CC2AA9F6C108919081C /* SleepInsightsView.swift */,
 				6C9021B0FD9EBD6AE275B136 /* SleepQualityMeterView.swift */,
+				2DADD9F2CE863D19E83415A4 /* SleepScheduleView.swift */,
 				82F890D0D8EF54848AD9A92C /* SleepScoreDetailView.swift */,
 				EC9602DCF97DB848E55CB99E /* SleepScoreRing.swift */,
 				064DDBEFCB49FF611C91EA16 /* SleepStagesBar.swift */,
@@ -209,7 +231,6 @@
 				B99E371898F02C71492560B6 /* TrendsView.swift */,
 				F70DC9B83A99DE62A4C7E512 /* WeeklyReportView.swift */,
 				3320D6B5A66F6084B9199F89 /* WeeklyView.swift */,
-				FF0102030405060708090A1B2C3D4E5F /* SleepScheduleView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -239,6 +260,7 @@
 				F807D101A4DEE12019634849 /* Assets.xcassets */,
 				FBBFEBC6B17ED5D85544AF8E /* Drift.entitlements */,
 				185A7E3991F0BE37BAB698CE /* Info.plist */,
+				BFB96937F57C0BF989039212 /* PrivacyInfo.xcprivacy */,
 				DEA9022DD4A2DD8F6EE5A384 /* AppStore */,
 			);
 			name = Resources;
@@ -253,9 +275,9 @@
 				3541CF53EC0094A13EF42A31 /* FamilyMember.swift */,
 				7FEAE76CDFB4B43D230F250E /* SleepInsight.swift */,
 				DDDDBE6D05FC5B13AB73016D /* SleepRecord.swift */,
+				762C96F7E25634B40A01E639 /* SleepSchedule.swift */,
 				814E7C9DD9A7CAF4B6667657 /* SleepStage.swift */,
 				7ECE3F1BDF14E3E7C8551E6A /* WeeklyReport.swift */,
-				BB0102030405060708090A1B2C3D4E5F /* SleepSchedule.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -271,11 +293,10 @@
 				F4EEEDECF6C65F72755D5D45 /* HealthKitService.swift */,
 				A8A67E062A98CDF8D93049B5 /* NotificationService.swift */,
 				FEF126C669AEA5ECA2859DDC /* OuraService.swift */,
+				4A1D60BA123A09098CC87380 /* SleepExportService.swift */,
+				FDDC1189C2048110C7482A4D /* SleepScheduleService.swift */,
 				9103A7D6E8D2F430655635E1 /* SmartWakeService.swift */,
 				AB44B3A0A21A46931E7C7AEC /* WeeklyReportService.swift */,
-				DD0102030405060708090A1B2C3D4E5F /* SleepScheduleService.swift */,
-				HH0102030405060708090A1B2C3D4E5F /* SleepExportService.swift */,
-
 				12E7C2F74D85738AA13CC2F5 /* WithingsService.swift */,
 			);
 			path = Services;
@@ -284,7 +305,7 @@
 		A26C32E3F93B6560F5997E3C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				DB53D49C71B5C8E43B6451ED /* Assets.xcassets */,
+				C901FBF84B8F511C5FD0807A /* Assets.xcassets */,
 				2F85D6B00DDB0034A3133787 /* DriftWatch.entitlements */,
 				76E10B6392D6F308FC0F4A38 /* Info.plist */,
 			);
@@ -295,6 +316,7 @@
 		A748F5E845F09C76A570580B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				DB53D49C71B5C8E43B6451ED /* Assets.xcassets */,
 				DFDFBCBD7D307B76FD2918F2 /* DriftMac.entitlements */,
 				308CEA5337E187E719E35090 /* Info.plist */,
 			);
@@ -313,6 +335,18 @@
 			);
 			name = Sources;
 			path = Drift/Sources;
+			sourceTree = "<group>";
+		};
+		BA103E4A0D567ECCA426C4FA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3E6B67C73BC40CBBE31253B5 /* MenuBarView.swift */,
+				3558C8AE5D75F491AF56E229 /* SettingsView.swift */,
+				02CAC288F06CCE279CF78ABE /* SleepDashboardView.swift */,
+				BE7F2172BF01B3F2A17D4EB8 /* SleepGoalsView.swift */,
+				2030CF80AD1B65B8D29440D8 /* SleepHistoryView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		DD9BB4178273AE867A611256 /* Utils */ = {
@@ -355,6 +389,7 @@
 			buildConfigurationList = 52B4F9478D92E41FB9CEE705 /* Build configuration list for PBXNativeTarget "DriftMac" */;
 			buildPhases = (
 				3FE7E1AB0C40B41ED1BFABE4 /* Sources */,
+				2C54EA5F31A9FFC1F8769EA7 /* Resources */,
 				3A0C62F6D80E21AB7596B0AE /* Frameworks */,
 			);
 			buildRules = (
@@ -435,11 +470,19 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		2C54EA5F31A9FFC1F8769EA7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				187186A071EE5DBD74852CCD /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A7F6EDADA8250DCCD3BF2AE7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3394A101E7FD449749C2F148 /* Assets.xcassets in Resources */,
+				6BF41472578A91237BB18527 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -449,6 +492,7 @@
 			files = (
 				BDCD4F8E2326EAF1D046D6D7 /* AppStore_en-US.txt in Resources */,
 				0FA7FFE408C85D2C1B17FFA6 /* Assets.xcassets in Resources */,
+				29868869682F6B6854B00E17 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -494,10 +538,14 @@
 				52AA6A4F4B2B303B94AB52AB /* RespiratoryCard.swift in Sources */,
 				36291A92C95865835A45F985 /* SettingsView.swift in Sources */,
 				57DC51DA96AE70B4B47702A8 /* SleepCommunityView.swift in Sources */,
+				8AB77F3460005CDBD0A57640 /* SleepExportService.swift in Sources */,
 				1E31543793320085328EF5EF /* SleepInsight.swift in Sources */,
 				E81935BD553F38C09D21578E /* SleepInsightsView.swift in Sources */,
 				B5EA181376C055A27F085AC5 /* SleepQualityMeterView.swift in Sources */,
 				41A4672C1A2DFFFA40CE8FD6 /* SleepRecord.swift in Sources */,
+				51829D0ABE64825750244E50 /* SleepSchedule.swift in Sources */,
+				B3195BF247D791C5ACB4D3F0 /* SleepScheduleService.swift in Sources */,
+				AA7A700913327435510AE507 /* SleepScheduleView.swift in Sources */,
 				074517E2301032B58D19C48F /* SleepScoreDetailView.swift in Sources */,
 				0B8F91E1CEA892557CDF107D /* SleepScoreRing.swift in Sources */,
 				77FE91D877BCAE0892C79022 /* SleepStage.swift in Sources */,
@@ -508,10 +556,6 @@
 				BF5BCD6E8F163CBD249D695F /* TrendsView.swift in Sources */,
 				74CE8AF194C1C067F0ECE49E /* WeeklyReport.swift in Sources */,
 				85203CD5CC2DD620023B758A /* WeeklyReportService.swift in Sources */,
-			AA0102030405060708090A1B2C3D4E5F /* SleepSchedule.swift in Sources */,
-			CC0102030405060708090A1B2C3D4E5F /* SleepScheduleService.swift in Sources */,
-			EE0102030405060708090A1B2C3D4E5F /* SleepScheduleView.swift in Sources */,
-			GG0102030405060708090A1B2C3D4E5F /* SleepExportService.swift in Sources */,
 				0DCC2F1D79B9AD43D8C5E901 /* WeeklyReportView.swift in Sources */,
 				39E2330E307F64B5A45D6716 /* WeeklyView.swift in Sources */,
 				115B2066E0E834FB00D636E0 /* WithingsService.swift in Sources */,
@@ -522,8 +566,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E796A5C67C3901BEE10EC018 /* ContentView.swift in Sources */,
 				A299F8FE87211509DC7AA1BA /* DriftMacApp.swift in Sources */,
-				20CE6304522DE99121737290 /* MacHomeView.swift in Sources */,
+				7F9C24B8970F2EF39BC99A38 /* MenuBarView.swift in Sources */,
+				59C9B642207BC6AA8DDFA16A /* SettingsView.swift in Sources */,
+				2D1A0667406187CED0E01958 /* SleepDashboardView.swift in Sources */,
+				3ECBEE821C66A7A6F0198541 /* SleepGoalsView.swift in Sources */,
+				54B84B7E868E2757E61070EF /* SleepHistoryView.swift in Sources */,
+				42C08E70CA6257A0BA521974 /* SleepPhase.swift in Sources */,
+				2E56A0BC9BDEE2A01A1CB3A8 /* Theme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
