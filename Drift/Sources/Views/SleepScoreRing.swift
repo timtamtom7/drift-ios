@@ -34,12 +34,19 @@ struct SleepScoreRing: View {
                     .textCase(.uppercase)
                     .tracking(2)
             }
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel("Sleep Score: \(animatedScore) out of 100")
         }
         .padding(Theme.Spacing.huge)
         .onAppear {
             animatedScore = score
-            withAnimation(.spring(duration: 1.4, bounce: 0.3)) {
+            let animation = Animation.spring(duration: 1.4, bounce: 0.3)
+            if UIAccessibility.isReduceMotionEnabled {
                 ringRotation = 270
+            } else {
+                withAnimation(animation) {
+                    ringRotation = 270
+                }
             }
         }
         .onChange(of: score) { _, newValue in
@@ -47,11 +54,15 @@ struct SleepScoreRing: View {
             withAnimation(.spring(duration: 1.2, bounce: 0.3)) {
                 ringRotation = -90
             }
-            Task { @MainActor in
-                try? await Task.sleep(nanoseconds: 100_000_000)
-                withAnimation(.spring(duration: 1.4, bounce: 0.3)) {
-                    ringRotation = 270
+            if !UIAccessibility.isReduceMotionEnabled {
+                Task { @MainActor in
+                    try? await Task.sleep(nanoseconds: 100_000_000)
+                    withAnimation(.spring(duration: 1.4, bounce: 0.3)) {
+                        ringRotation = 270
+                    }
                 }
+            } else {
+                ringRotation = 270
             }
         }
     }

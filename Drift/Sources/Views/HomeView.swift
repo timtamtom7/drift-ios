@@ -41,6 +41,7 @@ struct HomeView: View {
                             Image(systemName: "arrow.clockwise")
                                 .foregroundColor(Theme.textSecondary)
                         }
+                        .accessibilityLabel("Refresh sleep data")
 
                         Button {
                             showPricing = true
@@ -48,6 +49,7 @@ struct HomeView: View {
                             Image(systemName: "crown.fill")
                                 .foregroundColor(Theme.warningAccent)
                         }
+                        .accessibilityLabel("View subscription options")
                     }
                 }
             }
