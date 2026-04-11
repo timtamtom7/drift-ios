@@ -1,0 +1,30 @@
+{
+  "/Users/mauriello/Dev/drift-ios/Drift/Sources/Services/OuraService.swift" : {
+    "const-values" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/OuraService.swiftconstvalues",
+    "dependencies" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/OuraService.d",
+    "diagnostics" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/OuraService.dia",
+    "object" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/OuraService.o",
+    "swift-dependencies" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/OuraService.swiftdeps"
+  },
+  "/Users/mauriello/Dev/drift-ios/Drift/Sources/Views/OnboardingView.swift" : {
+    "const-values" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/OnboardingView.swiftconstvalues",
+    "dependencies" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/OnboardingView.d",
+    "diagnostics" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/OnboardingView.dia",
+    "object" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/OnboardingView.o",
+    "swift-dependencies" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/OnboardingView.swiftdeps"
+  },
+  "/Users/mauriello/Dev/drift-ios/Drift/Sources/Views/PricingView.swift" : {
+    "const-values" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/PricingView.swiftconstvalues",
+    "dependencies" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/PricingView.d",
+    "diagnostics" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/PricingView.dia",
+    "object" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/PricingView.o",
+    "swift-dependencies" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/PricingView.swiftdeps"
+  },
+  "/Users/mauriello/Dev/drift-ios/Drift/Sources/Views/RespiratoryCard.swift" : {
+    "const-values" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/RespiratoryCard.swiftconstvalues",
+    "dependencies" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/RespiratoryCard.d",
+    "diagnostics" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/RespiratoryCard.dia",
+    "object" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/RespiratoryCard.o",
+    "swift-dependencies" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/RespiratoryCard.swiftdeps"
+  }
+}

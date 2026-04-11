@@ -1,0 +1,37 @@
+{
+  "/Users/mauriello/Dev/drift-ios/Drift/Sources/App/AppStoreContent.swift" : {
+    "const-values" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/AppStoreContent.swiftconstvalues",
+    "dependencies" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/AppStoreContent.d",
+    "diagnostics" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/AppStoreContent.dia",
+    "object" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/AppStoreContent.o",
+    "swift-dependencies" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/AppStoreContent.swiftdeps"
+  },
+  "/Users/mauriello/Dev/drift-ios/Drift/Sources/Models/DeepSleepAnalysis.swift" : {
+    "const-values" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/DeepSleepAnalysis.swiftconstvalues",
+    "dependencies" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/DeepSleepAnalysis.d",
+    "diagnostics" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/DeepSleepAnalysis.dia",
+    "object" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/DeepSleepAnalysis.o",
+    "swift-dependencies" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/DeepSleepAnalysis.swiftdeps"
+  },
+  "/Users/mauriello/Dev/drift-ios/Drift/Sources/Services/AIInsightService.swift" : {
+    "const-values" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/AIInsightService.swiftconstvalues",
+    "dependencies" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/AIInsightService.d",
+    "diagnostics" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/AIInsightService.dia",
+    "object" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/AIInsightService.o",
+    "swift-dependencies" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/AIInsightService.swiftdeps"
+  },
+  "/Users/mauriello/Dev/drift-ios/Drift/Sources/Services/DatabaseService.swift" : {
+    "const-values" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/DatabaseService.swiftconstvalues",
+    "dependencies" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/DatabaseService.d",
+    "diagnostics" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/DatabaseService.dia",
+    "object" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/DatabaseService.o",
+    "swift-dependencies" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/DatabaseService.swiftdeps"
+  },
+  "/Users/mauriello/Dev/drift-ios/Drift/Sources/Views/ContentView.swift" : {
+    "const-values" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/ContentView.swiftconstvalues",
+    "dependencies" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/ContentView.d",
+    "diagnostics" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/ContentView.dia",
+    "object" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/ContentView.o",
+    "swift-dependencies" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/ContentView.swiftdeps"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "/Users/mauriello/Dev/drift-ios/Drift/Sources/App/DriftApp.swift" : {
+    "const-values" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/DriftApp.swiftconstvalues",
+    "dependencies" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/DriftApp.d",
+    "diagnostics" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/DriftApp.dia",
+    "object" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/DriftApp.o",
+    "swift-dependencies" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/DriftApp.swiftdeps"
+  },
+  "/Users/mauriello/Dev/drift-ios/Drift/Sources/Models/DriftR12R20.swift" : {
+    "const-values" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/DriftR12R20.swiftconstvalues",
+    "dependencies" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/DriftR12R20.d",
+    "diagnostics" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/DriftR12R20.dia",
+    "object" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/DriftR12R20.o",
+    "swift-dependencies" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/DriftR12R20.swiftdeps"
+  },
+  "/Users/mauriello/Dev/drift-ios/Drift/Sources/Models/FamilyMember.swift" : {
+    "const-values" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/FamilyMember.swiftconstvalues",
+    "dependencies" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/FamilyMember.d",
+    "diagnostics" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/FamilyMember.dia",
+    "object" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/FamilyMember.o",
+    "swift-dependencies" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/FamilyMember.swiftdeps"
+  },
+  "/Users/mauriello/Dev/drift-ios/Drift/Sources/Services/DriftR12R20Service.swift" : {
+    "const-values" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/DriftR12R20Service.swiftconstvalues",
+    "dependencies" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/DriftR12R20Service.d",
+    "diagnostics" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/DriftR12R20Service.dia",
+    "object" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/DriftR12R20Service.o",
+    "swift-dependencies" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/DriftR12R20Service.swiftdeps"
+  },
+  "/Users/mauriello/Dev/drift-ios/Drift/Sources/Views/ErrorStateView.swift" : {
+    "const-values" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/ErrorStateView.swiftconstvalues",
+    "dependencies" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/ErrorStateView.d",
+    "diagnostics" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/ErrorStateView.dia",
+    "object" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/ErrorStateView.o",
+    "swift-dependencies" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/ErrorStateView.swiftdeps"
+  }
+}

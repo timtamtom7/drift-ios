@@ -1,0 +1,30 @@
+{
+  "/Users/mauriello/Dev/drift-ios/Drift/Sources/Models/SleepRecord.swift" : {
+    "const-values" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/SleepRecord.swiftconstvalues",
+    "dependencies" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/SleepRecord.d",
+    "diagnostics" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/SleepRecord.dia",
+    "object" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/SleepRecord.o",
+    "swift-dependencies" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/SleepRecord.swiftdeps"
+  },
+  "/Users/mauriello/Dev/drift-ios/Drift/Sources/Views/SleepQualityMeterView.swift" : {
+    "const-values" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/SleepQualityMeterView.swiftconstvalues",
+    "dependencies" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/SleepQualityMeterView.d",
+    "diagnostics" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/SleepQualityMeterView.dia",
+    "object" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/SleepQualityMeterView.o",
+    "swift-dependencies" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/SleepQualityMeterView.swiftdeps"
+  },
+  "/Users/mauriello/Dev/drift-ios/Drift/Sources/Views/SleepScoreDetailView.swift" : {
+    "const-values" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/SleepScoreDetailView.swiftconstvalues",
+    "dependencies" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/SleepScoreDetailView.d",
+    "diagnostics" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/SleepScoreDetailView.dia",
+    "object" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/SleepScoreDetailView.o",
+    "swift-dependencies" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/SleepScoreDetailView.swiftdeps"
+  },
+  "/Users/mauriello/Dev/drift-ios/Drift/Sources/Views/SleepScoreRing.swift" : {
+    "const-values" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/SleepScoreRing.swiftconstvalues",
+    "dependencies" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/SleepScoreRing.d",
+    "diagnostics" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/SleepScoreRing.dia",
+    "object" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/SleepScoreRing.o",
+    "swift-dependencies" : "/Users/mauriello/Dev/drift-ios/build/Drift.build/Debug-iphoneos/Drift.build/Objects-normal/arm64/SleepScoreRing.swiftdeps"
+  }
+}
