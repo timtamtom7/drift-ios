@@ -35,7 +35,7 @@ struct SleepScoreRing: View {
                     .tracking(2)
             }
         }
-        .padding(40)
+        .padding(Theme.Spacing.huge)
         .onAppear {
             animatedScore = score
             withAnimation(.spring(duration: 1.4, bounce: 0.3)) {
@@ -47,7 +47,8 @@ struct SleepScoreRing: View {
             withAnimation(.spring(duration: 1.2, bounce: 0.3)) {
                 ringRotation = -90
             }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            Task { @MainActor in
+                try? await Task.sleep(nanoseconds: 100_000_000)
                 withAnimation(.spring(duration: 1.4, bounce: 0.3)) {
                     ringRotation = 270
                 }
